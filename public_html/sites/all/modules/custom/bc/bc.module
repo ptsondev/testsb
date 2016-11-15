@@ -1,0 +1,162 @@
+<?php
+
+require_once('consts.php');
+require_once('libs.inc');
+
+$arr_theme = array(   
+    'support_online' => 'Support Online',
+	'custom_login_area' => 'Custom login area',
+	'bc_user_profile' => 'User Profile',
+);
+define('ARR_THEME', serialize($arr_theme));
+
+/**
+ * Hook block_info
+ */
+function bc_block_info(){
+    $arr_theme = unserialize(ARR_THEME); 
+    foreach($arr_theme as $k=>$v){
+        $blocks[$k] = array(
+            'info' => $v
+        );      
+    }        
+    return $blocks;
+}
+
+function bc_block_view($delta = '') {
+  // The $delta parameter tells us which block is being requested.
+    $block['content'] = theme($delta);
+    return $block;
+}
+
+
+function bc_theme() {
+    $arr_theme = unserialize(ARR_THEME);
+    $arr = array();
+    foreach($arr_theme as $k=>$v){
+        $arr[$k] = array(
+            'path'=>drupal_get_path('module', 'bc') . '/templates',
+            'template' => $k
+        );
+    }    
+    
+    return $arr;    
+}
+ 
+
+function bc_menu_alter(&$items) {
+    $items['file/ajax']['file path'] = drupal_get_path('module', 'node');
+    $items['file/ajax']['file'] = 'node.pages.inc';
+    $items['system/ajax']['file path'] = drupal_get_path('module', 'node');
+    $items['system/ajax']['file'] = 'node.pages.inc';
+
+    $items['user/login']['type'] = MENU_CALLBACK;
+    $items['user/register']['type'] = MENU_CALLBACK;
+    $items['user/password']['type'] = MENU_CALLBACK;
+}
+
+function bc_form_alter(&$form, &$form_state, $form_id){
+    //var_dump($form);die;
+    if($form_id=='user_register_form') {
+        unset($form['account']['mail']['#description']);
+        unset($form['account']['pass']['#description']);
+        //var_dump($form['account']['pass']);
+    }
+}
+
+
+function bc_menu(){
+    $items['ajax-process'] = array(
+        'title' => 'Ajax Process',
+        'page callback' => 'bc_ajax_process',
+        'access callback' => TRUE,
+        'type' => MENU_SUGGESTED_ITEM,
+    );
+
+    $items['admin/config/master/basic'] = array(
+        'title' => 'Tùy chỉnh cơ bản',
+        'page callback' => 'bc_master_basic',
+        'access callback' => TRUE,
+        'type' => MENU_LOCAL_TASK,
+    );     
+    $items['admin/config/master/home'] = array(
+        'title' => 'Tùy chỉnh trang chủ',
+        'page callback' => 'bc_master_home',
+        'access callback' => TRUE,
+        'type' => MENU_LOCAL_TASK,
+    );   
+
+    return $items;
+}
+
+function bc_ajax_process(){
+    $action = $_REQUEST['action'];
+    drupal_session_start(); // allow session for anonymous
+    global $user;
+    
+    if($action=='add_to_cart'){        
+        if(isset($_SESSION['sl_cart'])){
+            $sl_cart = unserialize($_SESSION['sl_cart']);
+        }else{
+            $sl_cart = array();
+        }
+        $nid = $_REQUEST['nid'];
+        $exist = false;
+        foreach($sl_cart as &$sl_item){
+            if($nid == $sl_item['nid']){
+                $sl_item['quantity']++;
+                $exist = true;
+            }
+        } 
+        echo $exist;
+        if($exist==false){
+            $sl_cart[] = array('nid'=>$nid, 'quantity'=>1);
+        }
+        $_SESSION['sl_cart'] = serialize($sl_cart);
+    }
+    echo "1";
+    die;
+}
+
+
+function bc_mail($key, &$message, $params) {  
+
+	$headers = array(
+		'MIME-Version' => '1.0',
+		'Content-Type' => 'text/html; charset=UTF-8; format=flowed',
+		'Content-Transfer-Encoding' => '8Bit',
+		'X-Mailer' => 'Drupal'
+	);
+	$message['headers'] = $headers;
+	
+
+  switch ($key) {
+    // Send a simple message from the contact form.
+    case 'ntv_register_manage':
+      $message['subject'] = 'NTV - Khách mới đăng ký: '.check_plain($params['name']).' - '.$params['ip'];	  
+	  
+      // Note that the message body is an array, not a string.
+      $message['body'][] = '<div>Tài khoản: '.check_plain($params['name']).'</div>';
+	  $message['body'][] ='<div>Điện thoại: '.check_plain($params['phone']).'</div>';
+	  $message['body'][] = check_plain($params['message']);
+      break;
+	  
+	case 'ntv_register_customer':
+		$node = node_load(NID_MAIL_WELCOME);
+		$message['subject'] = $node->title;
+	  
+		global $base_url;
+		$tmp = $node->body[LANGUAGE_NONE][0]['value'];	
+		$tmp = str_replace('@site', '<a href="'.$base_url.'">'.variable_get('site_name', "Niềm Tin Việt").'</a>', $tmp);
+		$message['body'][] = $tmp;
+		break;
+  }
+}
+
+function bc_user_login(&$edit, $account) {
+    /*if(user_has_role(RID_PAGE_MANAGER, $account)){
+        $edit['redirect'] = 'admin/manage-service';		
+	}else{
+        $edit['redirect'] = '<front>';    	
+    }*/
+}

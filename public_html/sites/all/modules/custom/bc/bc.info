@@ -1,0 +1,14 @@
+name = BC - Booking Core
+description = Provides basic rule & block for travel sites
+core = 7.x
+package = core
+
+; Information added by drupal.org packaging script on 2014-06-02
+version = "7.x-1.5"
+core = "7.x"
+project = "SNH"
+datestamp = "1361665026"
+
+scripts[] = js/bc.js
+
+stylesheets[all][] = css/bc.css
