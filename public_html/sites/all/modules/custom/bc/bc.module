@@ -1,12 +1,15 @@
 <?php
 
 require_once('consts.php');
-require_once('libs.inc');
+require_once('libs.php');
+//require_once('forms/search_destination.php');
 
 $arr_theme = array(   
     'support_online' => 'Support Online',
 	'custom_login_area' => 'Custom login area',
 	'bc_user_profile' => 'User Profile',
+    'top_destinations' => 'Top Destinations',
+    'search_result' => 'Search Result',
 );
 define('ARR_THEME', serialize($arr_theme));
 
@@ -61,6 +64,23 @@ function bc_form_alter(&$form, &$form_state, $form_id){
         unset($form['account']['mail']['#description']);
         unset($form['account']['pass']['#description']);
         //var_dump($form['account']['pass']);
+        
+        $form['terms'] = array(
+            '#markup' => '<h3>Noi quy va dieu khoan</h3><div id="terms-conditions">'.variable_get('bc_term_condition', '[Noi dung dieu khoan o day]').'</div>'
+        );
+        $form['terms_agree'] = array(
+            '#type' => 'checkbox',
+            '#title' =>'Toi dong y voi nhung dieu khoan tren'
+        );
+        $form['#validate'][] = 'bc_validate_agree_terms';
+
+    }
+}
+
+function bc_validate_agree_terms(&$form_state, $form_id){
+    if(!$form_state['terms_agree']['#checked']){
+        form_set_error('terms_agree', t('Please read and agree our Terms & Conditions and Privacy Policy'));
+        
     }
 }
 
@@ -86,6 +106,13 @@ function bc_menu(){
         'type' => MENU_LOCAL_TASK,
     );   
 
+    $items['destination/autocomplete'] = array(
+        'title' => 'Destination autocomplete',
+        'page callback' => 'bc_destination_autocomplete',
+        'access arguments' => array('use autocomplete'),  //or whatever permission makes sense
+        'type' => MENU_CALLBACK
+    );   
+
     return $items;
 }
 
@@ -94,25 +121,10 @@ function bc_ajax_process(){
     drupal_session_start(); // allow session for anonymous
     global $user;
     
-    if($action=='add_to_cart'){        
-        if(isset($_SESSION['sl_cart'])){
-            $sl_cart = unserialize($_SESSION['sl_cart']);
-        }else{
-            $sl_cart = array();
-        }
-        $nid = $_REQUEST['nid'];
-        $exist = false;
-        foreach($sl_cart as &$sl_item){
-            if($nid == $sl_item['nid']){
-                $sl_item['quantity']++;
-                $exist = true;
-            }
-        } 
-        echo $exist;
-        if($exist==false){
-            $sl_cart[] = array('nid'=>$nid, 'quantity'=>1);
-        }
-        $_SESSION['sl_cart'] = serialize($sl_cart);
+    if($action=='getAvaiablePlaces'){
+        $results = db_query('SELECT title FROM node WHERE type=:type AND status=1', array(':type'=>'destination'))->fetchCol();
+        echo json_encode($results);
+        return ;
     }
     echo "1";
     die;
@@ -159,4 +171,18 @@ function bc_user_login(&$edit, $account) {
 	}else{
         $edit['redirect'] = '<front>';    	
     }*/
+}
+
+
+
+function bcform_search_destination($form_state, $form_id){
+    $form['#action'] = url('search-result');
+    $form['#method'] = 'get';
+    $form['key']=array(
+        '#type' => 'textfield',
+        '#attributes'=> array('placeholder'=>t('Where to go?')),
+        '#id' => 'txtSearchPlace',
+        //'#autocomplete_path' => 'destination/autocomplete',           
+    );  
+    return $form;
 }

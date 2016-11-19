@@ -10,13 +10,17 @@ if(!empty($page['sidebar_first'])){
 <main id="main-region" class="<?php echo $classSidebar; ?>">
     <div class="main-wrapper inner container">
         <div class="row">
-            <?php $class = 'col-md-8 col-sm-12';
+            <?php $class = 'col-md-9 col-sm-12';
             if(empty($page['sidebar_first'])){
                 $class='col-md-12 col-sm-12';
             }
             ?>
             <div id="main-content" class="<?php echo $class; ?> col-xs-12">
-                <div class="page-title"><h1><?php echo $title ?></div>
+                <?php 
+                if(arg(0)!='user'){
+                    echo '<div class="page-title"><h1>'.$title.'</div>';
+                }
+                ?>
                 <?php
                 if($messages){
                     echo '<div id="site-message">'.$messages.'</div>';
@@ -29,7 +33,7 @@ if(!empty($page['sidebar_first'])){
             </div>
             <?php
             if(!empty($page['sidebar_first'])){
-                echo '<div id="sidebar" class="col-md-4 col-sm-12 col-xs-12">';
+                echo '<div id="sidebar" class="col-md-3 col-sm-12 col-xs-12">';
                 echo render($page['sidebar_first']);
                 echo '</div>';
             }

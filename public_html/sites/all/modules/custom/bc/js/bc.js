@@ -1,6 +1,7 @@
 jQuery(document).ready(function($){	
     ajaxPath = window.location.protocol + "//" + window.location.host+'/ajax-process';
     
+    /*
     if( $('#edit-field-funds-und-0-value').length){
         $('#edit-field-funds-und-0-value').keyup(function() {
             var number = $('#edit-field-funds-und-0-value').val();        
@@ -27,5 +28,6 @@ jQuery(document).ready(function($){
             }
         });
     }
-    
+    */
+
 });

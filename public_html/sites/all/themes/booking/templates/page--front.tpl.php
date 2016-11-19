@@ -10,14 +10,11 @@
 
 <div id="main-region">
 	<div class="container">
-		Nội dung trang chủ
 		<?php
             if($messages){
                  echo '<div id="site-message">'.$messages.'</div>';
             }
-            if($tabs){
-                echo '<div id="site-tabs">'.render($tabs).'</div>';
-            }
+            echo theme('top_destinations');
         ?>
 	</div>			
 </div>

@@ -4,7 +4,8 @@
         <div class="container">
             <nav id="secondary-menu">
                 <li><a href="<?php echo $base_url;?>">Trang Chủ</a></li>
-                <li><a href="">Giới Thiệu</a></li>
+                <li><a href="">Travel Book</a></li>
+                <li><a href="">Travel Plan</a></li>
                 <li><a href="">Travel Blog</a></li>
                 <li><a href="">Liên Hệ</a></li>				
             </nav>
@@ -30,14 +31,17 @@
         </div>
     </div>
 
-    <div id="menu-region">
+    <?php if(drupal_is_front_page()){ ?>
+    <div id="search-region">
         <div class="container">
-            <nav id="main-menu">
-                <li><a href="">Tìm kiếm</a></li>
-                <li><a href="">Địa điểm hot</a></li>
-                <li><a href="">Item 3</a></li>
-                <li><a href="">Item 4</a></li>
-            </nav>
+
+            <!--<input type="text" id="txtSearchPlace" placeholder="Bạn muốn du lịch ở đâu?" />-->
+           <?php $form =drupal_get_form('bcform_search_destination'); echo drupal_render($form);
+           
+           //$results = db_query('SELECT title FROM node WHERE title COLLATE Latin1_general_CI_AI LIKE :key', array(':key'=>'%' . db_like($key) . '%'))->fetchCol();
+           //var_dump($results);die;
+            ?>
         </div>
     </div>
+    <?php } ?>
 </div>

@@ -1,4 +1,4 @@
-<?php echo snh_social_share(); ?>
+<?php //echo snh_social_share(); ?>
 <article class="<?php print $classes; ?> article-main-body" data-nid="<?php print $node->nid; ?>" >
   
 

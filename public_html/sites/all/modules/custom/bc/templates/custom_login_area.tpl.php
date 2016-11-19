@@ -1,11 +1,11 @@
 <div id="custom-login-area">
-	<h3>Đăng nhập bằng tài khoản tại Smart Booking</h3>
+	<h4>Đăng nhập bằng tài khoản tại Smart Booking</h4>
 	<?php 
 		$form = drupal_get_form('user_login_block');
 		echo drupal_render($form);
 	?>
-	<hr />
-	<h3>Hoặc đăng nhập với các mạng xã hội</h3>
+        <div id="loginor"><h3>Hoac</h3></div>
+	<h4>Dăng nhập với các mạng xã hội</h4>
 	<?php print fboauth_action_display('connect'); ?>
 	
 </div>
