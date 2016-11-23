@@ -10,6 +10,15 @@ jQuery(document).ready(function($){
 		return false;
 	});
 
+	$('#btnShowMenu').click(function(){
+		$('#main-menu').toggle();
+	});
+
+	$('a.dropdown-toggle').click(function(e){
+		$(this).next('ul').toggle();
+		 e.stopPropagation();
+    	e.preventDefault();
+	});
 	
     if( $('#txtSearchPlace').length){
     		var availablePlaces = [];

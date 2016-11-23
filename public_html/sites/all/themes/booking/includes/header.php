@@ -2,15 +2,31 @@
 <div id="main-header">
     <div id="header-r1">
         <div class="container">
-            <nav id="secondary-menu">
-                <li><a href="<?php echo $base_url;?>">Trang Chủ</a></li>
-                <li><a href="">Travel Book</a></li>
-                <li><a href="">Travel Plan</a></li>
-                <li><a href="">Travel Blog</a></li>
-                <li><a href="">Liên Hệ</a></li>				
-            </nav>
+            <i id="btnShowMenu" class="fa fa-bars" aria-hidden="true"></i>
+            <ul class="nav navbar-nav" id="main-menu">              
+              <li><a href="<?php echo $base_url;?>">Trang Chủ</a></li>                
+                <li class="dropdown-submenu">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Travel Plan
+                    <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li class="dropdown-submenu">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Điểm đến du lịch
+                        <span class="caret"></span></a>
+                          <ul class="dropdown-menu dep-2"> 
+                            <li><a href="">Điểm đến theo vị trí địa lý</a></li>                
+                            <li><a href="">Điểm đến theo chủ đề</a></li>                
+                          </ul>
+                        </li>
+                      <li><a href="#">Kế hoạch du lịch của tôi</a></li>
+                    </ul>
+               </li>
 
-            <div id="user-navigation">
+                <li><a href="">Travel Book</a></li>                
+                <li><a href="">Travel Blog</a></li>
+                <li><a href="">Liên Hệ</a></li>                                   
+            </ul>
+
+       <div id="user-navigation">
 				<?php if(user_is_logged_in()) { ?>
 					<li><a href="<?php echo url('user');?>">Trang cá nhân</a></li>
 					<li><a href="<?php echo url('user/logout');?>">Thoát</a></li>
@@ -42,6 +58,15 @@
            //var_dump($results);die;
             ?>
         </div>
+
+        <div id="home-slide">
+            <ul class="rslides">
+                <li><img src="<?php echo PATH_TO_IMAGES; ?>s1.jpg" /><div class="slide-content"><h4>Bình Thuận</h4><div class="des">Nắng vàng biển xanh.</div></div></li>
+                <li><img src="<?php echo PATH_TO_IMAGES; ?>s2.jpg" /><div class="slide-content"><h4>Đà Lạt</h4><div class="des">Vùng đất nghỉ dưỡng.</div></div></li>
+                <li><img src="<?php echo PATH_TO_IMAGES; ?>s3.jpg" /><div class="slide-content"><h4>Nha Trang</h4><div class="des">Chém gió... chém cho có.</div></div></li>
+            </ul>
+        </div>
+
     </div>
     <?php } ?>
 </div>

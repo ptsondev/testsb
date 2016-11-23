@@ -4,8 +4,8 @@
 		$form = drupal_get_form('user_login_block');
 		echo drupal_render($form);
 	?>
-        <div id="loginor"><h3>Hoac</h3></div>
-	<h4>Dăng nhập với các mạng xã hội</h4>
+        <div id="loginor"><h3>Hoặc</h3></div>
+	<h4>Đăng nhập với các mạng xã hội</h4>
 	<?php print fboauth_action_display('connect'); ?>
 	
 </div>

@@ -59,7 +59,7 @@ function bc_menu_alter(&$items) {
 }
 
 function bc_form_alter(&$form, &$form_state, $form_id){
-    //var_dump($form);die;
+    //var_dump($form_id); 
     if($form_id=='user_register_form') {
         unset($form['account']['mail']['#description']);
         unset($form['account']['pass']['#description']);
@@ -74,6 +74,11 @@ function bc_form_alter(&$form, &$form_state, $form_id){
         );
         $form['#validate'][] = 'bc_validate_agree_terms';
 
+    }
+    if($form_id=='user_login_block')  {
+        $form['links']['#markup']='<div class="item-list"><ul>
+<li class="last"><a href="/user/password" title="Request new password via e-mail.">'.t('Request new password').'</a></li>
+</ul></div>';
     }
 }
 
