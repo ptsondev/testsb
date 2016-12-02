@@ -10,6 +10,7 @@ $arr_theme = array(
 	'bc_user_profile' => 'User Profile',
     'top_destinations' => 'Top Destinations',
     'search_result' => 'Search Result',
+    'add_customer' => 'Add Customer',
 );
 define('ARR_THEME', serialize($arr_theme));
 
@@ -130,7 +131,11 @@ function bc_ajax_process(){
         $results = db_query('SELECT title FROM node WHERE type=:type AND status=1', array(':type'=>'destination'))->fetchCol();
         echo json_encode($results);
         return ;
+    }else if($action=='addCustomer'){
+        echo theme('add_customer');
+        return ;
     }
+    
     echo "1";
     die;
 }

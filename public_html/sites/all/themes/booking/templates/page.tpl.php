@@ -26,7 +26,7 @@ if(!empty($page['sidebar_first'])){
                     echo '<div id="site-message">'.$messages.'</div>';
                 }
                 if($tabs){
-                    echo '<div id="site-tabs">'.render($tabs).'</div>';
+                 //    echo '<div id="site-tabs">'.render($tabs).'</div>';
                 }
                 echo render($page['content']);
                 ?>

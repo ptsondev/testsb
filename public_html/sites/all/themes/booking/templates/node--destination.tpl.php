@@ -24,7 +24,12 @@
        <?php echo $node->field_best_list[LANGUAGE_NONE][0]['value']; ?>
      </div>
 
-     <?php  print render($content['field_photos']);  ?>
+     <?php
+        //print render($content['field_photos']);
+        echo render(field_view_field('node', $node, 'field_photos', array(
+            'label'=>'hidden', 
+             'type' => 'juicebox_formatter')));
+      ?>
 
   </div> <!-- /content -->
   

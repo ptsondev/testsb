@@ -286,11 +286,15 @@ body.front #main-region{
 	color:#19c48f;
         margin-bottom: 30px;
 }
-.user-field{
-	
+.user-field,
+.tour-field{
+    font-weight:bold; 
 }
-.user-field label{
+
+.user-field label,
+.tour-field label{
 	width:150px;
+    font-weight:normal;
 }
 
 #txtSearchPlace{
@@ -328,7 +332,7 @@ body.front #main-region{
     width:100%;
 }
 
-.user-info-group{
+.user-info-group, .info-group{
     border:1px solid #19c48f;
     -webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
@@ -337,7 +341,8 @@ body.front #main-region{
         position: relative;
         margin-bottom: 40px;
 }
-.user-info-group .group-title{
+.user-info-group .group-title,
+.info-group .group-title{
     position: absolute;
     top:-45px;
     left: 30px;
@@ -415,6 +420,154 @@ body.front #main-region{
 	margin-bottom:20px;
 }
 
+#general-info{
+    
+}
+.timeline .timeline-items{
+    padding-top:50px;
+}
+.timeline .timeline-items .timeline-item{
+    margin-bottom:50px; 
+    /*top: !important;*/
+}
+.timeline h2{
+    width:160px;
+    padding:5px 10px;
+    background: #5b5555;
+}
+.timeline .timeline-items .timeline-item.centered{ 
+    left:-10px !important; 
+}
+.timeline .timeline-items .timeline-item,
+.timeline .timeline-items .timeline-item input{
+    background: #19c48f !important;
+}
+.timeline .timeline-items .timeline-item:nth-of-type(2n+1)::before{
+    right:-1em;
+}
+.timeline .timeline-items .timeline-item:nth-of-type(2n)::before{
+    /*left:-1em;
+    border-left:1em solid transparent;*/
+}
+.timeline .timeline-items .timeline-item:nth-of-type(2n)::after{
+    right:calc(100% + 10.4%); 
+}
+.timeline .timeline-items .timeline-item.centered::before{
+    border-bottom-color: #19c48f !important;
+}
+.timeline .timeline-items .timeline-item hr{
+    border-color: #FFF !important;
+}
+.timeline .timeline-items .timeline-item h3{
+    color:#FFF;
+}
+.timeline::before{
+    background-color:#19c48f;
+    /* style tiep truong hop responsive */
+}
+.timeline .timeline-items .timeline-item  h3{
+    cursor: pointer;
+}
+.timeline .timeline-items .timeline-item a:hover{
+    text-decoration: none; 
+}
+.timeline .timeline-items .timeline-item  h3:hover{
+    animation: move_left 0.5s forwards;
+	-ms-animation: move_left 0.5s forwards;
+	-webkit-animation: move_left 0.5s forwards;
+}
+.timeline .timeline-items .timeline-item.inverted h3:hover{
+    animation: move_right 0.5s forwards;
+	-ms-animation: move_right 0.5s forwards;
+	-webkit-animation: move_right 0.5s forwards;
+}
+@keyframes move_left{
+    from{
+        padding-left: 0;     
+    }
+    to{
+        padding-left: 10px;
+    }
+}
+@-webkit-keyframes move_left{
+    from{
+        padding-left: 0;     
+    }
+    to{
+        padding-left: 10px;
+    }
+}
+
+@keyframes move_right{
+    from{
+        padding-right: 0;     
+    }
+    to{
+        padding-right: 10px;
+    }
+}
+@-webkit-keyframes move_right{
+    from{
+        padding-right: 0;     
+    }
+    to{
+        padding-right: 10px;
+    }
+}
+
+
+#travellers-info{
+    
+    
+}
+#list-customers{
+    overflow-y: auto;
+    height:132px;
+}
+
+.detail-tour-content{
+    display: none;
+}
+
+.btn-edit{
+    position:absolute;
+    right: 10px;
+    top:10px;
+    cursor:pointer;    
+}
+
+.edit-mode{
+    display: none;
+}
+
+#list-customers .add-customer {
+    border-bottom: 1px dashed #ccc;
+    padding:5px 0;
+    position: relative;
+}
+#list-customers .add-customer input,
+#list-customers .add-customer select{
+    width:43%;
+    margin:2px 1%;
+}
+.tour-detail-controls{
+    float: right;
+}
+.tour-detail-controls i{
+    cursor: pointer;
+}
+.timeline .timeline-items{
+    overflow: visible;
+    position:relative;
+}
+
+.add-customer .fa-check{
+    position: absolute;
+    right: 5px;
+    bottom: 10px;
+    cursor: pointer;
+}
+
 @media (max-width: 768px) {
     #main-menu li{
     	display:block;
@@ -436,3 +589,4 @@ body.front #main-region{
 		display:none;
 	}
 }
+
