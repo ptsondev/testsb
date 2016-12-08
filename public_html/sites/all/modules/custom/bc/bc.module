@@ -6,11 +6,12 @@ require_once('libs.php');
 
 $arr_theme = array(   
     'support_online' => 'Support Online',
-	'custom_login_area' => 'Custom login area',
-	'bc_user_profile' => 'User Profile',
+    'custom_login_area' => 'Custom login area',
+    'bc_user_profile' => 'User Profile',
     'top_destinations' => 'Top Destinations',
     'search_result' => 'Search Result',
     'add_customer' => 'Add Customer',
+    'add_todo' => 'Add To do thing',
 );
 define('ARR_THEME', serialize($arr_theme));
 
@@ -43,7 +44,6 @@ function bc_theme() {
             'template' => $k
         );
     }    
-    
     return $arr;    
 }
  
@@ -134,6 +134,72 @@ function bc_ajax_process(){
     }else if($action=='addCustomer'){
         echo theme('add_customer');
         return ;
+    }else if($action=='addCustomTour'){
+        //echo (var_dump($_REQUEST));
+        
+        /* init from clone, important */
+        $tour = $_REQUEST['tour'];
+        $node = node_load($tour['id']);
+        $node->nid = NULL; // save new, not edit
+        $node->vid = NULL;
+        $node->type='custom_tour';
+        $node->uid = $user->uid;
+        //$node->title .= ' - '.$user->name;
+        
+        /* modify any fields */
+        $node->field_start_date[LANGUAGE_NONE][0]['value'] = strtotime($tour['startDate']);
+        $node->field_end_date[LANGUAGE_NONE][0]['value'] = strtotime($tour['endDate']);
+        $node->field_total_day[LANGUAGE_NONE][0]['value'] = strtotime($tour['totalDay']);
+        $node->field_tour_target[LANGUAGE_NONE][0]['value'] = strtotime($tour['target']);
+        
+        //customers 
+        unset($node->field_traveller);
+        foreach($tour['customers'] as $customer){
+            $values = array(
+                'field_name' => 'field_traveller',
+                'field_human' => array(
+                  LANGUAGE_NONE => array(array('value' => $customer['name'])),
+                ),
+                'field_phone' => array(
+                  LANGUAGE_NONE => array(array('value' => $customer['phone'])),
+                ),
+                'field_email' => array(
+                  LANGUAGE_NONE => array(array('value' => $customer['email'])),
+                ),
+                'field_old' => array(
+                  LANGUAGE_NONE => array(array('value' => $customer['old'])),
+                ),
+            );
+            $entity1 = entity_create('field_collection_item', $values);
+            $entity1->setHostEntity('node', $node);
+        }        
+        $entity1->save();
+        
+        //trips
+        /*
+        $node->field_tour_detail = array();
+        foreach($tour['trips'] as $trip){
+            $values = array(
+                'field_name' => 'field_tour_detail',
+                'field_tour_detail_ref' => array(
+                  LANGUAGE_NONE => array(array('nid' => 51)),
+                ),
+                'field_schedule_by_day' => array(
+                  LANGUAGE_NONE => array(array('value' => $trip['bday'])),
+                ),
+                'field_schedule_by_day_part' => array(
+                  LANGUAGE_NONE => array(array('value' => $trip['bdaypart'])),
+                ),                
+            );
+            $entity2 = entity_create('field_collection_item', $values);
+            $entity2->setHostEntity('node', $node);
+        }                
+        $entity2->save();
+        */
+
+        node_save($node);
+        echo url('node/'.$node->nid);
+        return;
     }
     
     echo "1";

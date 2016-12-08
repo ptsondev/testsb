@@ -61,6 +61,7 @@ function display_video($node){
                 $link = '<iframe width="760" height="480" src="'.$link.'" frameborder="0" allowfullscreen></iframe>';
         }
         echo $link;
+        echo '<div class="clearfix"></div><br />';
     }
     
 }

@@ -59,7 +59,7 @@ jQuery(document).ready(function($){
 		closeEffect	: 'none'
 	});
 
-     $( "#u-start-date, #u-end-date" ).datepicker({'dateFormat': 'd/m/yy'});
+     $( "#u-start-date, #u-end-date" ).datepicker({'dateFormat': 'M-d-yy'});
     
     $('.btn-edit, .tour-detail-controls i.fa-pencil-square-o').on('click', function(){
         // validate is user logged in
@@ -90,17 +90,80 @@ jQuery(document).ready(function($){
         
     });
     
+    // them hanh khach
     $('#travellers-info').on('click', '.add-customer .fa-check', function(){
-        var name= $('.txtNewCus-Name').val();
-        if(name==''){
-            alert('Please enter member\'s name');
-        }else{
-            var phone= $('.txtNewCus-Phone').val();
-            var email= $('.txtNewCus-Email').val();
-            var newMember = '<li>'+name+' - ' + phone + ' - ' + email + ' </li>';
-            $('#list-customers ol').append(newMember);
+        if(confirmLogin()){
+            var name= $('.txtNewCus-Name').val();
+            if(name==''){
+                alert('Please enter member\'s name');
+            }else{
+                var phone= $('.txtNewCus-Phone').val();
+                var email= $('.txtNewCus-Email').val();
+                var old = $('.slNewCus-Old option:selected').val(); 
+                var tmp = [name, phone, email, old];
+
+                var newMember = '<li>';
+                newMember += '<span class="cu-name">'+name+'</span> -';
+                newMember += '<span class="cu-phone">'+phone+'</span> -';
+                newMember += '<span class="cu-email">'+email+'</span> -';
+                newMember += '<span class="cu-old">'+old+'</span>';
+                newMember +='<i class="fa fa-times" aria-hidden="true" title="Remove this member"></i></li>';
+                $('#list-customers ol').append(newMember);
+                
+                $('#list-customers .txtNewCus-Name').val('');
+                $('#list-customers .txtNewCus-Phone').val('');
+                $('#list-customers .txtNewCus-Email').val('');
+            }
         }
     });
+    
+    $('#list-customers').on('click', 'li .fa-times', function(){
+       $(this).parents('li').remove(); 
+    });
+    
+    
+    // them viec can lam
+    $('#list-todo').on('click', '.add-todo .fa-check', function(){
+        if(confirmLogin()){
+            var task= $('#list-todo .txtTask').val();
+            if(task==''){
+                alert('Please enter task to do');
+            }else{
+                var order = $('#list-todo .txtOrder').val();
+                var name = $('#list-todo .txtName').val();
+                var time = $('#list-todo .txtTime').val();
+                var status = $('#list-todo .txtStatus').val();
+                var note = $('#list-todo .txtNote').val();
+                
+                
+                var tmp = [task,order,name,time,status,note];
+
+                var newTask = '<div class="item">';
+                newTask += '<div class="col-sm-2 col-xs-6">'+task+'</div>';
+                newTask += '<div class="col-sm-2 col-xs-6">'+order+'</div>';
+                newTask += '<div class="col-sm-2 col-xs-6">'+name+'</div>';
+                newTask += '<div class="col-sm-2 col-xs-6">'+time+'</div>';
+                newTask += '<div class="col-sm-2 col-xs-6">'+status+'</div>';
+                newTask += '<div class="col-sm-2 col-xs-6">'+note+'</div>';
+                newTask += '<i class="fa fa-times" aria-hidden="true" title="Remove this task"></i></div>';
+                $('#list-todo #todo-result').append(newTask);
+                
+                $('#list-todo .txtTask').val('');
+                $('#list-todo .txtOrder').val('');
+                $('#list-todo .txtName').val('');
+                $('#list-todo .txtTime').val('');
+                $('#list-todo .txtStatus').val('');
+                $('#list-todo .txtNote').val('');
+            }
+        }
+    });
+    
+    $('#list-todo').on('click', '.item .fa-times', function(){
+       $(this).parents('.item').remove(); 
+    });
+    
+    
+    
     
     $('.timeline-item').draggable();
     $('ul.timeline-items').droppable({
@@ -116,10 +179,72 @@ jQuery(document).ready(function($){
             if(new_index < 0){ 
                 ui.draggable.parent().prepend(ui.draggable);
             }else{
-                ui.draggable.parent().children("li:eq("+new_index+")").after(ui.draggable);
+                ui.draggable.parents().children("li:eq("+new_index+")").after(ui.draggable);
             }
         }
     });
+    
+    
+    
+    // Begin customize tour
+    $('#btnCustomTour').click(function(){
+        if(confirmLogin()){ 
+            $('.edit-mode').show();
+            $('.view-mode').hide();
+            $('html, body').animate({
+                scrollTop: $('#main-content').offset().top + 'px'
+            }, 'fast');
+        }
+    });
+    
+    /*
+     *  SAVE CUSTOM TOUR 
+     */
+    $('#btnSaveCustomTour').click(function(){
+        var tour={};
+        tour.id = $('article.node-tour').data('nid');
+        tour.startDate = $('#u-start-date').val();
+        tour.endDate = $('#u-end-date').val();
+        tour.totalDay = $('#u-total-day').val(); 
+        tour.target = $('.rdTarget:checked').val();
+                                
+        // customers 
+        var customers = [];
+        $('#list-customers li').each(function(){
+            var cu={};
+            cu.name = $(this).find('.cu-name').text();
+            cu.phone = $(this).find('.cu-phone').text();
+            cu.email = $(this).find('.cu-email').text();
+            cu.old = $(this).find('.cu-old').text();
+            customers.push(cu);
+        });
+        tour.customers = customers;
+        
+        // tour detail 
+        var trips = [];
+        $('#tour-detail li.timeline-item').each(function(){
+            var trip = {};
+            trip.nid = $(this).data('tdid');
+            trip.bday = '1';
+            trip.bdaypart=$(this).find('.txtDayPart').val();
+            trips.push(trip);
+        });
+        tour.trips = trips;
+        
+        console.log(tour);
+        jQuery.ajax({
+	    method: "POST",
+	    async:false,
+	    url: ajaxPath,
+	    data: {action: "addCustomTour", tour:tour},
+	    success: function (response) { 
+                //alert(response);
+                window.location.href = response;
+            }
+	});
+        
+    });
+    
 });
 
 

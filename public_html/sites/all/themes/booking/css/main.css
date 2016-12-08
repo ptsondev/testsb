@@ -442,15 +442,32 @@ body.front #main-region{
 .timeline .timeline-items .timeline-item input{
     background: #19c48f !important;
 }
+.timeline .timeline-items .timeline-item:nth-of-type(2n+1){
+    position: relative;
+    left: -10px !important;
+}
+.timeline .timeline-items .timeline-item:nth-of-type(2n){
+    position: relative;
+    left: 56% !important;
+}
+.timeline .timeline-items .timeline-item:nth-of-type(2n) a h3{
+    text-align:right;
+}
+.timeline .timeline-items .animated.timeline-item:nth-of-type(2n){
+    animation:fadeInRight 600ms !important;   
+    -webkit-animation:fadeInRight 600ms !important;   
+}
 .timeline .timeline-items .timeline-item:nth-of-type(2n+1)::before{
     right:-1em;
+    border-top-color:#19c48f;
 }
 .timeline .timeline-items .timeline-item:nth-of-type(2n)::before{
-    /*left:-1em;
-    border-left:1em solid transparent;*/
+    border-top: 1em solid #19c48f;
+    border-left: 1em solid transparent;
+    left:-1em;
 }
 .timeline .timeline-items .timeline-item:nth-of-type(2n)::after{
-    right:calc(100% + 10.4%); 
+    left: calc(-14% - 10px);
 }
 .timeline .timeline-items .timeline-item.centered::before{
     border-bottom-color: #19c48f !important;
@@ -525,8 +542,58 @@ body.front #main-region{
     height:132px;
 }
 
+#list-todo input,
+#list-todo select{
+    max-width: 100%;
+}
+#list-todo .col-sm-2{
+    padding:2px;
+}
+.add-todo{
+    position: relative;
+    display: inline-block;
+}
+.add-todo .fa-check{
+    position: absolute;
+    right:-15px;
+    top:4px;
+    cursor: pointer; 
+}
 .detail-tour-content{
     display: none;
+}
+
+.detail-tour-content img{
+    margin:10px 0;
+}
+
+#tour-buttons{
+    margin-bottom: 30px;
+    display: inline-block;
+    width:100%;
+}
+
+#tour-buttons input{
+    background:#19c48f;
+    color:#FFF; 
+    border:none;
+    -webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+#travellers-info{
+    min-height: 176px;
+}
+#todo-result .item{
+    position: relative;    
+    display: inline-block;
+    width:100%;
+}
+#todo-result .item .fa-times{
+    position: absolute;
+    right:-10px;
+    top:2px;
 }
 
 .btn-edit{
@@ -568,6 +635,23 @@ body.front #main-region{
     cursor: pointer;
 }
 
+#list-customers ol{
+    margin:0;
+    padding:0 8px 0 20px; 
+}
+#list-customers li{
+    padding-right: 15px;
+    position: relative;
+}
+#list-customers i.fa-times{
+    position: absolute;
+    right: 5px;
+    top:3px;
+    cursor: pointer;
+}
+#list-customers ol li:nth-of-type(2n){
+    
+}
 @media (max-width: 768px) {
     #main-menu li{
     	display:block;

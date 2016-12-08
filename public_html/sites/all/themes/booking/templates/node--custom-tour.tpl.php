@@ -59,7 +59,27 @@
               <div class="info-group" id="travellers-info">
                   <h3 class="group-title"><?php echo t('Travellers Information'); ?></h3>
                    <div id="edit-travellers-info" class="btn-edit"></div>
-                   <div id="list-customers" class="edit-modexxx"><?php echo theme('add_customer'); ?><ol></ol></div>
+                   <div id="list-customers">
+                       <?php echo theme('add_customer'); ?>
+                       <ol>
+                           <?php
+                           foreach($node->field_traveller[LANGUAGE_NONE] as $item){
+                               $customer = field_collection_item_load($item['value']);
+                                echo '<li>';
+                                    $old = $customer->field_human[LANGUAGE_NONE][0]['value']==0? 'Children':'Adult';
+                                    echo '<span class="cu-name">'.$customer->field_human[LANGUAGE_NONE][0]['value'].'</span> -';
+                                    echo '<span class="cu-phone">'.$customer->field_phone[LANGUAGE_NONE][0]['value'].'</span> -';
+                                    echo '<span class="cu-email">'.$customer->field_email[LANGUAGE_NONE][0]['value'].'</span> -';
+                                    echo '<span class="cu-old">'.t($old).'</span>';
+                                    echo '<i class="fa fa-times" aria-hidden="true" title="Remove this member"></i>';
+                                echo '</li>';
+                                
+                              
+                           }
+                           ?>
+                       </ol>
+                       
+                   </div>
               </div>      
           </div>       
       </div>      
@@ -72,7 +92,7 @@
           $k=1;      
           echo '<h2>Ngày thứ 1</h2>';
           echo '<ul class="timeline-items">';
-        
+          
           foreach($node->field_tour_detail[LANGUAGE_NONE] as $row){              
               $detail = field_collection_item_load($row['value']);
               if($detail->field_schedule_by_day[LANGUAGE_NONE][0]['value'] != $day){
@@ -83,22 +103,23 @@
               }
               
               $class= ($k%2==1)?'':'inverted';
-              echo '<li class="is-hidden timeline-item" data-tdid="'.$detail->field_tour_detail_ref[LANGUAGE_NONE][0]['nid'].'">';              
+               echo '<li class="is-hidden timeline-item" data-tdid="'.$detail->field_tour_detail_ref[LANGUAGE_NONE][0]['nid'].'">';              
                      $tour_detail = node_load($detail->field_tour_detail_ref[LANGUAGE_NONE][0]['nid']);
                     
                     echo '<a class="link-detail-tour" href="#detail-'.$detail->item_id.'">';
                         echo '<h3>'.$tour_detail->title.'</h3>';
                     echo '</a>';
               
+              
       
                     //echo render(field_view_field('field_collection_item', $detail, 'field_photos',array( 'label'=>'hidden', 'type' => 'juicebox_formatter'))); 
                     echo '<div class="detail-tour-content" id="detail-'.$detail->item_id.'">';
                          // tour detail
-                          display_video($tour_detail);
-                          if(isset($tour_detail->field_special_information) && !empty($tour_detail->field_special_information[LANGUAGE_NONE])){
-                              echo $tour_detail->field_special_information[LANGUAGE_NONE][0]['value'];
+                          display_video($detail);
+                          if(isset($detail->field_special_information) && !empty($detail->field_special_information[LANGUAGE_NONE])){
+                              echo $detail->field_special_information[LANGUAGE_NONE][0]['value'];
                           }                        
-                        display_photos_as_images($tour_detail); 
+                        display_photos_as_images($detail); 
                     echo '</div>';
                     echo '<hr>';
                     echo '<time>';
@@ -144,8 +165,9 @@
       </div>
       
       <div id="tour-buttons">
-        <input type="button" value="<?php echo t('Customize this tour');?>" id="btnCustomTour" /> 
-        <input type="button" value="Save this tour to your list" id="btnSaveCustomTour" />
+        <input type="button" value="<?php echo t('Invite your friends to join this tour');?>" id="btnInviteTour" /> 
+        <!--<input type="button" value="<?php echo t('Update this tour');?>" id="btnCustomTour" /> -->
+        <!--<input type="button" value="Save this tour to your list" id="btnSaveCustomTour" />-->
       </div>
   </div> <!-- /content -->
   
