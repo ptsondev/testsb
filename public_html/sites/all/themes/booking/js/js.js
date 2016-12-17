@@ -191,9 +191,9 @@ jQuery(document).ready(function($){
         if(confirmLogin()){ 
             $('.edit-mode').show();
             $('.view-mode').hide();
-            $('html, body').animate({
+            /*$('html, body').animate({
                 scrollTop: $('#main-content').offset().top + 'px'
-            }, 'fast');
+            }, 'fast');*/
         }
     });
     
@@ -245,6 +245,15 @@ jQuery(document).ready(function($){
         
     });
     
+    $('#place-tabs .tab').click(function(){
+       var ref=$(this).data('ref');
+       $('.tab-ref').hide();
+       $('#place-tabs .tab').removeClass('current');
+       $('#place-'+ref).show();
+       $(this).addClass('current');
+    });
+    
+     $("#place-tabs-ref, .tour-detail-2 .content").mCustomScrollbar();
 });
 
 

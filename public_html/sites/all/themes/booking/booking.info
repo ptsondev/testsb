@@ -23,6 +23,7 @@ stylesheets[all][] = css/pgwslideshow.min.css
 stylesheets[all][] = css/animate.css
 stylesheets[all][] = css/timelify.css
 stylesheets[all][] = js/fancybox/jquery.fancybox.css
+stylesheets[all][] = css/jquery.mCustomScrollbar.css
 stylesheets[all][] = css/main.css
 
 ; Scripts
@@ -35,5 +36,6 @@ scripts[] = js/pgwslideshow.min.js
 scripts[] = js/modernizr.2.5.3.min.js
 scripts[] = js/jquery.timelify.js
 scripts[] = js/fancybox/jquery.fancybox.js
+scripts[] = js/jquery.mCustomScrollbar.concat.min.js
 scripts[] = js/js.js
 

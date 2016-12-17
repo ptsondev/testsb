@@ -76,3 +76,4 @@ function display_photos_as_images($node){
         }
     }
 }
+

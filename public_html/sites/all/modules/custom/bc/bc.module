@@ -12,6 +12,8 @@ $arr_theme = array(
     'search_result' => 'Search Result',
     'add_customer' => 'Add Customer',
     'add_todo' => 'Add To do thing',
+    //'tour_detail' => 'Tour Detail',
+    'place_detail' => 'Place Detail'
 );
 define('ARR_THEME', serialize($arr_theme));
 
@@ -44,6 +46,12 @@ function bc_theme() {
             'template' => $k
         );
     }    
+    // some theme have params 
+    $arr['tour_detail'] = array(
+        'path'=>drupal_get_path('module', 'bc') . '/templates',
+        'template' => 'tour_detail',
+        'variables'=> array('tour_detail'=>NULL)
+    );
     return $arr;    
 }
  
