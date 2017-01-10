@@ -12,8 +12,9 @@ $arr_theme = array(
     'search_result' => 'Search Result',
     'add_customer' => 'Add Customer',
     'add_todo' => 'Add To do thing',
+    'add_budget_cost' => 'Add budget cost',
     //'tour_detail' => 'Tour Detail',
-    'place_detail' => 'Place Detail'
+    //'place_detail' => 'Place Detail'
 );
 define('ARR_THEME', serialize($arr_theme));
 
@@ -52,6 +53,11 @@ function bc_theme() {
         'template' => 'tour_detail',
         'variables'=> array('tour_detail'=>NULL)
     );
+    $arr['place_detail'] = array(
+        'path'=>drupal_get_path('module', 'bc') . '/templates',
+        'template' => 'place_detail',
+        'variables'=> array('place_id'=>NULL)
+    );
     return $arr;    
 }
  
@@ -68,7 +74,7 @@ function bc_menu_alter(&$items) {
 }
 
 function bc_form_alter(&$form, &$form_state, $form_id){
-    //var_dump($form_id); 
+    //var_dump($form);
     if($form_id=='user_register_form') {
         unset($form['account']['mail']['#description']);
         unset($form['account']['pass']['#description']);
@@ -86,11 +92,57 @@ function bc_form_alter(&$form, &$form_state, $form_id){
     }
     if($form_id=='user_login_block')  {
         $form['links']['#markup']='<div class="item-list"><ul>
-<li class="last"><a href="/user/password" title="Request new password via e-mail.">'.t('Request new password').'</a></li>
-</ul></div>';
+                <li class="last"><a href="/user/password" title="Request new password via e-mail.">'.t('Request new password').'</a></li>
+            </ul></div>';
     }
+    
+    if ($form_id == 'hotel_node_form') {
+        $form['#submit'][]='update_location_item'; 
+	if(is_numeric(arg(1))){ // edit
+            $item = db_query('SELECT * FROM items WHERE nid=:nid', array(':nid'=>arg(1)))->fetchObject();	            
+            if(!$item){
+                $item = new stdClass();
+		$item->nid = arg(1);
+		$item->lat=10.799189;
+                $item->lng=106.674716;
+            }
+            $form['location_lat'] = array(
+                '#type' => 'textfield',
+		'#title' => 'Lat',
+		'#default_value' => $item->lat,
+		'#weight'=>91
+            );
+            $form['location_lng'] = array(
+                '#type' => 'textfield',
+                '#title' => 'Lng',
+		'#default_value' => $item->lng,
+		'#weight'=>92
+            );
+            $html='';
+            $html.='<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.MAPKEY.'"></script>';
+            $html.='<div id="map-canvas" style="width:100%; height:500px;"></div><div id="marker-tooltip"></div>';
+            $html.='<script>initialize(' . $item->lat . ', ' . $item->lng . ');</script>';
+            $html.='<script>addMarker(' . $item->nid . ',' . $item->lat . ', ' . $item->lng . ', "",  "");</script>';          
+            $form['location_map']=array(
+		'#markup' => $html,
+		'#weight' => 90
+            );
+	}
+    }    
 }
 
+function update_location_item(&$form_state, $form_id){
+    //var_dump($form_state);die;
+    
+    if(isset($form_state['nid']) && !empty($form_state['nid']['#value'])){
+        db_query('update items SET lat=:lat, lng=:lng WHERE nid=:nid', array(
+				':nid' => $form_state['nid']['#value'],
+				':lat' => $form_state['location_lat']['#value'],
+				':lng' => $form_state['location_lng']['#value'],
+			));   
+    }
+    
+}
 function bc_validate_agree_terms(&$form_state, $form_id){
     if(!$form_state['terms_agree']['#checked']){
         form_set_error('terms_agree', t('Please read and agree our Terms & Conditions and Privacy Policy'));
@@ -270,3 +322,41 @@ function bcform_search_destination($form_state, $form_id){
     );  
     return $form;
 }
+
+function bc_node_insert($node){
+    if($node->type=='hotel'){
+        //if($node->is_new){
+            $address = $node->field_address[LANGUAGE_NONE][0]['value'];
+		$coordinate = getCoordinatesByAddress($address); 
+		if($coordinate){	                    
+			db_query('insert into items (nid, lat, lng)'
+					. ' values (:nid, :lat, :lng)', array(
+				':nid' => $node->nid,
+				':lat' => $coordinate->lat,
+				':lng' => $coordinate->lng            
+			));
+		}
+        //}
+    }
+}
+
+
+
+function bc_node_update($node){
+    // luc insert new moi get location, luc update thi location trong textfield tren form
+    /*if($node->type=='hotel'){
+
+            $address = $node->field_address[LANGUAGE_NONE][0]['value'];
+		$coordinate = getCoordinatesByAddress($address);                 
+		if($coordinate){	                    
+			db_query('update items SET lat=:lat, lng=:lng WHERE nid=:nid', array(
+				':nid' => $node->nid,
+				':lat' => $coordinate->lat,
+				':lng' => $coordinate->lng            
+			));                       
+		}
+
+    }*/
+}
+
+

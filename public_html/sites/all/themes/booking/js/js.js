@@ -145,7 +145,7 @@ jQuery(document).ready(function($){
                 newTask += '<div class="col-sm-2 col-xs-6">'+time+'</div>';
                 newTask += '<div class="col-sm-2 col-xs-6">'+status+'</div>';
                 newTask += '<div class="col-sm-2 col-xs-6">'+note+'</div>';
-                newTask += '<i class="fa fa-times" aria-hidden="true" title="Remove this task"></i></div>';
+                newTask += '<i class="fa fa-times" aria-hidden="true" title="Remove this row"></i></div>';
                 $('#list-todo #todo-result').append(newTask);
                 
                 $('#list-todo .txtTask').val('');
@@ -158,7 +158,39 @@ jQuery(document).ready(function($){
         }
     });
     
-    $('#list-todo').on('click', '.item .fa-times', function(){
+    // them chi tieu
+    $('#list-cost').on('click', '.add-cost .fa-check', function(){
+        if(confirmLogin()){
+            var name= $('#list-cost .txtName').val();
+            if(name == ''){
+                alert('Please enter expense name');
+            }else{                
+                var type = $('#list-cost .slType').val();
+                var quality = $('#list-cost .txtQuality').val();
+                var uPrice = $('#list-cost .txtUnitPrice').val();
+                var total = $('#list-cost .txtTotal').val();
+                var note = $('#list-cost .txtNote').val();
+                
+                var newTask = '<div class="item">';
+                newTask += '<div class="col-sm-2 col-xs-6">'+name+'</div>';
+                newTask += '<div class="col-sm-2 col-xs-6">'+type+'</div>';
+                newTask += '<div class="col-sm-2 col-xs-6">'+quality+'</div>';
+                newTask += '<div class="col-sm-2 col-xs-6">'+uPrice+'</div>';
+                newTask += '<div class="col-sm-2 col-xs-6">'+total+'</div>';
+                newTask += '<div class="col-sm-2 col-xs-6">'+note+'</div>';
+                newTask += '<i class="fa fa-times" aria-hidden="true" title="Remove this row"></i></div>';
+                $('#list-cost #cost-result').append(newTask);
+                
+                $('#list-cost .txtName').val('');                
+                $('#list-cost .txtQuality').val('');
+                $('#list-cost .txtUnitPrice').val('');
+                $('#list-cost .txtTotal').val('');
+                $('#list-cost .txtNote').val('');
+            }
+        }
+    });
+    
+    $('#list-todo, #list-cost').on('click', '.item .fa-times', function(){
        $(this).parents('.item').remove(); 
     });
     
@@ -168,7 +200,7 @@ jQuery(document).ready(function($){
     $('.timeline-item').draggable();
     $('ul.timeline-items').droppable({
         drop: function( event, ui ) {
-            var changed = Math.floor(ui.position.top / 180);
+            var changed = Math.floor(ui.position.top / 240);
             var cur_index = ui.draggable.index();
             var new_index = cur_index + changed;
             
@@ -272,3 +304,4 @@ function confirmLogin(){
         return false;
     }
 }
+

@@ -17,15 +17,15 @@ $account = user_load($uid);
                 echo '<img src="'.image_style_url('large', $account->field_avatar[LANGUAGE_NONE][0]['uri']).'" />';
             }
             echo '</div>';
-            
-        echo '</div>';
+                    
         
-        $name = $account->name;
-        if(!empty($account->field_full_name[LANGUAGE_NONE])){
-            $name = $account->field_full_name[LANGUAGE_NONE][0]['value'];
-        }
+            $name = $account->name;
+            if(!empty($account->field_full_name[LANGUAGE_NONE])){
+                $name = $account->field_full_name[LANGUAGE_NONE][0]['value'];
+            }
 
-        echo '<h2 id="fullname">'.$name.'</h2>';
+            echo '<h2 id="fullname">'.$name.'</h2>';
+        echo '</div>';
     ?>
         
 </div>

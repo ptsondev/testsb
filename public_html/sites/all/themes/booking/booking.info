@@ -34,6 +34,7 @@ scripts[] = js/jquery.flexisel.js
 scripts[] = js/responsiveslides.min.js
 scripts[] = js/pgwslideshow.min.js
 scripts[] = js/modernizr.2.5.3.min.js
+scripts[] = js/jssor.slider.min.js
 scripts[] = js/jquery.timelify.js
 scripts[] = js/fancybox/jquery.fancybox.js
 scripts[] = js/jquery.mCustomScrollbar.concat.min.js

@@ -11,7 +11,7 @@
         <div class="info-group" id="place-info">
                 <h3 class="group-title"><?php echo t('Destination information'); ?></h3>
                 <?php 
-                  echo theme('place_detail');
+                  echo theme('place_detail', array('place_id'=>$node->field_destination[LANGUAGE_NONE][0]['nid']));
                 ?>
         </div>
               
@@ -35,16 +35,16 @@
               }
               
               $class= ($k%2==1)?'':'inverted';
-              $tour_detail = node_load($detail->field_tour_detail_ref[LANGUAGE_NONE][0]['nid']);
+              //$tour_detail = node_load($detail->field_tour_detail_ref[LANGUAGE_NONE][0]['nid']);
                     
-                    $tmp = image_style_url('width_2_height', $tour_detail->field_photos[LANGUAGE_NONE][0]['uri']);
+                $tmp = image_style_url('width_2_height', $detail->field_avatar[LANGUAGE_NONE][0]['uri']);
                     
                     
-              echo '<li style="background:url('.$tmp.'); background-size:100%;" class="is-hidden timeline-item" data-tdid="'.$detail->field_tour_detail_ref[LANGUAGE_NONE][0]['nid'].'">';              
+              echo '<li style="background:url('.$tmp.'); background-size:100%;" class="is-hidden timeline-item">';              
                                   
                     echo '<div class="li-inner">';
                        // echo '<a class="link-detail-tour" href="#detail-'.$detail->item_id.'">';
-                            echo '<h3>'.$tour_detail->title.'</h3>';
+                            echo '<h3>'.$detail->field_des_name[LANGUAGE_NONE][0]['value'].'</h3>';
                        // echo '</a>';
 
                         echo '<time>';
@@ -55,24 +55,22 @@
                                 echo ' <i class="fa fa-pencil-square-o" aria-hidden="true" title="Edit this trip"></i> ';
                                 echo ' <i class="fa fa-times" aria-hidden="true" title="Remove this trip"></i> ';
                             echo '</span>';
-                        echo '</time>';
-                        
-                        //echo '<div class="any-photos">';
-                        //   echo '<img src="'.image_style_url('width_2_height', $tour_detail->field_photos[LANGUAGE_NONE][0]['uri']).'" />';
-                        //echo '</div>';
-
-                        //echo render(field_view_field('field_collection_item', $detail, 'field_photos',array( 'label'=>'hidden', 'type' => 'juicebox_formatter'))); 
-                        echo '<div class="detail-tour-content" id="detail-'.$detail->item_id.'">';
-                             // tour detail
-                              display_video($tour_detail);
-                              if(isset($tour_detail->field_special_information) && !empty($tour_detail->field_special_information[LANGUAGE_NONE])){
-                                  echo $tour_detail->field_special_information[LANGUAGE_NONE][0]['value'];
-                              }                        
-                            display_photos_as_images($tour_detail); 
-                        echo '</div>';                                                                                                
+                        echo '</time>';                                                                                                             
                     echo '</div>';
                     
-                    echo theme('tour_detail', array('tour_detail'=>$tour_detail));
+           
+                    ?>
+                    <div class="tour-detail-2">
+                        <div class="content">
+                            <?php 
+                            if(isset($detail->field_des_des) && !empty($detail->field_des_des[LANGUAGE_NONE])){
+                                //echo  'vawevwae';
+                                echo $detail->field_des_des[LANGUAGE_NONE][0]['value'];
+                            }    
+                            ?>
+                        </div>
+                    </div>
+                    <?php 
                 echo '</li>';
               
               $k++;            
@@ -105,32 +103,33 @@
                             echo $node_des->title;
                         ?>               
                   </div>          
+                  
                   <div class="tour-field">
                         <?php
                             echo '<label>'.t('Start Date').'</label> '; 
-                            echo '<span class="view-mode">'.date('M-d-Y', $node->field_start_date[LANGUAGE_NONE][0]['value']).'</span>';                   
-                            echo '<span class="edit-mode"><input type="text" id="u-start-date" value="'.date('M-d-Y', $node->field_start_date[LANGUAGE_NONE][0]['value']).'" /></span>';
+                            //echo '<span class="view-mode">'.date('M-d-Y', $node->field_start_date[LANGUAGE_NONE][0]['value']).'</span>';                   
+                            //echo '<span class="edit-mode"><input type="text" id="u-start-date" value="'.date('M-d-Y', $node->field_start_date[LANGUAGE_NONE][0]['value']).'" /></span>';
                         ?>               
                   </div>          
                   <div class="tour-field">
                         <?php
                             echo '<label>'.t('End Date').'</label> '; 
-                            echo '<span class="view-mode">'.date('M-d-Y', $node->field_end_date[LANGUAGE_NONE][0]['value']).'</span>';                   
-                            echo '<span class="edit-mode"><input type="text" id="u-end-date" value="'.date('M-d-Y', $node->field_end_date[LANGUAGE_NONE][0]['value']).'" /></span>';
+                            //echo '<span class="view-mode">'.date('M-d-Y', $node->field_end_date[LANGUAGE_NONE][0]['value']).'</span>';                   
+                            //echo '<span class="edit-mode"><input type="text" id="u-end-date" value="'.date('M-d-Y', $node->field_end_date[LANGUAGE_NONE][0]['value']).'" /></span>';
                         ?>               
                   </div>
                   <div class="tour-field">
                         <?php
                             echo '<label>'.t('Total day').'</label> '; 
-                            echo '<span class="view-mode">'.$node->field_total_day[LANGUAGE_NONE][0]['value'].'</span>';
-                            echo '<span class="edit-mode"><input type="text" id="u-total-day" value="'.$node->field_total_day[LANGUAGE_NONE][0]['value'].'" /></span>';
+                            //echo '<span class="view-mode">'.$node->field_total_day[LANGUAGE_NONE][0]['value'].'</span>';
+                            //echo '<span class="edit-mode"><input type="text" id="u-total-day" value="'.$node->field_total_day[LANGUAGE_NONE][0]['value'].'" /></span>';
                       
                         ?>               
                   </div>
                   <div class="tour-field">
                         <?php
                             echo '<label>'.t('Tour target').'</label> '; 
-                            echo '<span class="view-mode">'.$node->field_tour_target[LANGUAGE_NONE][0]['value'].'</span>';
+                            //echo '<span class="view-mode">'.$node->field_tour_target[LANGUAGE_NONE][0]['value'].'</span>';
                             //echo $node->field_tour_target[LANGUAGE_NONE][0]['value'];
                             echo '<span class="edit-mode">
                                 <input type="radio" class="rdTarget" name="target" value="travel" checked="checked" > '.t('Travel').' 
@@ -162,6 +161,20 @@
         </div>
       </div>
       
+      <div class="info-group col-sm-12 col-xs-12 edit-mode" id="budget-managed">
+        <h3 class="group-title"><?php echo t('Budget Management'); ?></h3>  
+        <div id="list-cost">
+            <div class="col-sm-2 col-xs-6"><?php echo t('Expense name'); ?></div>
+            <div class="col-sm-2 col-xs-6"><?php echo t('Type'); ?></div>
+            <div class="col-sm-2 col-xs-6"><?php echo t('Quality'); ?></div>
+            <div class="col-sm-2 col-xs-6"><?php echo t('Unit price'); ?></div>
+            <div class="col-sm-2 col-xs-6"><?php echo t('Total'); ?></div>
+            <div class="col-sm-2 col-xs-6"><?php echo t('Note'); ?></div>
+            <?php echo theme('add_budget_cost'); ?>
+            <div id="cost-result"></div>
+        </div>
+      </div>
+      
       <div id="tour-buttons">
         <input type="button" value="<?php echo t('Customize this tour');?>" id="btnCustomTour" /> 
         <input type="button" value="Save this tour to your list" id="btnSaveCustomTour" />
@@ -169,3 +182,24 @@
   </div> <!-- /content -->
   
 </article> <!-- /article #node -->
+
+<?php
+$bg = '';
+if(isset($node->field_background) && !empty($node->field_background[LANGUAGE_NONE])){
+    $bg = image_style_url('width_2_height', $node->field_background[LANGUAGE_NONE][0]['uri']);
+}
+?>
+<!-- override css -->
+<style>
+    #main-region::before{
+        content:" ";
+        position:fixed;
+        top:0;
+        left:0;
+        z-index:-1;
+        background:url('<?php echo $bg; ?>') no-repeat;
+        background-size:100%;
+        width:100%;
+        height:100%;
+    }
+</style>
