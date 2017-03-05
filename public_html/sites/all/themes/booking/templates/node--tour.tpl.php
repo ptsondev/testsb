@@ -16,14 +16,14 @@
         </div>
               
       
-      <div class="info-group col-sm-12 col-xs-12" id="tour-detail">
+      <div class="info-group col-sm-12 col-xs-12" id="tour-detail" data-bgid="<?php echo $node->field_background[LANGUAGE_NONE][0]['fid']; ?>">
           <h3 class="group-title"><?php echo t('Tour detail'); ?></h3>
           <div class="timeline">
           <?php
           $day = 1;          
           $k=1;      
           echo '<h2>Ngày thứ 1</h2>';
-          echo '<ul class="timeline-items">';
+          echo '<ul class="timeline-items" data-day="'.$day.'">';
         
           foreach($node->field_tour_detail[LANGUAGE_NONE] as $row){              
               $detail = field_collection_item_load($row['value']);
@@ -31,28 +31,26 @@
                   $day = $detail->field_schedule_by_day[LANGUAGE_NONE][0]['value'];
                   echo '</ul>';
                   echo '<h2>Ngày thứ '.$day.'</h2>';                  
-                  echo '<ul class="timeline-items">';
+                  echo '<ul class="timeline-items" data-day="'.$day.'">';
               }
               
               $class= ($k%2==1)?'':'inverted';
-              //$tour_detail = node_load($detail->field_tour_detail_ref[LANGUAGE_NONE][0]['nid']);
+                //$tour_detail = node_load($detail->field_tour_detail_ref[LANGUAGE_NONE][0]['nid']);                    
+                $tmp = image_style_url('width_2_height', $detail->field_avatar[LANGUAGE_NONE][0]['uri']);                    
                     
-                $tmp = image_style_url('width_2_height', $detail->field_avatar[LANGUAGE_NONE][0]['uri']);
-                    
-                    
-              echo '<li style="background:url('.$tmp.'); background-size:100%;" class="is-hidden timeline-item">';              
+                echo '<li  fid="'.$detail->item_id.'" style="background:url('.$tmp.'); background-size:100%;" class="is-hidden timeline-item">';              
                                   
                     echo '<div class="li-inner">';
                        // echo '<a class="link-detail-tour" href="#detail-'.$detail->item_id.'">';
-                            echo '<h3>'.$detail->field_des_name[LANGUAGE_NONE][0]['value'].'</h3>';
+                            echo '<h3 class="trip-name">'.$detail->field_des_name[LANGUAGE_NONE][0]['value'].'</h3>';
                        // echo '</a>';
 
                         echo '<time>';
                             echo '<span class="view-mode">'.$detail->field_schedule_by_day_part[LANGUAGE_NONE][0]['value'].'</span>';
                             echo '<span class="edit-mode"><input type="text" class="txtDayPart" id="txtPD_'.$k.'" value="'.$detail->field_schedule_by_day_part[LANGUAGE_NONE][0]['value'].'" /></span>';
                             echo '<span class="tour-detail-controls edit-mode">';
-                                echo ' <i class="fa fa-search" aria-hidden="true" alt="Search hotel near from here"></i> ';
-                                echo ' <i class="fa fa-pencil-square-o" aria-hidden="true" title="Edit this trip"></i> ';
+                                //echo ' <i class="fa fa-search" aria-hidden="true" alt="Search hotel near from here"></i> ';
+                                //echo ' <i class="fa fa-pencil-square-o" aria-hidden="true" title="Edit this trip"></i> ';
                                 echo ' <i class="fa fa-times" aria-hidden="true" title="Remove this trip"></i> ';
                             echo '</span>';
                         echo '</time>';                                                                                                             
@@ -94,48 +92,7 @@
          <div class="col-sm-6 col-xs-12">
               <div class="info-group" id="tour-info">
                   <h3 class="group-title"><?php echo t('Tour Information'); ?></h3>
-                  <!--<div id="edit-general-info" class="btn-edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>-->
-                  
-                  <div class="tour-field">
-                        <?php
-                            echo '<label>'.t('Destination').'</label> '; 
-                            $node_des = node_load($node->field_destination[LANGUAGE_NONE][0]['nid']);
-                            echo $node_des->title;
-                        ?>               
-                  </div>          
-                  
-                  <div class="tour-field">
-                        <?php
-                            echo '<label>'.t('Start Date').'</label> '; 
-                            //echo '<span class="view-mode">'.date('M-d-Y', $node->field_start_date[LANGUAGE_NONE][0]['value']).'</span>';                   
-                            //echo '<span class="edit-mode"><input type="text" id="u-start-date" value="'.date('M-d-Y', $node->field_start_date[LANGUAGE_NONE][0]['value']).'" /></span>';
-                        ?>               
-                  </div>          
-                  <div class="tour-field">
-                        <?php
-                            echo '<label>'.t('End Date').'</label> '; 
-                            //echo '<span class="view-mode">'.date('M-d-Y', $node->field_end_date[LANGUAGE_NONE][0]['value']).'</span>';                   
-                            //echo '<span class="edit-mode"><input type="text" id="u-end-date" value="'.date('M-d-Y', $node->field_end_date[LANGUAGE_NONE][0]['value']).'" /></span>';
-                        ?>               
-                  </div>
-                  <div class="tour-field">
-                        <?php
-                            echo '<label>'.t('Total day').'</label> '; 
-                            //echo '<span class="view-mode">'.$node->field_total_day[LANGUAGE_NONE][0]['value'].'</span>';
-                            //echo '<span class="edit-mode"><input type="text" id="u-total-day" value="'.$node->field_total_day[LANGUAGE_NONE][0]['value'].'" /></span>';
-                      
-                        ?>               
-                  </div>
-                  <div class="tour-field">
-                        <?php
-                            echo '<label>'.t('Tour target').'</label> '; 
-                            //echo '<span class="view-mode">'.$node->field_tour_target[LANGUAGE_NONE][0]['value'].'</span>';
-                            //echo $node->field_tour_target[LANGUAGE_NONE][0]['value'];
-                            echo '<span class="edit-mode">
-                                <input type="radio" class="rdTarget" name="target" value="travel" checked="checked" > '.t('Travel').' 
-                                <input type="radio" class="rdTarget" name="target" value="business"> '.t('Business').' </span>';    
-                        ?>               
-                  </div>
+                  <?php echo theme('tour_information', array('tour_node'=>$node)); ?>
               </div>
           </div>
 
@@ -166,22 +123,51 @@
         <div id="list-cost">
             <div class="col-sm-2 col-xs-6"><?php echo t('Expense name'); ?></div>
             <div class="col-sm-2 col-xs-6"><?php echo t('Type'); ?></div>
-            <div class="col-sm-2 col-xs-6"><?php echo t('Quality'); ?></div>
+            <div class="col-sm-2 col-xs-6"><?php echo t('Quantity'); ?></div>
             <div class="col-sm-2 col-xs-6"><?php echo t('Unit price'); ?></div>
             <div class="col-sm-2 col-xs-6"><?php echo t('Total'); ?></div>
             <div class="col-sm-2 col-xs-6"><?php echo t('Note'); ?></div>
             <?php echo theme('add_budget_cost'); ?>
-            <div id="cost-result"></div>
+            <div id="cost-result"></div>            
+            <div id="budget-after">Ngân sách còn lại: <span id="nscl"><?php echo $nscl;?></span></div>
+        </div>
+      </div>
+      
+      <div class="info-group col-sm-12 col-xs-12 edit-mode" id="urgent-contact">
+        <h3 class="group-title"><?php echo t('Urgent Contact'); ?></h3>  
+        <div id="list-urgent-contact">
+            <div class="col-sm-2 col-xs-6"><?php echo t('Full name'); ?></div>
+            <div class="col-sm-2 col-xs-6"><?php echo t('Landline'); ?></div>
+            <div class="col-sm-2 col-xs-6"><?php echo t('Cellphone'); ?></div>
+            <div class="col-sm-2 col-xs-6"><?php echo t('Address'); ?></div>
+            <div class="col-sm-2 col-xs-6"><?php echo t('Relationship'); ?></div>
+            <div class="col-sm-2 col-xs-6"><?php echo t('Note'); ?></div>
+            <?php echo theme('add_urgent_contact'); ?>
+            <div id="urgent-contact-result"></div>
         </div>
       </div>
       
       <div id="tour-buttons">
         <input type="button" value="<?php echo t('Customize this tour');?>" id="btnCustomTour" /> 
-        <input type="button" value="Save this tour to your list" id="btnSaveCustomTour" />
+        <input type="button" value="<?php echo t('Save this tour to your list'); ?>" id="btnSaveCustomTour" />
       </div>
   </div> <!-- /content -->
   
 </article> <!-- /article #node -->
+
+
+<?php 
+ /* Nhung tour khac cung dia diem */
+    echo '<div id="list-tour-by-des">';
+        echo '<h3>'.t('Other Tours').'</h3>';
+        $nids = db_query('SELECT entity_id FROM field_data_field_destination WHERE field_destination_nid=:t_nid AND bundle=:tour AND entity_id<>:nid'
+                , array(':t_nid'=>$node->field_destination[LANGUAGE_NONE][0]['nid'], ':tour'=>'tour', ':nid'=>$node->nid))->fetchCol();
+        $tours = node_load_multiple($nids);
+        foreach($tours as $tour){
+            echo '<a href="'.url('node/'.$tour->nid).'">'.$tour->title.'</a>';
+        }
+    echo '</div>';
+?>
 
 <?php
 $bg = '';

@@ -1,4 +1,4 @@
-<div class="add-customer edit-mode">
+<div class="add-customer">
     <input type="text" placeholder="<?php echo t('Full name');?>" class="txtNewCus-Name"/> 
     <input type="text" placeholder="<?php echo t('Phone number');?>" class="txtNewCus-Phone"/>  
     <input type="text" placeholder="<?php echo t('Email');?>" class="txtNewCus-Email"/>  

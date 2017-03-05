@@ -1,4 +1,0 @@
-1. setup môi trường
-2. cần module nào thì cài: npm install module_name    ----   require('tenmodule');
-3. chạy: node tenfile.js
-4. lỗi trùng port: killall -9 node

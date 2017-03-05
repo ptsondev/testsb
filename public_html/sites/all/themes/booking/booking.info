@@ -38,5 +38,7 @@ scripts[] = js/jssor.slider.min.js
 scripts[] = js/jquery.timelify.js
 scripts[] = js/fancybox/jquery.fancybox.js
 scripts[] = js/jquery.mCustomScrollbar.concat.min.js
+scripts[] = js/html2canvas.js
+scripts[] = js/canvas2image.js
 scripts[] = js/js.js
 

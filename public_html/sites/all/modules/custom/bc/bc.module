@@ -13,6 +13,7 @@ $arr_theme = array(
     'add_customer' => 'Add Customer',
     'add_todo' => 'Add To do thing',
     'add_budget_cost' => 'Add budget cost',
+    'add_urgent_contact' => 'Add urgent contact'    
     //'tour_detail' => 'Tour Detail',
     //'place_detail' => 'Place Detail'
 );
@@ -48,6 +49,12 @@ function bc_theme() {
         );
     }    
     // some theme have params 
+    $arr['tour_information'] = array(
+        'path'=>drupal_get_path('module', 'bc') . '/templates',
+        'template' => 'tour_information',
+        'variables'=> array('tour_node'=>NULL)
+    );
+    
     $arr['tour_detail'] = array(
         'path'=>drupal_get_path('module', 'bc') . '/templates',
         'template' => 'tour_detail',
@@ -195,67 +202,252 @@ function bc_ajax_process(){
         echo theme('add_customer');
         return ;
     }else if($action=='addCustomTour'){
-        //echo (var_dump($_REQUEST));
+        
         
         /* init from clone, important */
         $tour = $_REQUEST['tour'];
+        //echo (var_dump($tour['toDoWorks']));return;
         $node = node_load($tour['id']);
-        $node->nid = NULL; // save new, not edit
-        $node->vid = NULL;
-        $node->type='custom_tour';
-        $node->uid = $user->uid;
+        if($tour['addNew']){
+            $node->nid = NULL; // save new, not edit
+            $node->vid = NULL;
+            $node->type='custom_tour';
+            $node->uid = $user->uid;
+        }
         //$node->title .= ' - '.$user->name;
         
         /* modify any fields */
+        $node->field_start_date[LANGUAGE_NONE][0]['value'] = $tour['background'];
         $node->field_start_date[LANGUAGE_NONE][0]['value'] = strtotime($tour['startDate']);
         $node->field_end_date[LANGUAGE_NONE][0]['value'] = strtotime($tour['endDate']);
-        $node->field_total_day[LANGUAGE_NONE][0]['value'] = strtotime($tour['totalDay']);
-        $node->field_tour_target[LANGUAGE_NONE][0]['value'] = strtotime($tour['target']);
+        $node->field_total_day[LANGUAGE_NONE][0]['value'] = check_plain($tour['totalDay']);        
+        $node->field_tour_target[LANGUAGE_NONE][0]['value'] = check_plain($tour['target']);
+        $node->field_transportation_type[LANGUAGE_NONE][0]['value'] = check_plain($tour['transport']);
+        $node->field_expect_budget[LANGUAGE_NONE][0]['value'] = check_plain($tour['budget']);
         
-        //customers 
-        unset($node->field_traveller);
+        //customers        
+        $existed_custumers = (isset($node->field_traveller) && !empty($node->field_traveller[LANGUAGE_NONE]))? TRUE:FALSE;
+        $k = 0;
+        $entity1 = NULL;
         foreach($tour['customers'] as $customer){
-            $values = array(
-                'field_name' => 'field_traveller',
-                'field_human' => array(
-                  LANGUAGE_NONE => array(array('value' => $customer['name'])),
-                ),
-                'field_phone' => array(
-                  LANGUAGE_NONE => array(array('value' => $customer['phone'])),
-                ),
-                'field_email' => array(
-                  LANGUAGE_NONE => array(array('value' => $customer['email'])),
-                ),
-                'field_old' => array(
-                  LANGUAGE_NONE => array(array('value' => $customer['old'])),
-                ),
-            );
-            $entity1 = entity_create('field_collection_item', $values);
-            $entity1->setHostEntity('node', $node);
-        }        
-        $entity1->save();
+            if($existed_custumers && isset($node->field_traveller[LANGUAGE_NONE][$k])){
+                // update old
+                $item = field_collection_item_load($node->field_traveller[LANGUAGE_NONE][$k]['value']);
+                $item->field_human[LANGUAGE_NONE][0]['value'] = $customer['name'];
+                $item->field_phone[LANGUAGE_NONE][0]['value'] = $customer['phone'];
+                $item->field_email[LANGUAGE_NONE][0]['value'] = $customer['email'];
+                $item->field_old[LANGUAGE_NONE][0]['value'] = $customer['old'];
+                $item->save(TRUE);
+                $k++;
+            }else{
+                // create new
+                $values = array(
+                    'field_name' => 'field_traveller',
+                    'field_human' => array(
+                        LANGUAGE_NONE => array(array('value' => $customer['name'])),
+                    ),
+                    'field_phone' => array(
+                        LANGUAGE_NONE => array(array('value' => $customer['phone'])),
+                    ),
+                    'field_email' => array(
+                        LANGUAGE_NONE => array(array('value' => $customer['email'])),
+                    ),
+                    'field_old' => array(
+                        LANGUAGE_NONE => array(array('value' => 1)),
+                    ),
+                );
+                $entity1 = entity_create('field_collection_item', $values);
+                $entity1->setHostEntity('node', $node);
+            }            
+        }
+        if($existed_custumers && count($node->field_traveller[LANGUAGE_NONE]) > $k){
+            $field_collection_item_values = array();
+            for($i=$k; $i<count($node->field_traveller[LANGUAGE_NONE]); $i++){
+                $field_collection_item_values[] = $node->field_traveller[LANGUAGE_NONE][$i]['value'];               
+                unset($node->field_traveller[LANGUAGE_NONE][$i]);
+            }            
+            // Delete field collection items.
+            entity_delete_multiple('field_collection_item', $field_collection_item_values);
+        }
+        if($entity1){
+            $entity1->save();
+        }
+        
+        
+        // to do list        
+        $existed_todo = (isset($node->field_to_do) && !empty($node->field_to_do[LANGUAGE_NONE]))? TRUE:FALSE;
+        $k = 0;
+        $entity2 = NULL;
+        foreach($tour['toDoWorks'] as $todo){
+            if($existed_todo && isset($node->field_to_do[LANGUAGE_NONE][$k])){
+                // update old
+                $item = field_collection_item_load($node->field_to_do[LANGUAGE_NONE][$k]['value']);
+                $item->field_title[LANGUAGE_NONE][0]['value'] = $todo['name'];
+                $item->field_human[LANGUAGE_NONE][0]['value'] = $todo['human'];
+                $item->field_deadline[LANGUAGE_NONE][0]['value'] = $todo['time'];
+                $item->field_status[LANGUAGE_NONE][0]['value'] = $todo['status'];
+                $item->field_note[LANGUAGE_NONE][0]['value'] = $todo['note'];
+                $item->field_index[LANGUAGE_NONE][0]['value'] = $todo['prio'];
+                $item->save(TRUE);
+                $k++;
+            }else{
+                // create new
+                $values = array(
+                    'field_name' => 'field_to_do',
+                    'field_title' => array( LANGUAGE_NONE => array(array('value' => $todo['name']))),
+                    'field_human' => array(LANGUAGE_NONE => array(array('value' => $todo['human']))),
+                    'field_deadline' => array(LANGUAGE_NONE => array(array('value' => $todo['time']))),
+                    'field_status' => array(LANGUAGE_NONE => array(array('value' => $todo['status']))),
+                    'field_note' => array(LANGUAGE_NONE => array(array('value' => $todo['note']))),
+                    'field_index' => array(LANGUAGE_NONE => array(array('value' => $todo['prio']))),
+                );
+                $entity2 = entity_create('field_collection_item', $values);
+                $entity2->setHostEntity('node', $node);
+            }            
+        }
+        if($existed_todo && count($node->field_to_do[LANGUAGE_NONE]) > $k){
+            $field_collection_item_values = array();
+            for($i=$k; $i<count($node->field_to_do[LANGUAGE_NONE]); $i++){
+                $field_collection_item_values[] = $node->field_to_do[LANGUAGE_NONE][$i]['value'];               
+                unset($node->field_to_do[LANGUAGE_NONE][$i]);
+            }            
+            // Delete field collection items.
+            entity_delete_multiple('field_collection_item', $field_collection_item_values);
+        }
+        if($entity2){
+            $entity2->save();
+        }
+        
+        // expense        
+        $existed_expense = (isset($node->field_expense) && !empty($node->field_expense[LANGUAGE_NONE]))? TRUE:FALSE;
+        $k = 0;
+        $entity3 = NULL;
+        foreach($tour['expense'] as $expense){
+            if($existed_expense && isset($node->field_expense[LANGUAGE_NONE][$k])){
+                // update old
+                $item = field_collection_item_load($node->field_expense[LANGUAGE_NONE][$k]['value']);
+                $item->field_expense_type[LANGUAGE_NONE][0]['value'] = $expense['type'];
+                $item->field_human[LANGUAGE_NONE][0]['value'] = $expense['name'];
+                $item->field_init[LANGUAGE_NONE][0]['value'] = $expense['uprice'];
+                $item->field_number[LANGUAGE_NONE][0]['value'] = $expense['quantity'];
+                $item->field_note[LANGUAGE_NONE][0]['value'] = $expense['note'];
+                $item->field_total[LANGUAGE_NONE][0]['value'] = $expense['total'];
+                $item->save(TRUE);
+                $k++;
+            }else{
+                // create new
+                $values = array(
+                    'field_name' => 'field_expense',
+                    'field_expense_type' => array( LANGUAGE_NONE => array(array('value' => $expense['type']))),
+                    'field_human' => array(LANGUAGE_NONE => array(array('value' => $expense['name']))),
+                    'field_init' => array(LANGUAGE_NONE => array(array('value' => $expense['uprice']))),
+                    'field_number' => array(LANGUAGE_NONE => array(array('value' => $expense['quantity']))),
+                    'field_note' => array(LANGUAGE_NONE => array(array('value' => $expense['note']))),
+                    'field_total' => array(LANGUAGE_NONE => array(array('value' => $expense['total']))),
+                );
+                $entity3 = entity_create('field_collection_item', $values);
+                $entity3->setHostEntity('node', $node);
+            }            
+        }
+        if($existed_expense && count($node->field_expense[LANGUAGE_NONE]) > $k){
+            $field_collection_item_values = array();
+            for($i=$k; $i<count($node->field_expense[LANGUAGE_NONE]); $i++){
+                $field_collection_item_values[] = $node->field_expense[LANGUAGE_NONE][$i]['value'];               
+                unset($node->field_expense[LANGUAGE_NONE][$i]);
+            }            
+            // Delete field collection items.
+            entity_delete_multiple('field_collection_item', $field_collection_item_values);
+        }
+        if($entity3){
+            $entity3->save();
+        }
+        
+        // urgent contact        
+        $existed_ucontact = (isset($node->field_urgent_contact) && !empty($node->field_urgent_contact[LANGUAGE_NONE]))? TRUE:FALSE;
+        $k = 0;
+        $entity3 = NULL;
+        foreach($tour['uContact'] as $contact){
+            if($existed_ucontact && isset($node->field_urgent_contact[LANGUAGE_NONE][$k])){
+                // update old
+                $item = field_collection_item_load($node->field_urgent_contact[LANGUAGE_NONE][$k]['value']);
+                $item->field_human[LANGUAGE_NONE][0]['value'] = $contact['name'];
+                $item->field_phone[LANGUAGE_NONE][0]['value'] = $contact['phone'];
+                $item->field_home_phone[LANGUAGE_NONE][0]['value'] = $contact['home_phone'];
+                $item->field_address[LANGUAGE_NONE][0]['value'] = $contact['address'];
+                $item->field_relation_ship[LANGUAGE_NONE][0]['value'] = $contact['relationship'];
+                $item->field_note[LANGUAGE_NONE][0]['value'] = $contact['note'];
+                $item->save(TRUE);
+                $k++;
+            }else{
+                // create new
+                $values = array(
+                    'field_name' => 'field_urgent_contact',
+                    'field_human' => array(LANGUAGE_NONE => array(array('value' => $contact['name']))),
+                    'field_phone' => array( LANGUAGE_NONE => array(array('value' => $contact['phone']))),                    
+                    'field_home_phone' => array(LANGUAGE_NONE => array(array('value' => $contact['home_phone']))),
+                    'field_address' => array(LANGUAGE_NONE => array(array('value' => $contact['address']))),
+                    'field_relation_ship' => array(LANGUAGE_NONE => array(array('value' => $contact['relationship']))),
+                    'field_note' => array(LANGUAGE_NONE => array(array('value' => $contact['note']))),
+                );
+                $entity3 = entity_create('field_collection_item', $values);
+                $entity3->setHostEntity('node', $node);
+            }            
+        }
+        if($existed_ucontact && count($node->field_urgent_contact[LANGUAGE_NONE]) > $k){
+            $field_collection_item_values = array();
+            for($i=$k; $i<count($node->field_urgent_contact[LANGUAGE_NONE]); $i++){
+                $field_collection_item_values[] = $node->field_urgent_contact[LANGUAGE_NONE][$i]['value'];               
+                unset($node->field_urgent_contact[LANGUAGE_NONE][$i]);
+            }            
+            // Delete field collection items.
+            entity_delete_multiple('field_collection_item', $field_collection_item_values);
+        }
+        if($entity3){
+            $entity3->save();
+        }
+       
         
         //trips
-        /*
-        $node->field_tour_detail = array();
+        $existed_trips = (isset($node->field_tour_detail) && !empty($node->field_tour_detail[LANGUAGE_NONE]))? TRUE:FALSE;
+        $k = 0;
+        $entity4 = NULL;
         foreach($tour['trips'] as $trip){
-            $values = array(
-                'field_name' => 'field_tour_detail',
-                'field_tour_detail_ref' => array(
-                  LANGUAGE_NONE => array(array('nid' => 51)),
-                ),
-                'field_schedule_by_day' => array(
-                  LANGUAGE_NONE => array(array('value' => $trip['bday'])),
-                ),
-                'field_schedule_by_day_part' => array(
-                  LANGUAGE_NONE => array(array('value' => $trip['bdaypart'])),
-                ),                
-            );
-            $entity2 = entity_create('field_collection_item', $values);
-            $entity2->setHostEntity('node', $node);
-        }                
-        $entity2->save();
-        */
+            if($existed_trips && isset($node->field_tour_detail[LANGUAGE_NONE][$k])){
+                // update old
+                $item = field_collection_item_load($node->field_tour_detail[LANGUAGE_NONE][$k]['value']);
+                $item->field_des_name[LANGUAGE_NONE][0]['value'] = $trip['name'];
+                $item->field_schedule_by_day[LANGUAGE_NONE][0]['value'] = $trip['bday'];                
+                $item->field_schedule_by_day_part[LANGUAGE_NONE][0]['value'] = $trip['bdaypart'];
+                //$item->field_des_des[LANGUAGE_NONE][0]['value'] = $trip['relationship'];
+                //$item->field_avatar[LANGUAGE_NONE][0]['value'] = $trip['note'];
+                $item->save(TRUE);
+                $k++;
+            }else{
+                // create new
+                $values = array(
+                    'field_name' => 'field_tour_detail',
+                    'field_des_name' => array(LANGUAGE_NONE => array(array('value' => $trip['name']))),
+                    'field_schedule_by_day' => array( LANGUAGE_NONE => array(array('value' => $trip['bday']))),                    
+                    'field_schedule_by_day_part' => array(LANGUAGE_NONE => array(array('value' => $trip['bdaypart']))),
+                    //'field_des_des' => array(LANGUAGE_NONE => array(array('value' => $contact['address']))),
+                    //'field_avatar' => array(LANGUAGE_NONE => array(array('value' => $contact['relationship'])))
+                );
+                $entity4 = entity_create('field_collection_item', $values);
+                $entity4->setHostEntity('node', $node);
+            }            
+        }
+        if($existed_trips && count($node->field_tour_detail[LANGUAGE_NONE]) > $k){
+            $field_collection_item_values = array();
+            for($i=$k; $i<count($node->field_tour_detail[LANGUAGE_NONE]); $i++){
+                $field_collection_item_values[] = $node->field_tour_detail[LANGUAGE_NONE][$i]['value'];               
+                unset($node->field_tour_detail[LANGUAGE_NONE][$i]);
+            }            
+            // Delete field collection items.
+            entity_delete_multiple('field_collection_item', $field_collection_item_values);
+        }
+        if($entity4){
+            $entity4->save();
+        }
 
         node_save($node);
         echo url('node/'.$node->nid);
@@ -360,3 +552,13 @@ function bc_node_update($node){
 }
 
 
+
+function bc_preprocess_page(&$variables){
+    if(arg(0)=='node' && is_numeric(arg(1))){
+        $node = node_load(arg(1));        
+        if($node->type=='custom_tour'){
+            $u = user_load($node->uid);
+            drupal_set_title($node->title. ' ('.$u->name.')');
+        }
+    }
+}

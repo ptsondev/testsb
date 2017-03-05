@@ -1,4 +1,12 @@
 jQuery(document).ready(function($){	
+    isHome = false;
+    if($('body').hasClass('front')){
+        isHome=true;
+    }
+    $(window).bind('scroll', function() {
+	parallax();
+    });	
+        
         fullURL = window.location.protocol + "//" + window.location.host;
 	ajaxPath = fullURL+'/ajax-process';
 
@@ -158,6 +166,7 @@ jQuery(document).ready(function($){
         }
     });
     
+    var nscl = $('#budget-after #nscl').text();
     // them chi tieu
     $('#list-cost').on('click', '.add-cost .fa-check', function(){
         if(confirmLogin()){
@@ -186,41 +195,86 @@ jQuery(document).ready(function($){
                 $('#list-cost .txtUnitPrice').val('');
                 $('#list-cost .txtTotal').val('');
                 $('#list-cost .txtNote').val('');
+                
+                nscl -= total;
+                $('#budget-after #nscl').text(nscl);
             }
         }
     });
     
-    $('#list-todo, #list-cost').on('click', '.item .fa-times', function(){
+    // them thong tin lien he khan cap
+    $('#list-urgent-contact').on('click', '.add-urgent-contact .fa-check', function(){
+        if(confirmLogin()){            
+            var name= $('#list-urgent-contact .txtFullName').val();
+            if(name == ''){
+                alert('Please enter name');
+            }else{                
+                var landline = $('#list-urgent-contact .txtLandline').val();
+                var cellphone = $('#list-urgent-contact .txtCellPhone').val();
+                var address = $('#list-urgent-contact .txtAddress').val();
+                var relationship = $('#list-urgent-contact .txtRelationship').val();
+                var note = $('#list-urgent-contact .txtNote').val();
+                
+                var newRow = '<div class="item">';
+                newRow += '<div class="col-sm-2 col-xs-6">'+name+'</div>';
+                newRow += '<div class="col-sm-2 col-xs-6">'+landline+'</div>';
+                newRow += '<div class="col-sm-2 col-xs-6">'+cellphone+'</div>';
+                newRow += '<div class="col-sm-2 col-xs-6">'+address+'</div>';
+                newRow += '<div class="col-sm-2 col-xs-6">'+relationship+'</div>';
+                newRow += '<div class="col-sm-2 col-xs-6">'+note+'</div>';
+                newRow += '<i class="fa fa-times" aria-hidden="true" title="Remove this row"></i></div>';
+                $('#list-urgent-contact #urgent-contact-result').append(newRow);
+                
+                $('#list-urgent-contact .txtFullName').val('');
+                $('#list-urgent-contact .txtLandline').val('');
+                $('#list-urgent-contact .txtCellPhone').val('');
+                $('#list-urgent-contact .txtAddress').val('');
+                $('#list-urgent-contact .txtRelationship').val('');
+                $('#list-urgent-contact .txtNote').val('');
+                
+                
+            }
+        }
+    });
+    
+    $('#list-todo, #list-cost, #list-urgent-contact').on('click', '.item .fa-times', function(){
        $(this).parents('.item').remove(); 
     });
     
     
     
-    
+    var liHeight = 300;    
+    var tourTop = $('#tour-detail .timeline').offset().top;    
     $('.timeline-item').draggable();
-    $('ul.timeline-items').droppable({
-        drop: function( event, ui ) {
-            var changed = Math.floor(ui.position.top / 240);
-            var cur_index = ui.draggable.index();
-            var new_index = cur_index + changed;
-            
-            console.log(ui.position.top);  
-            console.log(new_index);
-     
-            ui.draggable.css({top: 0, left:'none'});
-            if(new_index < 0){ 
-                ui.draggable.parent().prepend(ui.draggable);
+    $('#tour-detail .timeline').droppable({
+        drop: function( event, ui ) {            
+            if(ui.offset.top  <  tourTop){
+                    console.log('x');
+                    $('#tour-detail .timeline ul[data-day=1]').prepend(ui.draggable);
+                    ui.draggable.css({top: '0', left:'none'});
+                    //return false;
             }else{
-                ui.draggable.parents().children("li:eq("+new_index+")").after(ui.draggable);
-            }
+                // tim ra thang tren no de insert no vao sau
+                $('#tour-detail .timeline > ul > li').each(function(){
+                    if($(this).attr('fid') != ui.draggable.attr('fid')){
+                        var h = $(this).offset().top;
+                        if(h+liHeight > ui.offset.top){
+                            //console.log($(this));
+                            $(this).after(ui.draggable);
+                            ui.draggable.css({top: 0, left:'none'});
+                            return false;
+                        }
+                    }
+                });    
+            } 
         }
-    });
-    
-    
+    });        
     
     // Begin customize tour
     $('#btnCustomTour').click(function(){
         if(confirmLogin()){ 
+            //$('#tour-detail').animate({ 'zoom': 0.4 }, 400);
+            //window.parent.document.body.style.zoom = 0.4;
             $('.edit-mode').show();
             $('.view-mode').hide();
             /*$('html, body').animate({
@@ -233,12 +287,26 @@ jQuery(document).ready(function($){
      *  SAVE CUSTOM TOUR 
      */
     $('#btnSaveCustomTour').click(function(){
+        var addNew = 1;
+        if($(this).hasClass('update')){
+            addNew = 0;
+        }
         var tour={};
+        tour.addNew = addNew;
         tour.id = $('article.node-tour').data('nid');
+        if(!tour.id){
+            tour.id = $('article.node-custom-tour').data('nid');
+        }
+        
+        // tour information
+        tour.background = $('#tour-detail').data('bgid');
+        tour.destination = $('#des-ref').data('nid');
         tour.startDate = $('#u-start-date').val();
         tour.endDate = $('#u-end-date').val();
         tour.totalDay = $('#u-total-day').val(); 
         tour.target = $('.rdTarget:checked').val();
+        tour.transport = $('.rdTransport:checked').val();
+        tour.budget = $('#u-expected-budget').val();
                                 
         // customers 
         var customers = [];
@@ -251,19 +319,63 @@ jQuery(document).ready(function($){
             customers.push(cu);
         });
         tour.customers = customers;
+
+        // todo works  
+        var toDoWorks = [];
+        $('#todo-result .item').each(function(){
+            var item={};
+            item.name = $(this).find('.col-sm-2:nth-child(1)').text();
+            item.prio = $(this).find('.col-sm-2:nth-child(2)').text();
+            item.human = $(this).find('.col-sm-2:nth-child(3)').text();
+            item.time = $(this).find('.col-sm-2:nth-child(4)').text();
+            item.status = $(this).find('.col-sm-2:nth-child(5)').text();
+            item.note = $(this).find('.col-sm-2:nth-child(6)').text();            
+            toDoWorks.push(item);
+        });
+        tour.toDoWorks = toDoWorks;
+        
+        // ngan sach
+        var expense = [];
+        $('#cost-result .item').each(function(){
+            var item={};
+            item.name = $(this).find('.col-sm-2:nth-child(1)').text();
+            item.type = $(this).find('.col-sm-2:nth-child(2)').text();
+            item.quantity = $(this).find('.col-sm-2:nth-child(3)').text();
+            item.uprice = $(this).find('.col-sm-2:nth-child(4)').text();
+            item.total = $(this).find('.col-sm-2:nth-child(5)').text();
+            item.note = $(this).find('.col-sm-2:nth-child(6)').text();            
+            expense.push(item);
+        });
+        tour.expense = expense;
+        
+        // urgent contact
+        var uContact = [];
+        $('#urgent-contact-result .item').each(function(){
+            var item={};
+            item.name = $(this).find('.col-sm-2:nth-child(1)').text();
+            item.home_phone = $(this).find('.col-sm-2:nth-child(2)').text();
+            item.phone = $(this).find('.col-sm-2:nth-child(3)').text();
+            item.address = $(this).find('.col-sm-2:nth-child(4)').text();
+            item.relationship = $(this).find('.col-sm-2:nth-child(5)').text();
+            item.note = $(this).find('.col-sm-2:nth-child(6)').text();            
+            uContact.push(item);
+        });
+        tour.uContact = uContact;
         
         // tour detail 
         var trips = [];
         $('#tour-detail li.timeline-item').each(function(){
             var trip = {};
-            trip.nid = $(this).data('tdid');
-            trip.bday = '1';
+            trip.name = $(this).find('h3.trip-name').text();
+            trip.bday = $(this).parent().data('day');
             trip.bdaypart=$(this).find('.txtDayPart').val();
             trips.push(trip);
         });
         tour.trips = trips;
         
-        console.log(tour);
+        //console.log(tour.background);
+        //return;
+        
         jQuery.ajax({
 	    method: "POST",
 	    async:false,
@@ -271,6 +383,7 @@ jQuery(document).ready(function($){
 	    data: {action: "addCustomTour", tour:tour},
 	    success: function (response) { 
                 //alert(response);
+                //console.log(response);
                 window.location.href = response;
             }
 	});
@@ -286,9 +399,44 @@ jQuery(document).ready(function($){
     });
     
      $("#place-tabs-ref, .tour-detail-2 .content").mCustomScrollbar();
+     
+     // save to image
+     $("#btnSaveImage").click(function() { 
+        html2canvas($("#export-data"), {
+            onrendered: function(canvas) {
+                theCanvas = canvas;
+                document.body.appendChild(canvas);
+
+                // Convert and download as image 
+                Canvas2Image.saveAsPNG(canvas); 
+                $("#img-out").append(canvas);
+                // Clean up 
+                //document.body.removeChild(canvas);
+            }
+        });
+        //var link ='';
+        //downloadCanvas(link, 'img-out', 'xxx.jpg');
+        //console.log(link);
+    });   
+    
+    // tu tinh ngan sach    
+    $('.add-cost .txtUnitPrice, .add-cost .txtQuality').focusout(function(){
+       var unit = $('.add-cost .txtUnitPrice').val();
+       var quantity = $('.add-cost .txtQuality').val();
+       if(jQuery.isNumeric(unit) && jQuery.isNumeric(quantity)){
+           var amount = unit*quantity;
+           $('.add-cost .txtTotal').val(amount);
+       }
+    });
+
 });
 
 
+function downloadCanvas(link, canvasId, filename) {
+    link.href = document.getElementById(canvasId).toDataURL();
+    link.download = filename;
+}
+    
 jQuery(window).load(function($) {
 	
 });
@@ -305,3 +453,16 @@ function confirmLogin(){
     }
 }
 
+
+
+function parallax() {
+    var scrollPos = $(window).scrollTop();		    
+    if(scrollPos >100){	
+        $('#header-r2').addClass('active');
+        $('#bcform-search-destination').insertAfter($('#site-logo'));
+    }else{
+        if(isHome){
+            $('#header-r2').removeClass('active');	
+        }
+    }
+}
