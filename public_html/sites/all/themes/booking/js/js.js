@@ -237,6 +237,43 @@ jQuery(document).ready(function($){
         }
     });
     
+      // them ticket
+    $('#list-ticket').on('click', '.add-ticket .fa-check', function(){        
+        if(confirmLogin()){            
+            var datetime= $('#list-ticket .txtDateTime').val();
+            if(datetime == ''){
+                alert('Please enter datetime');
+            }else{                
+                var start = $('#list-ticket .txtStart').val();
+                var end = $('#list-ticket .txtEnd').val();
+                var type = $('#list-ticket .txtType').val();
+                var num = $('#list-ticket .txtNum').val();
+                var note = $('#list-ticket .txtNote').val();
+                
+                var newRow = '<div class="item">';
+                newRow += '<div class="col-sm-2 col-xs-6">'+datetime+'</div>';
+                newRow += '<div class="col-sm-2 col-xs-6">'+start+'</div>';
+                newRow += '<div class="col-sm-2 col-xs-6">'+end+'</div>';
+                newRow += '<div class="col-sm-2 col-xs-6">'+type+'</div>';
+                newRow += '<div class="col-sm-2 col-xs-6">'+num+'</div>';
+                newRow += '<div class="col-sm-2 col-xs-6">'+note+'</div>';
+                newRow += '<i class="fa fa-times" aria-hidden="true" title="Remove this row"></i></div>';
+                $('#list-ticket #ticket-result').append(newRow);
+                
+                $('#list-ticket .txtDateTime').val('');
+                $('#list-ticket .txtStart').val('');
+                $('#list-ticket .txtEnd').val('');
+                $('#list-ticket .txtType').val('');
+                $('#list-ticket .txtNum').val('');
+                $('#list-ticket .txtNote').val('');
+                
+                
+                
+            }
+        }
+    });
+    
+    
     $('#list-todo, #list-cost, #list-urgent-contact').on('click', '.item .fa-times', function(){
        $(this).parents('.item').remove(); 
     });
@@ -361,6 +398,20 @@ jQuery(document).ready(function($){
             uContact.push(item);
         });
         tour.uContact = uContact;
+        
+        // ticket info
+        var tickets = [];
+        $('#ticket-result .item').each(function(){
+            var item={};
+            item.datetime = $(this).find('.col-sm-2:nth-child(1)').text();
+            item.start = $(this).find('.col-sm-2:nth-child(2)').text();
+            item.end = $(this).find('.col-sm-2:nth-child(3)').text();
+            item.type = $(this).find('.col-sm-2:nth-child(4)').text();
+            item.num = $(this).find('.col-sm-2:nth-child(5)').text();
+            item.note = $(this).find('.col-sm-2:nth-child(6)').text();            
+            tickets.push(item);
+        });
+        tour.tickets = tickets;
         
         // tour detail 
         var trips = [];

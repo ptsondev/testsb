@@ -13,7 +13,8 @@ $arr_theme = array(
     'add_customer' => 'Add Customer',
     'add_todo' => 'Add To do thing',
     'add_budget_cost' => 'Add budget cost',
-    'add_urgent_contact' => 'Add urgent contact'    
+    'add_urgent_contact' => 'Add urgent contact',
+    'add_ticket' => 'Add Ticket'    
     //'tour_detail' => 'Tour Detail',
     //'place_detail' => 'Place Detail'
 );
@@ -136,6 +137,11 @@ function bc_form_alter(&$form, &$form_state, $form_id){
             );
 	}
     }    
+    if($form_id=='comment_node_tour_form'){
+        //var_dump($form);
+        unset($form['subject']);
+        unset($form['actions']['preview']);
+    }
 }
 
 function update_location_item(&$form_state, $form_id){

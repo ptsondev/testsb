@@ -666,6 +666,8 @@ body.front #main-region{
 #list-todo select,
 #list-cost input,
 #list-cost select,
+#list-ticket input,
+#list-ticket select,
 #list-urgent-contact input{
     max-width: 100%;
     width:100%;
@@ -673,11 +675,13 @@ body.front #main-region{
 
 #list-todo .col-sm-2,
 #list-cost .col-sm-2,
+#list-ticket .col-sm-2,
 #list-urgent-contact .col-sm-2{
     padding:2px;
 }
 .add-todo,
 .add-cost,
+.add-ticket,
 .add-urgent-contact{
     position: relative;
     display: inline-block;
@@ -685,6 +689,7 @@ body.front #main-region{
 }
 .add-todo .fa-check,
 .add-cost .fa-check,
+.add-ticket .fa-check,
 .add-urgent-contact .fa-check{
     position: absolute;
     right:-15px;
@@ -713,7 +718,8 @@ body.front #main-region{
     width:100%;
 }
 
-#tour-buttons input{
+#tour-buttons input,
+.form-submit{
     background:#f75e50;
     color:#FFF; 
     border:none;
@@ -728,17 +734,19 @@ body.front #main-region{
     margin-left: 0;
 }
 #travellers-info{
-    min-height: 240px;
+    min-height: 184px;
 }
 #todo-result .item,
 #cost-result .item,
-#urgent-contact-result .item{
+#urgent-contact-result .item,
+#ticket-result .item{
     position: relative;    
     display: inline-block;
     width:100%;
 }
 #todo-result .item .fa-times,
 #cost-result .item .fa-times,
+#ticket-result .item .fa-times,
 #urgent-contact-result .item .fa-times{
     position: absolute;
     right:-6px;
@@ -823,7 +831,7 @@ body.front #main-region{
     overflow-y:auto;
     overflow-x: hidden; 
     width:100%;
-    height: 100%;
+    height:300px;
     display: inline-block;
 }
 .tour-detail-2:before{
@@ -844,6 +852,16 @@ body.front #main-region{
     animation: show_opa 0.8s forwards;
     -ms-animation: show_opa 0.8s forwards;
     -webkit-animation: show_opa 0.8s forwards;
+}
+
+.view-comment-by-tour .views-row{    
+    margin-bottom:4px;
+}
+.i-comment .field-name-comment-body{
+    font-style: italic;    
+}
+.i-comment .submitted{
+    font-size:12px;
 }
 @keyframes show_opa{
     from{
@@ -930,6 +948,14 @@ body.front #main-region{
 }
 #budget-after #nscl{
     font-size:20px;
+}
+
+.tour-detail-2 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+    background: #FFF !important;
+}
+
+.resizable-textarea .grippie{
+    display: none;
 }
 @media (max-width: 1024px) {
     #main-menu{

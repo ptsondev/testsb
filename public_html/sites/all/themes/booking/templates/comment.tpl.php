@@ -1,15 +1,12 @@
-<div class="i-comment <?php print $classes . ' ' . $zebra; ?>">
-    
-       <?php
-      if(!user_has_role(RID_PAGE_MANAGER) || user_is_anonymous()){
-			hide($content['links']);
-	  }
-	  
-	 // $comment_body = ($content['comment_body']['#object']);
-	 // echo $comment_body->comment_body[LANGUAGE_NONE][0]['value'];
+
+  <div class="submitted">
+    <?php print $submitted; ?>
+  </div>
+
+  <div class="content"<?php print $content_attributes; ?>>
+    <?php
+      // We hide the comments and links now so that we can render them later.
+      hide($content['links']);
       print render($content);
-      ?>
-    
-    <span class="submitted"><?php print $submitted; ?></span>
- 
-</div>
+    ?>
+  </div>

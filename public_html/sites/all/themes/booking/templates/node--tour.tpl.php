@@ -25,7 +25,7 @@
           echo '<h2>Ngày thứ 1</h2>';
           echo '<ul class="timeline-items" data-day="'.$day.'">';
         
-          foreach($node->field_tour_detail[LANGUAGE_NONE] as $row){              
+          foreach($node->field_tour_detail[LANGUAGE_NONE] as $row){
               $detail = field_collection_item_load($row['value']);
               if($detail->field_schedule_by_day[LANGUAGE_NONE][0]['value'] != $day){
                   $day = $detail->field_schedule_by_day[LANGUAGE_NONE][0]['value'];
@@ -65,6 +65,9 @@
                                 //echo  'vawevwae';
                                 echo $detail->field_des_des[LANGUAGE_NONE][0]['value'];
                             }    
+                            if(isset($detail->field_video_youtube) && !empty($detail->field_video_youtube[LANGUAGE_NONE])){
+                                display_video($detail, 400, 300);
+                            }
                             ?>
                         </div>
                     </div>
@@ -104,6 +107,22 @@
               </div>      
           </div>
         </div>
+      
+      <div class="info-group col-sm-12 col-xs-12 edit-mode" id="ticket-list">
+        <h3 class="group-title"><?php echo t('Transportation'); ?></h3>  
+        <div id="list-ticket">
+            <div class="col-sm-2 col-xs-6">Ngày giờ xuất phát</div>
+            <div class="col-sm-2 col-xs-6">Điểm xuất phát</div>
+            <div class="col-sm-2 col-xs-6">Điểm đến</div>
+            <div class="col-sm-2 col-xs-6">Loại phương tiện</div>
+            <div class="col-sm-2 col-xs-6">Mã vé</div>
+            <div class="col-sm-2 col-xs-6">Ghi chú</div>
+            <?php echo theme('add_ticket'); ?>
+            <div id="ticket-result"></div>
+        </div>
+      </div>
+      
+      
       <div class="info-group col-sm-12 col-xs-12 edit-mode" id="to-do-list">
         <h3 class="group-title"><?php echo t('To do list'); ?></h3>  
         <div id="list-todo">
@@ -150,6 +169,19 @@
       <div id="tour-buttons">
         <input type="button" value="<?php echo t('Customize this tour');?>" id="btnCustomTour" /> 
         <input type="button" value="<?php echo t('Save this tour to your list'); ?>" id="btnSaveCustomTour" />
+      </div>
+      
+      <hr />
+      <div id="comment-area">          
+          <?php           
+          echo '<h2> <i class="fa fa-comments" aria-hidden="true"></i> '.t('Tell me how was you feel about this tour?').'</h2>';
+          //$comments = comment_get_thread($node, COMMENT_MODE_THREADED, 20);
+          //var_dump($comments);
+          $k = views_embed_view($name='comment_by_tour', $display_id = 'default');
+          echo $k;
+          $form = drupal_get_form("comment_node_tour_form", (object) array('nid' => $node->nid));
+          print drupal_render($form);
+          ?>
       </div>
   </div> <!-- /content -->
   

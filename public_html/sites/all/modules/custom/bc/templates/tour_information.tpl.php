@@ -34,7 +34,7 @@
                             echo '<span class="edit-modex"><input type="text" id="u-total-day" value="'.$total_day.'" /></span>';
                         ?>               
                   </div>
-                  <div class="tour-field">
+                  <!--<div class="tour-field">
                         <?php
                             echo '<label>'.t('Tour target').'</label> '; 
                             $target = isset($node->field_tour_target) ? $node->field_tour_target[LANGUAGE_NONE][0]['value']:'travel';
@@ -66,7 +66,7 @@
                                 //echo ' <input type="radio" class="rdTransport" name="transport" value="coach" '.$check.'> '.t('Coach');
                             echo '</span>';
                         ?>               
-                  </div>
+                  </div>-->
                   <div class="tour-field">
                         <?php
                             echo '<label>'.t('Expected budget').'</label> ';                                

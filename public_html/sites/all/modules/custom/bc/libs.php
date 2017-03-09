@@ -45,7 +45,7 @@ function bc_destination_autocomplete($key){
       drupal_json_output($matches);
 }
 
-function display_video($node){
+function display_video($node, $width=760, $height=480){
     if(isset($node->field_video_youtube) && !empty($node->field_video_youtube[LANGUAGE_NONE])){
         $video = $node->field_video_youtube[LANGUAGE_NONE][0]['value'];    
         if(!$video){
@@ -54,10 +54,10 @@ function display_video($node){
     
         $link = $video;
         if (strpos($link,'iframe') !== false) {
-            $link =  str_replace('width="760"', 'width="480"', $link);
+            $link =  str_replace('width="'.$width.'"', 'height="'.$height.'"', $link);
         }else{ // contain "watch"
             $link =  str_replace('watch?v=', 'embed/', $link);
-                $link = '<div class="iframe-wrapper"><iframe width="760" height="480" src="'.$link.'" frameborder="0" allowfullscreen></iframe></div>';
+                $link = '<div class="iframe-wrapper"><iframe width="'.$width.'" height="'.$height.'" src="'.$link.'" frameborder="0" allowfullscreen></iframe></div>';
         }
         echo $link;
         echo '<div class="clearfix"></div><br />';
@@ -67,13 +67,13 @@ function display_video($node){
 
 function display_photos_as_gallery($node){
     ?>
-    <div id="jssor_1" style="position: relative; margin: 0 auto; top: 0px; left: 0px; width: 1400px; height: 700px; overflow: hidden; visibility: hidden; background-color: #24262e;">
+    <div id="jssor_1" style="position: relative; margin: 0 auto; top: 0px; left: 0px; width: 1400px; height: 900px; overflow: hidden; visibility: hidden; background-color: #24262e;">
     <!-- Loading Screen -->
     <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
     <div style="filter: alpha(opacity=70); opacity: 0.7; position: absolute; display: block; top: 0px; left: 0px; width: 100%; height: 100%;"></div>
     <div style="position:absolute;display:block;background:url('img/loading.gif') no-repeat center center;top:0px;left:0px;width:100%;height:100%;"></div>
     </div>
-    <div data-u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 1400px; height: 700px; overflow: hidden;">
+    <div data-u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 1400px; height: 900px; overflow: hidden;">
 
 
     <?php 
