@@ -66,6 +66,16 @@ function bc_theme() {
         'template' => 'place_detail',
         'variables'=> array('place_id'=>NULL)
     );
+    $arr['full_custom_tour_data'] = array(
+        'path'=>drupal_get_path('module', 'bc') . '/templates',
+        'template' => 'full_custom_tour_data',
+        'variables'=> array('nid'=>NULL)
+    );
+    $arr['full_custom_tour_data2'] = array(
+        'path'=>drupal_get_path('module', 'bc') . '/templates',
+        'template' => 'full_custom_tour_data2',
+        'variables'=> array('nid'=>NULL)
+    );
     return $arr;    
 }
  
@@ -171,6 +181,13 @@ function bc_menu(){
         'access callback' => TRUE,
         'type' => MENU_SUGGESTED_ITEM,
     );
+    
+    $items['stest'] = array(
+        'title' => 'stest',
+        'page callback' => 'stest',
+        'access callback' => TRUE,
+        'type' => MENU_SUGGESTED_ITEM,
+    );
 
     $items['admin/config/master/basic'] = array(
         'title' => 'Tùy chỉnh cơ bản',
@@ -193,6 +210,10 @@ function bc_menu(){
     );   
 
     return $items;
+}
+
+function stest(){    
+    return '<div id="export-img">'.theme('full_custom_tour_data', array('nid'=>112)).'</div>';    
 }
 
 function bc_ajax_process(){
@@ -230,6 +251,7 @@ function bc_ajax_process(){
         $node->field_tour_target[LANGUAGE_NONE][0]['value'] = check_plain($tour['target']);
         $node->field_transportation_type[LANGUAGE_NONE][0]['value'] = check_plain($tour['transport']);
         $node->field_expect_budget[LANGUAGE_NONE][0]['value'] = check_plain($tour['budget']);
+        
         
         //customers        
         $existed_custumers = (isset($node->field_traveller) && !empty($node->field_traveller[LANGUAGE_NONE]))? TRUE:FALSE;
@@ -281,6 +303,7 @@ function bc_ajax_process(){
         
         
         // to do list        
+        
         $existed_todo = (isset($node->field_to_do) && !empty($node->field_to_do[LANGUAGE_NONE]))? TRUE:FALSE;
         $k = 0;
         $entity2 = NULL;
@@ -411,6 +434,50 @@ function bc_ajax_process(){
         if($entity3){
             $entity3->save();
         }
+        
+        // tickets
+        $existed_tickets = (isset($node->field_tickets) && !empty($node->field_tickets[LANGUAGE_NONE]))? TRUE:FALSE;
+        $k = 0;
+        $entity5 = NULL;
+        foreach($tour['tickets'] as $ticket){
+            if($existed_tickets && isset($node->field_tickets[LANGUAGE_NONE][$k])){
+                // update old
+                $item = field_collection_item_load($node->field_tickets[LANGUAGE_NONE][$k]['value']);
+                $item->field_datetime[LANGUAGE_NONE][0]['value'] = $ticket['datetime'];
+                $item->field_start[LANGUAGE_NONE][0]['value'] = $ticket['start'];
+                $item->field_goal[LANGUAGE_NONE][0]['value'] = $ticket['end'];
+                $item->field_transport_type[LANGUAGE_NONE][0]['value'] = $ticket['type'];
+                $item->field_ticket_num[LANGUAGE_NONE][0]['value'] = $ticket['num'];
+                $item->field_note[LANGUAGE_NONE][0]['value'] = $ticket['note'];
+                $item->save(TRUE);
+                $k++;
+            }else{
+                // create new
+                $values = array(
+                    'field_name' => 'field_tickets',
+                    'field_datetime' => array(LANGUAGE_NONE => array(array('value' => $ticket['datetime']))),
+                    'field_start' => array( LANGUAGE_NONE => array(array('value' => $ticket['start']))),                    
+                    'field_goal' => array(LANGUAGE_NONE => array(array('value' => $ticket['end']))),
+                    'field_transport_type' => array(LANGUAGE_NONE => array(array('value' => $ticket['type']))),
+                    'field_ticket_num' => array(LANGUAGE_NONE => array(array('value' => $ticket['num']))),
+                    'field_note' => array(LANGUAGE_NONE => array(array('value' => $ticket['note']))),
+                );
+                $entity5 = entity_create('field_collection_item', $values);
+                $entity5->setHostEntity('node', $node);
+            }            
+        }
+        if($existed_tickets && count($node->field_tickets[LANGUAGE_NONE]) > $k){
+            $field_collection_item_values = array();
+            for($i=$k; $i<count($node->field_tickets[LANGUAGE_NONE]); $i++){
+                $field_collection_item_values[] = $node->field_tickets[LANGUAGE_NONE][$i]['value'];               
+                unset($node->field_tickets[LANGUAGE_NONE][$i]);
+            }            
+            // Delete field collection items.
+            entity_delete_multiple('field_collection_item', $field_collection_item_values);
+        }
+        if($entity5){
+            $entity5->save();
+        }
        
         
         //trips
@@ -457,6 +524,14 @@ function bc_ajax_process(){
 
         node_save($node);
         echo url('node/'.$node->nid);
+        return;
+    }else if($action=='getFullCustomTourData'){
+        $nid = check_plain($_REQUEST['nid']);
+        echo theme('full_custom_tour_data', array('nid'=>$nid));
+        return;
+    }else if($action=='getFullCustomTourData2'){
+        $nid = check_plain($_REQUEST['nid']);
+        echo theme('full_custom_tour_data2', array('nid'=>$nid));
         return;
     }
     

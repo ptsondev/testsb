@@ -8,5 +8,5 @@
     </select>
     
     <!--<i class="fa fa-times" aria-hidden="true" title="Remove this member"></i>-->
-    <i class="fa fa-check" aria-hidden="true" title="<?php echo t('Add this member to list');?>"></i>
+    <i class="fa fa-plus" aria-hidden="true" title="<?php echo t('Add this member to list');?>"></i>
 </div>

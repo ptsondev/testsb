@@ -129,7 +129,7 @@
             <div class="col-sm-2 col-xs-6"><?php echo t('Task'); ?></div>
             <div class="col-sm-2 col-xs-6"><?php echo t('Priority'); ?></div>
             <div class="col-sm-2 col-xs-6"><?php echo t('Assign to'); ?></div>
-            <div class="col-sm-2 col-xs-6"><?php echo t('Time to do'); ?></div>
+            <div class="col-sm-2 col-xs-6"><?php echo t('Deadline'); ?></div>
             <div class="col-sm-2 col-xs-6"><?php echo t('Status'); ?></div>
             <div class="col-sm-2 col-xs-6"><?php echo t('Note'); ?></div>
             <?php echo theme('add_todo'); ?>
@@ -148,7 +148,7 @@
             <div class="col-sm-2 col-xs-6"><?php echo t('Note'); ?></div>
             <?php echo theme('add_budget_cost'); ?>
             <div id="cost-result"></div>            
-            <div id="budget-after">Ngân sách còn lại: <span id="nscl"><?php echo $nscl;?></span></div>
+            <div id="budget-after">Ngân sách còn lại: <span id="nscl"><?php echo snh_display_number($nscl);?></span></div>
         </div>
       </div>
       

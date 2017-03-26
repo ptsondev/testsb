@@ -1,63 +1,34 @@
-<?php //echo snh_social_share();
-//$x = strtotime('Nov-16-2016');
-//var_dump($x);die;
+<?php 
+$node = node_load($nid);
+$place = node_load($node->field_destination[LANGUAGE_NONE][0]['nid']);
 ?>
-<article class="<?php print $classes; ?> custom-tour-main-body" data-nid="<?php print $node->nid; ?>" >    
-    <div class="content">      
-    <div id="export-data">
-        <div class="info-group" id="place-info">
-                <h3 class="group-title"><?php echo t('Destination information'); ?></h3>
-                <?php 
-                  echo theme('place_detail', array('place_id'=>$node->field_destination[LANGUAGE_NONE][0]['nid']));
-                ?>
-        </div>
-              
-      
-      <div class="info-group col-sm-12 col-xs-12" id="tour-detail">
-          <h3 class="group-title"><?php echo t('Tour detail'); ?></h3>
-          <div class="timeline">
-          <?php
-          $day = 1;          
-          $k=1;      
-          echo '<h2>Ngày thứ 1</h2>';
-          echo '<ul class="timeline-items" data-day="1">';
-        
-          foreach($node->field_tour_detail[LANGUAGE_NONE] as $row){              
-                $detail = field_collection_item_load($row['value']);                
-                if($detail->field_schedule_by_day[LANGUAGE_NONE][0]['value'] != $day){
-                    $day = $detail->field_schedule_by_day[LANGUAGE_NONE][0]['value'];
-                    echo '</ul>';
-                    echo '<h2>Ngày thứ '.$day.'</h2>';                  
-                    echo '<ul class="timeline-items" data-day="'.$day.'">';
-                }
-              
-              $class= ($k%2==1)?'':'inverted';
-              //$tour_detail = node_load($detail->field_tour_detail_ref[LANGUAGE_NONE][0]['nid']);
-                    
-                $tmp = image_style_url('width_2_height', $detail->field_avatar[LANGUAGE_NONE][0]['uri']);
-                    
-                    
-              echo '<li fid="'.$detail->item_id.'" style="background:url('.$tmp.'); background-size:100%;" class="is-hidden timeline-item">';              
-                                  
-                    echo '<div class="li-inner">';
-                        echo '<h3 class="trip-name">'.$detail->field_des_name[LANGUAGE_NONE][0]['value'].'</h3>';                       
+<div class="info-group" id="place-info">
+    <h3 class="group-title"><?php echo t('Destination information'); ?></h3>
+    <h4><i class="fa fa-info-circle" aria-hidden="true"></i><?php echo t('General Information');?></h4>
+    <?php echo $place->field_general_info[LANGUAGE_NONE][0]['value'];?>
+    
+    <h4><i class="fa fa-bus" aria-hidden="true"></i> <?php echo t('Transportation');?></h4>
+    <?php echo $place->field_transport_info[LANGUAGE_NONE][0]['value'];?>
+    
+    <h4><i class="fa fa-calendar" aria-hidden="true"></i> <?php echo t('Recommended Time');?></h4>
+    <?php echo $place->field_advise_info[LANGUAGE_NONE][0]['value'];?>
+    
+    <h4><i class="fa fa-lightbulb-o" aria-hidden="true"></i> <?php echo t('To do task');?></h4>
+    <?php echo $place->field_todo_info[LANGUAGE_NONE][0]['value'];?>    
+</div>
 
-                        echo '<time>';
-                            //echo '<span class="view-mode">'.$detail->field_schedule_by_day_part[LANGUAGE_NONE][0]['value'].'</span>';
-                            echo '<span class="edit-modex"><input type="text" class="txtDayPart" id="txtPD_'.$k.'" value="'.$detail->field_schedule_by_day_part[LANGUAGE_NONE][0]['value'].'" /></span>';
-                            echo '<span class="tour-detail-controls edit-modex">';
-                                //echo ' <i class="fa fa-search" aria-hidden="true" alt="Search hotel near from here"></i> ';
-                                //echo ' <i class="fa fa-pencil-square-o" aria-hidden="true" title="Edit this trip"></i> ';
-                                echo ' <i class="fa fa-times" aria-hidden="true" title="Remove this trip"></i> ';
-                            echo '</span>';
-                        echo '</time>';                                                                                                             
-                    echo '</div>';
-                    
-           
-                    ?>
-                    <div class="tour-detail-2">
-                        <div class="content">
-                            <?php 
+
+ <div class="info-group">
+    <h3 class="group-title"><?php echo t('Tour detail'); ?></h3>
+    <?php 
+    foreach($node->field_tour_detail[LANGUAGE_NONE] as $row){              
+        $detail = field_collection_item_load($row['value']);                                
+        $day = $detail->field_schedule_by_day[LANGUAGE_NONE][0]['value'];
+        echo '<h5>'.$detail->field_schedule_by_day_part[LANGUAGE_NONE][0]['value'].' Ngày thứ '.$day.': </h5>';                  
+        echo '<h4 class="trip-name">'.$detail->field_des_name[LANGUAGE_NONE][0]['value'].'</h4>';                       
+        $tmp = image_style_url('width_2_height', $detail->field_avatar[LANGUAGE_NONE][0]['uri']);
+        echo '<img src="'.$tmp.'" />';
+        echo '<div class="content">';
                             if(isset($detail->field_des_des) && !empty($detail->field_des_des[LANGUAGE_NONE])){
                                 //echo  'vawevwae';
                                 echo $detail->field_des_des[LANGUAGE_NONE][0]['value'];
@@ -65,29 +36,15 @@
                             if(isset($detail->field_video_youtube) && !empty($detail->field_video_youtube[LANGUAGE_NONE])){
                                 display_video($detail, 400, 300);
                             }
-                            ?>
-                        </div>
-                    </div>
-                    <?php 
-                echo '</li>';
-              
-              $k++;            
-            }
-            
-          ?>
-          </div>
-          
-          <script>              
-            $('.timeline').timelify({
-                animLeft: "fadeInLeft",
-                animCenter: "fadeInUp",
-                animRight: "fadeInRight",
-                animSpeed: 600,
-                offset: 150
-            });
-          </script>
-      </div><!-- End tour detail -->
       
+        echo '</div>';
+        echo '<hr />';
+    }
+    ?>
+ </div>
+
+
+
       <div class="row view-mode"> 
          <div class="col-sm-6 col-xs-12">
               <div class="info-group" id="tour-info">
@@ -100,7 +57,7 @@
               <div class="info-group" id="travellers-info">
                   <h3 class="group-title"><?php echo t('Travellers Information'); ?></h3>
                    <div id="edit-travellers-info" class="btn-edit"></div>
-                   <div id="list-customers" class="edit-modexxx"><?php echo theme('add_customer'); ?>
+                   <div id="list-customers" class="edit-modexxx">
                        <ol><?php 
                             if(!empty($node->field_traveller[LANGUAGE_NONE])){
                                 foreach($node->field_traveller[LANGUAGE_NONE] as $item){
@@ -130,8 +87,7 @@
             <div class="col-sm-2 col-xs-6">Điểm đến</div>
             <div class="col-sm-2 col-xs-6">Loại phương tiện</div>
             <div class="col-sm-2 col-xs-6">Mã vé</div>
-            <div class="col-sm-2 col-xs-6">Ghi chú</div>
-            <?php echo theme('add_ticket'); ?>            
+            <div class="col-sm-2 col-xs-6">Ghi chú</div>                      
             <div id="ticket-result">
                 <?php                 
                 if(!empty($node->field_tickets[LANGUAGE_NONE])){
@@ -163,8 +119,7 @@
             <div class="col-sm-2 col-xs-6"><?php echo t('Assign to'); ?></div>
             <div class="col-sm-2 col-xs-6"><?php echo t('Time to do'); ?></div>
             <div class="col-sm-2 col-xs-6"><?php echo t('Status'); ?></div>
-            <div class="col-sm-2 col-xs-6"><?php echo t('Note'); ?></div>
-            <?php echo theme('add_todo'); ?>
+            <div class="col-sm-2 col-xs-6"><?php echo t('Note'); ?></div>            
             <div id="todo-result">
                 <?php 
                 //var_dump($node->field_to_do);
@@ -195,8 +150,7 @@
             <div class="col-sm-2 col-xs-6"><?php echo t('Quantity'); ?></div>
             <div class="col-sm-2 col-xs-6"><?php echo t('Unit price'); ?></div>
             <div class="col-sm-2 col-xs-6"><?php echo t('Total'); ?></div>
-            <div class="col-sm-2 col-xs-6"><?php echo t('Note'); ?></div>
-            <?php echo theme('add_budget_cost'); ?>
+            <div class="col-sm-2 col-xs-6"><?php echo t('Note'); ?></div>            
             <div id="cost-result">
                 <?php 
                 $nscl = (isset($node->field_expect_budget) && !empty($node->field_expect_budget[LANGUAGE_NONE])) ? $node->field_expect_budget[LANGUAGE_NONE][0]['value']:0;
@@ -252,39 +206,3 @@
             </div>
         </div>
       </div>
-      <div class="clearfix"></div>
-      </div> <!-- export data -->
-      
-      <div id="tour-buttons">
-        <!--<input type="button" value="<?php echo t('Modify this tour');?>" id="btnCustomTour" />-->
-        <input type="button" value="<?php echo t('Update');?>" id="btnSaveCustomTour" class="update" />         
-        <input type="button" value="<?php echo t('Invite friends via Email');?>" id="btnInviteFriend" class="update" />        
-        <input type="button" value="<?php echo t('Export to image');?>" id="btnSaveImage" data-nid="<?php echo $node->nid;?>" class="update" />        
-        
-      </div>      
-      <div id="export-img"></div>
-      <div id="export-img2"></div>
-    
-  </div> <!-- /content -->    
-</article> <!-- /article #node -->
-
-<?php
-$bg = '';
-if(isset($node->field_background) && !empty($node->field_background[LANGUAGE_NONE])){
-    $bg = image_style_url('width_2_height', $node->field_background[LANGUAGE_NONE][0]['uri']);
-}
-?>
-<!-- override css -->
-<style>
-    #main-region::before{
-        content:" ";
-        position:fixed;
-        top:0;
-        left:0;
-        z-index:-1;
-        background:url('<?php echo $bg; ?>') no-repeat;
-        background-size:100%;
-        width:100%;
-        height:100%;
-    }
-</style>

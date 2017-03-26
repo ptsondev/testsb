@@ -70,7 +70,7 @@
                   <div class="tour-field">
                         <?php
                             echo '<label>'.t('Expected budget').'</label> ';                                
-                            $budget = (isset($node->field_expect_budget) && !empty($node->field_expect_budget[LANGUAGE_NONE])) ? $node->field_expect_budget[LANGUAGE_NONE][0]['value']:0;
+                            $budget = (isset($node->field_expect_budget) && !empty($node->field_expect_budget[LANGUAGE_NONE])) ? snh_display_number($node->field_expect_budget[LANGUAGE_NONE][0]['value']):'';
                             echo '<span class="edit-modex"><input type="text" id="u-expected-budget"  value="'.$budget.'" /></span>';                            
                         ?>               
                   </div>

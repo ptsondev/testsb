@@ -99,7 +99,7 @@ jQuery(document).ready(function($){
     });
     
     // them hanh khach
-    $('#travellers-info').on('click', '.add-customer .fa-check', function(){
+    $('#travellers-info').on('click', '.add-customer .fa-plus', function(){
         if(confirmLogin()){
             var name= $('.txtNewCus-Name').val();
             if(name==''){
@@ -131,7 +131,7 @@ jQuery(document).ready(function($){
     
     
     // them viec can lam
-    $('#list-todo').on('click', '.add-todo .fa-check', function(){
+    $('#list-todo').on('click', '.add-todo .fa-plus', function(){
         if(confirmLogin()){
             var task= $('#list-todo .txtTask').val();
             if(task==''){
@@ -166,9 +166,19 @@ jQuery(document).ready(function($){
         }
     });
     
-    var nscl = $('#budget-after #nscl').text();
+    
+    var nscl = ($('#budget-after #nscl').text());
+    if(nscl=='' || nscl==0){
+        $('#u-expected-budget').keyup(function(){
+           nscl = removeFormatNumber($('#u-expected-budget').val()); 
+           $('#budget-after #nscl').text(formatNumber(nscl));
+        });
+    }else{
+        nscl = removeFormatNumber(nscl);
+    }
+    
     // them chi tieu
-    $('#list-cost').on('click', '.add-cost .fa-check', function(){
+    $('#list-cost').on('click', '.add-cost .fa-plus', function(){
         if(confirmLogin()){
             var name= $('#list-cost .txtName').val();
             if(name == ''){
@@ -176,7 +186,7 @@ jQuery(document).ready(function($){
             }else{                
                 var type = $('#list-cost .slType').val();
                 var quality = $('#list-cost .txtQuality').val();
-                var uPrice = $('#list-cost .txtUnitPrice').val();
+                var uPrice = removeFormatNumber($('#list-cost .txtUnitPrice').val());
                 var total = $('#list-cost .txtTotal').val();
                 var note = $('#list-cost .txtNote').val();
                 
@@ -196,14 +206,14 @@ jQuery(document).ready(function($){
                 $('#list-cost .txtTotal').val('');
                 $('#list-cost .txtNote').val('');
                 
-                nscl -= total;
-                $('#budget-after #nscl').text(nscl);
+                nscl -= removeFormatNumber(total);
+                $('#budget-after #nscl').text(formatNumber(nscl));
             }
         }
     });
     
     // them thong tin lien he khan cap
-    $('#list-urgent-contact').on('click', '.add-urgent-contact .fa-check', function(){
+    $('#list-urgent-contact').on('click', '.add-urgent-contact .fa-plus', function(){
         if(confirmLogin()){            
             var name= $('#list-urgent-contact .txtFullName').val();
             if(name == ''){
@@ -238,7 +248,7 @@ jQuery(document).ready(function($){
     });
     
       // them ticket
-    $('#list-ticket').on('click', '.add-ticket .fa-check', function(){        
+    $('#list-ticket').on('click', '.add-ticket .fa-plus', function(){        
         if(confirmLogin()){            
             var datetime= $('#list-ticket .txtDateTime').val();
             if(datetime == ''){
@@ -343,7 +353,7 @@ jQuery(document).ready(function($){
         tour.totalDay = $('#u-total-day').val(); 
         tour.target = $('.rdTarget:checked').val();
         tour.transport = $('.rdTransport:checked').val();
-        tour.budget = $('#u-expected-budget').val();
+        tour.budget = removeFormatNumber($('#u-expected-budget').val());
                                 
         // customers 
         var customers = [];
@@ -378,8 +388,8 @@ jQuery(document).ready(function($){
             item.name = $(this).find('.col-sm-2:nth-child(1)').text();
             item.type = $(this).find('.col-sm-2:nth-child(2)').text();
             item.quantity = $(this).find('.col-sm-2:nth-child(3)').text();
-            item.uprice = $(this).find('.col-sm-2:nth-child(4)').text();
-            item.total = $(this).find('.col-sm-2:nth-child(5)').text();
+            item.uprice = removeFormatNumber($(this).find('.col-sm-2:nth-child(4)').text());
+            item.total = removeFormatNumber($(this).find('.col-sm-2:nth-child(5)').text());
             item.note = $(this).find('.col-sm-2:nth-child(6)').text();            
             expense.push(item);
         });
@@ -453,31 +463,76 @@ jQuery(document).ready(function($){
      
      // save to image
      $("#btnSaveImage").click(function() { 
-        html2canvas($("#export-data"), {
-            onrendered: function(canvas) {
-                theCanvas = canvas;
-                document.body.appendChild(canvas);
+         var nid = $(this).data('nid');         
+        jQuery.ajax({
+            method: "POST",
+            async: false,
+            url: ajaxPath,
+            data: {action: "getFullCustomTourData", nid: nid},
+            success: function (response) {
+                $('#export-img').html(response);
+                // save
+                html2canvas($("#export-img"), {
+                    onrendered: function(canvas) {
+                        theCanvas = canvas;
+                        document.body.appendChild(canvas);
 
-                // Convert and download as image 
-                Canvas2Image.saveAsPNG(canvas); 
-                $("#img-out").append(canvas);
-                // Clean up 
-                //document.body.removeChild(canvas);
+                        // Convert and download as image 
+                        Canvas2Image.saveAsPNG(canvas); 
+                        $("#export-img").html(canvas);       
+                        $(document).scrollTop( $("#btnSaveImage").offset().top );  
+                    }
+                });     
+        
             }
         });
-        //var link ='';
-        //downloadCanvas(link, 'img-out', 'xxx.jpg');
-        //console.log(link);
+                      
+
     });   
+    
+     $("#btnSaveImage2").click(function() { 
+         var nid = $(this).data('nid');         
+        jQuery.ajax({
+            method: "POST",
+            async: false,
+            url: ajaxPath,
+            data: {action: "getFullCustomTourData2", nid: nid},
+            success: function (response) {
+                $('#export-img2').html(response);
+                  // save
+                html2canvas($("#export-img2"), {
+                    onrendered: function(canvas) {
+                      //  theCanvas = canvas;
+                      //  document.body.appendChild(canvas);
+
+                        // Convert and download as image 
+                        Canvas2Image.saveAsPNG(canvas); 
+                      //  $("#export-img2").append(canvas);
+                      //  // Clean up 
+                      //  document.body.removeChild(canvas);
+                    }
+                });     
+            }
+        });
+                      
+       
+    });  
     
     // tu tinh ngan sach    
     $('.add-cost .txtUnitPrice, .add-cost .txtQuality').focusout(function(){
-       var unit = $('.add-cost .txtUnitPrice').val();
-       var quantity = $('.add-cost .txtQuality').val();
+       var unit = removeFormatNumber($('.add-cost .txtUnitPrice').val());
+       var quantity = $('.add-cost .txtQuality').val();       
        if(jQuery.isNumeric(unit) && jQuery.isNumeric(quantity)){
            var amount = unit*quantity;
-           $('.add-cost .txtTotal').val(amount);
+           $('.add-cost .txtTotal').val(formatNumber(amount));
        }
+    });
+    
+    // auto them dau . khi nhap gia
+    $('#u-expected-budget, .txtUnitPrice').keyup(function (e){
+        var k = $(this).val();
+        k = formatNumber(k);        
+        $(this).val(k);
     });
 
 });
@@ -516,4 +571,15 @@ function parallax() {
             $('#header-r2').removeClass('active');	
         }
     }
+}
+
+function formatNumber (num) {
+    num = num.toString();
+    num = num.replace(/\,/g, '');
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+}
+
+function removeFormatNumber(num){
+    //num = num.toString();
+    return parseInt(num.replace(/\,/g, ''));
 }

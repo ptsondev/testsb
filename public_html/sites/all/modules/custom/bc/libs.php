@@ -4,6 +4,10 @@ function snh_display_price($price){
     return number_format(check_plain($price), 0, '.', '.').' ₫';
 }
 
+function snh_display_number($num){
+    return number_format(check_plain($num), 0, ',', ',');
+}
+
 function can_view_personal_company_info($account){
     global $user;
     if($user->uid==1 || $user->uid == $account->uid){

@@ -138,6 +138,10 @@ img{
     display: inline-block;
     float: right;
 }
+
+#main-menu-region .dropdown-menu a{
+    color:#000 !important;
+}
 #header-r2 #site-logo a{
     color:#FFF;
     text-shadow:2px 2px #333;
@@ -155,7 +159,6 @@ img{
 	padding:0;	
 	z-index:9;
     width:60%;
-
 }
 #search-region .container::after{
 	background:url('../images/main-menu-bg.png') 0 bottom no-repeat #FFF;
@@ -687,10 +690,10 @@ body.front #main-region{
     display: inline-block;
     width:99%;
 }
-.add-todo .fa-check,
-.add-cost .fa-check,
-.add-ticket .fa-check,
-.add-urgent-contact .fa-check{
+.add-todo .fa-plus,
+.add-cost .fa-plus,
+.add-ticket .fa-plus,
+.add-urgent-contact .fa-plus{
     position: absolute;
     right:-15px;
     top:4px;
@@ -786,7 +789,7 @@ body.front #main-region{
     position:relative;
 }
 
-.add-customer .fa-check{
+.add-customer .fa-plus{
     position: absolute;
     right: 5px;
     bottom: 10px;
@@ -852,6 +855,8 @@ body.front #main-region{
     animation: show_opa 0.8s forwards;
     -ms-animation: show_opa 0.8s forwards;
     -webkit-animation: show_opa 0.8s forwards;
+    background:rgba(255, 255, 255, 0.9);
+    color:#333;
 }
 
 .view-comment-by-tour .views-row{    
@@ -958,6 +963,13 @@ body.front #main-region{
 
 .resizable-textarea .grippie{
     display: none;
+}
+#export-img{
+   
+}
+#export-img h4{
+    color:#f75e50;
+    font-size:20px;
 }
 @media (max-width: 1024px) {
     #main-menu{
