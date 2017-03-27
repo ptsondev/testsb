@@ -126,6 +126,17 @@ function display_photos_as_images($node){
     }
 }
 
+function display_node_summary($node){
+    if(isset($node->field_summary) && !empty($node->field_summary[LANGUAGE_NONE])){
+        echo $node->field_summary[LANGUAGE_NONE][0]['value'];
+        return;
+    }
+    if(isset($node->field_content) && !empty($node->field_content[LANGUAGE_NONE])){
+        echo text_summary($node->field_content[LANGUAGE_NONE][0]['value'], $format = NULL, $size = 100);
+        return;
+    }
+    echo text_summary($node->body[LANGUAGE_NONE][0]['value'], $format = NULL, $size = 100);
+}
 
 
 /*  Location API */
@@ -162,3 +173,7 @@ function findByCoordinatesFromNear($from_lat, $from_lng, $r = MAP_R) {
 
 /* Location API  */
 
+
+function getUserName($account){
+    return $account->name;
+}

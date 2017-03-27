@@ -18,7 +18,7 @@ if(!empty($page['sidebar_first'])){
             <div id="main-content" class="<?php echo $class; ?> col-xs-12">
                 <?php 
                 if(arg(0)!='user'){
-                    echo '<div class="page-title col-sm-12"><h1>'.$title.'</div>';
+                    echo '<div class="page-title col-sm-12"><h1 id="page-title">'.$title.'</div>';
                 }
                 ?>
                 <?php

@@ -6,15 +6,19 @@ require_once('libs.php');
 
 $arr_theme = array(   
     'support_online' => 'Support Online',
-    'custom_login_area' => 'Custom login area',
+    'custom_login_area' => 'Custom login area',   
     'bc_user_profile' => 'User Profile',
+    'bc_user_wall' => 'User Wall',
+    'travel_blog' => 'Travel blog',
     'top_destinations' => 'Top Destinations',
     'search_result' => 'Search Result',
     'add_customer' => 'Add Customer',
     'add_todo' => 'Add To do thing',
     'add_budget_cost' => 'Add budget cost',
     'add_urgent_contact' => 'Add urgent contact',
-    'add_ticket' => 'Add Ticket'    
+    'add_ticket' => 'Add Ticket',
+    'add_new_post' => 'Add New Post',
+    'user_update_profile' => 'User update Profile'
     //'tour_detail' => 'Tour Detail',
     //'place_detail' => 'Place Detail'
 );
@@ -76,6 +80,12 @@ function bc_theme() {
         'template' => 'full_custom_tour_data2',
         'variables'=> array('nid'=>NULL)
     );
+    
+    $arr['bc_user_header'] = array(
+        'path'=>drupal_get_path('module', 'bc') . '/templates',
+        'template' => 'bc_user_header',
+        'variables'=> array('uid'=>NULL)
+    );
     return $arr;    
 }
  
@@ -92,7 +102,7 @@ function bc_menu_alter(&$items) {
 }
 
 function bc_form_alter(&$form, &$form_state, $form_id){
-    //var_dump($form);
+    //var_dump($form_id);
     if($form_id=='user_register_form') {
         unset($form['account']['mail']['#description']);
         unset($form['account']['pass']['#description']);

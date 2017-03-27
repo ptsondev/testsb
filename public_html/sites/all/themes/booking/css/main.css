@@ -21,13 +21,13 @@
     font-size:20px;
 }
 input:focus{
-    border-color:#f75e50;
+    border-color:#f35369;
     -webkit-box-shadow: 0px 0px 2px 1px rgba(25,196,143,1);
 -moz-box-shadow: 0px 0px 2px 1px rgba(25,196,143,1);
 box-shadow: 0px 0px 2px 1px rgba(25,196,143,1);
 }
 .col.col-right{
-	float:right;
+    float:right;
 }
 
 
@@ -42,7 +42,7 @@ a{
 	color:#4b4b4b;
 }
 a:hover, a:focus{
-	color:#f75e50;
+	color:#f35369;
 }
 
 img{
@@ -104,7 +104,7 @@ img{
     margin: 0;
 }
 #header-r2.active{
-    background: #f75e50;
+    background: #f35369;
 }
 #header-r2 li a{
     color:#fff;
@@ -245,7 +245,7 @@ img{
 }
 
 #home-slide .rslides_tabs .rslides_here a{
-	background:#f75e50; /*xanh*/
+	background:#f35369; /*xanh*/
 }
 
 #main-region .main-wrapper{
@@ -259,7 +259,7 @@ form .form-item input[type="text"],
 form .form-item input[type="password"],
 form .form-item select{
     width:320px;
-    color:#f75e50;
+    color:#f35369;
     -webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
@@ -296,7 +296,7 @@ form div.password-confirm{
         z-index:4;
 }
 #custom-login-area h4{
-    color:#f75e50;
+    color:#f35369;
 }
 #custom-login-area a{
     font-style: italic;
@@ -336,7 +336,7 @@ body.front #main-region{
 	width:180px;
 	height:180px;
 	border:1px solid #fafafa;
-    background:#f75e50;
+    background:#f35369;
 }
 #profile-top #fullname{
 	position:absolute;
@@ -349,7 +349,7 @@ body.front #main-region{
 #user-slogan{
 	font-size:28px;
 	font-style:italic;	
-	color:#f75e50;
+	color:#f35369;
         margin-bottom: 30px;
 }
 .user-field,
@@ -419,7 +419,7 @@ body.front #main-region{
 }
 #place-tabs .tab.current,
 #place-tabs .tab:hover{
-    color:#f75e50;    
+    color:#f35369;    
 }
 .tab-ref{
     display: none;
@@ -428,7 +428,7 @@ body.front #main-region{
     display: inline-block;
 }
 .user-info-group, .info-group{
-    border:1px solid #f75e50;
+    border:1px solid #f35369;
     -webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
@@ -537,7 +537,7 @@ body.front #main-region{
     width: 160px;
     font-size: 20px;
     padding: 5px;
-    background: #f75e50;
+    background: #f35369;
     float: right;
     margin-right: 25px!important;
 }
@@ -546,7 +546,7 @@ body.front #main-region{
 }
 .timeline .timeline-items .timeline-item,
 .timeline .timeline-items .timeline-item input{
-    /*background: #f75e50 !important;*/
+    /*background: #f35369 !important;*/
 }
 
 .timeline .timeline-items .timeline-item::after{
@@ -556,7 +556,7 @@ body.front #main-region{
 }
 
 .timeline .timeline-items .timeline-item.centered::before{
-    border-bottom-color: #f75e50 !important;
+    border-bottom-color: #f35369 !important;
 }
 .timeline .timeline-items .timeline-item hr{
     border-color: #5b5555 !important;
@@ -579,7 +579,7 @@ body.front #main-region{
     color:#888;
 }
 .timeline::before{
-    background-color:#f75e50;
+    background-color:#f35369;
     right:3%;
     left:auto;
     /* style tiep truong hop responsive */
@@ -722,13 +722,15 @@ body.front #main-region{
 }
 
 #tour-buttons input,
-.form-submit{
-    background:#f75e50;
+.u-post-tool input,
+.form-submit,
+#user-tools a{
+    background:#f35369;
     color:#FFF; 
     border:none;
     -webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
-	border-radius: 5px;
+	border-radius: 5px;        
 }
 .edit-mode input[type=radio]{
     margin-left: 10px;
@@ -827,7 +829,7 @@ body.front #main-region{
     -moz-border-radius: 10px;
     border-radius: 10px;
     opacity: 0;
-    background: #f75e50;
+    background: #f35369;
     z-index:1; 
 }
 .tour-detail-2 .content{
@@ -886,7 +888,7 @@ body.front #main-region{
 }
 
 .mCSB_dragger .mCSB_dragger_bar{
-    background-color: #f75e50 !important;
+    background-color: #f35369 !important;
 }
 
 #place-photo-video{
@@ -929,7 +931,7 @@ body.front #main-region{
     margin:20px 0;
 }
 #list-tour-by-des a{
-    background:#f75e50;
+    background:#f35369;
     color:#FFF;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
@@ -946,7 +948,7 @@ body.front #main-region{
 }
 
 #user-login-form{
-    color:#f75e50;
+    color:#f35369;
 }
 
 #budget-after{
@@ -968,8 +970,91 @@ body.front #main-region{
    
 }
 #export-img h4{
-    color:#f75e50;
+    color:#f35369;
     font-size:20px;
+}
+#user-tools a{
+    color:#FFF;
+}
+#user-tools{
+    position: absolute;
+    bottom:-40px;
+    right:0px;
+}
+#user-tools a{
+    margin-left: 10px;
+}
+.page-user a,
+.node-type-post a{
+    color:#f35369;
+}
+.u-post{
+    display: inline-block;
+    width:100%;
+    margin-top:20px;
+    border: 1px solid #666;
+    background: #efefef;
+    padding:15px;
+}
+.u-post-tool{
+    margin:10px 0;
+    border-bottom: 1px solid #ccc;
+}
+.u-post-tool .fa-comments{
+    float:right;
+}
+.u-post .comment-body{
+    font-size:13px;    
+}
+.u-post-info img{
+    width:120%;
+}
+.u-post-date,
+.created{
+    font-size:13px;
+    font-style: italic;
+    color:#999;
+}
+.u-post-main{
+    background: #FFF;
+    border-top:1px solid #ccc;
+    border-bottom:1px solid #ccc;
+    margin:15px 0;
+    padding: 10px;
+}
+
+.u-post .comment-form{
+    display: none;
+}
+.u-post .comment-form .form-type-item,
+.u-post .comment-form label{
+    display: none;
+}
+.u-post-tool .fa{
+    cursor:pointer;
+}
+h3.u-post-title{
+    margin:0;
+}
+
+.node-type-post h1#page-title{
+    display: none;
+}
+#user-tools .flag-wrapper a{
+    display: inline-block;
+    padding:4px 10px;
+}
+/* tmp: hide some fields */
+.page-user-update #edit-fboauth,
+.page-user-update .form-item-status,
+.page-user-update .form-item-roles,
+.page-user-update #edit-locale,
+.page-user-update #edit-timezone,
+.page-user-update #edit-picture{
+    display: none;
+}
+.page-user-update .file-icon{
+    width:auto;
 }
 @media (max-width: 1024px) {
     #main-menu{

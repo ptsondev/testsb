@@ -290,32 +290,34 @@ jQuery(document).ready(function($){
     
     
     
-    var liHeight = 300;    
-    var tourTop = $('#tour-detail .timeline').offset().top;    
-    $('.timeline-item').draggable();
-    $('#tour-detail .timeline').droppable({
-        drop: function( event, ui ) {            
-            if(ui.offset.top  <  tourTop){
-                    console.log('x');
-                    $('#tour-detail .timeline ul[data-day=1]').prepend(ui.draggable);
-                    ui.draggable.css({top: '0', left:'none'});
-                    //return false;
-            }else{
-                // tim ra thang tren no de insert no vao sau
-                $('#tour-detail .timeline > ul > li').each(function(){
-                    if($(this).attr('fid') != ui.draggable.attr('fid')){
-                        var h = $(this).offset().top;
-                        if(h+liHeight > ui.offset.top){
-                            //console.log($(this));
-                            $(this).after(ui.draggable);
-                            ui.draggable.css({top: 0, left:'none'});
-                            return false;
+    if( $('#tour-detail').length){
+        var liHeight = 300;    
+        var tourTop = $('#tour-detail .timeline').offset().top;    
+        $('.timeline-item').draggable();
+        $('#tour-detail .timeline').droppable({
+            drop: function( event, ui ) {            
+                if(ui.offset.top  <  tourTop){
+                        console.log('x');
+                        $('#tour-detail .timeline ul[data-day=1]').prepend(ui.draggable);
+                        ui.draggable.css({top: '0', left:'none'});
+                        //return false;
+                }else{
+                    // tim ra thang tren no de insert no vao sau
+                    $('#tour-detail .timeline > ul > li').each(function(){
+                        if($(this).attr('fid') != ui.draggable.attr('fid')){
+                            var h = $(this).offset().top;
+                            if(h+liHeight > ui.offset.top){
+                                //console.log($(this));
+                                $(this).after(ui.draggable);
+                                ui.draggable.css({top: 0, left:'none'});
+                                return false;
+                            }
                         }
-                    }
-                });    
-            } 
-        }
-    });        
+                    });    
+                } 
+            }
+        });       
+    }
     
     // Begin customize tour
     $('#btnCustomTour').click(function(){
@@ -535,6 +537,12 @@ jQuery(document).ready(function($){
         $(this).val(k);
     });
 
+    if( $('.u-post-tool').length){
+        $('.u-post-tool .fa-comments').click(function(){
+           var nid = $(this).data('nid');
+           $('#u-post-'+nid+' .comment-form').toggle();
+        });
+    }
 });
 
 

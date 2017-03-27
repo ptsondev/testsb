@@ -1,34 +1,8 @@
 <?php
 $uid = arg(1);
 $account = user_load($uid);
+echo theme('bc_user_header');
 ?>
-
-
-<div id="user-profile">
-    <?php
-        echo '<div id="profile-top">';
-            if(!empty($account->field_cover[LANGUAGE_NONE])){
-                echo file_create_url($account->field_cover[LANGUAGE_NONE][0]['uri']);
-            }
-           
-            
-            echo '<div id="avatar">';
-            if(!empty($account->field_avatar[LANGUAGE_NONE])){
-                echo '<img src="'.image_style_url('large', $account->field_avatar[LANGUAGE_NONE][0]['uri']).'" />';
-            }
-            echo '</div>';
-                    
-        
-            $name = $account->name;
-            if(!empty($account->field_full_name[LANGUAGE_NONE])){
-                $name = $account->field_full_name[LANGUAGE_NONE][0]['value'];
-            }
-
-            echo '<h2 id="fullname">'.$name.'</h2>';
-        echo '</div>';
-    ?>
-        
-</div>
 
 <div id="sidebar" class="col-sm-4 col-xs-12">
     Sidebar => Chưa biết để gì vô
