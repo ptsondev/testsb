@@ -71,6 +71,7 @@ function display_video($node, $width=760, $height=480){
 
 function display_photos_as_gallery($node){
     ?>
+    <div id="hinhs-wrapper">
     <div id="jssor_1" style="position: relative; margin: 0 auto; top: 0px; left: 0px; width: 1400px; height: 900px; overflow: hidden; visibility: hidden; background-color: #24262e;">
     <!-- Loading Screen -->
     <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
@@ -92,6 +93,7 @@ function display_photos_as_gallery($node){
         ?>
 
     </div>
+    
     <!-- Thumbnail Navigator -->
     <div data-u="thumbnavigator" class="jssort01" style="position:absolute;left:0px;bottom:0px;width:800px;height:100px;" data-autocenter="1">
     <!-- Thumbnail Item Skin Begin -->
@@ -109,6 +111,7 @@ function display_photos_as_gallery($node){
     <span data-u="arrowleft" class="jssora05l" style="top:158px;left:8px;width:40px;height:40px;"></span>
     <span data-u="arrowright" class="jssora05r" style="top:158px;right:8px;width:40px;height:40px;"></span>
     </div>
+        </div>
     <script type="text/javascript">jssor_1_slider_init();</script>
 
     <?php 

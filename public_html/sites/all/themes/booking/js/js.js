@@ -22,7 +22,12 @@ jQuery(document).ready(function($){
 	$('#btnShowMenu').click(function(){
 		$('#main-menu').toggle();
 	});
-
+        $("body").click(function (e) {
+            if (e.target.className !== 'menu' && e.target.id !== 'btnShowMenu') {
+                $('#main-menu').hide();
+            }
+        });
+        
 	$('a.dropdown-toggle').click(function(e){
 		$(this).next('ul').toggle();
 		 e.stopPropagation();
@@ -570,15 +575,19 @@ function confirmLogin(){
 
 
 function parallax() {
-    var scrollPos = $(window).scrollTop();		    
-    if(scrollPos >100){	
-        $('#header-r2').addClass('active');
-        $('#bcform-search-destination').insertAfter($('#site-logo'));
-    }else{
-        if(isHome){
-            $('#header-r2').removeClass('active');	
+    var win_width = $( window ).width();
+    
+        var scrollPos = $(window).scrollTop();		    
+        if(scrollPos >100){	
+            $('#header-r2').addClass('active');
+            if(win_width > 700){
+                $('#bcform-search-destination').insertAfter($('#site-logo'));
+            }
+        }else{
+            if(isHome){
+                $('#header-r2').removeClass('active');	
+            }        
         }
-    }
 }
 
 function formatNumber (num) {

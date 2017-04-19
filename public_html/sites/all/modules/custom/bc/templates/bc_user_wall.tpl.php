@@ -26,10 +26,13 @@ foreach ($posts as $post) {
         echo '</div>';
 
         echo '<div class="u-post-tool">';
-            echo '<i class="fa fa-comments" aria-hidden="true" data-nid="'.$post->nid.'"> Comment</i>';
-                        
+            echo '<a class="twitter-share-button"href="https://twitter.com/intent/tweet">Tweet</a>';
+            echo '<div class="ggplus-like"><script src="https://apis.google.com/js/platform.js" async defer></script><g:plusone></g:plusone></div>';
+            echo '<i class="fa fa-comments" aria-hidden="true" data-nid="'.$post->nid.'"> Comment</i>';                        
             //echo flag_create_link('like', $post->nid);            
-            echo '<div class="fb-like" data-href="'.url('node/'.$post->nid).'" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>';
+            echo '<div class="fb-like" data-href="'.url('node/'.$post->nid).'" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>';
+            
+            
         echo '</div>';
         
         $form = drupal_get_form("comment_node_post_form", (object) array('nid' => $post->nid));

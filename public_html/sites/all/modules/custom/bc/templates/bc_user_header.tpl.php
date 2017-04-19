@@ -8,9 +8,9 @@ $account = user_load($uid);
 
 <div id="user-profile">
     <?php
-        echo '<div id="profile-top">';
+        echo '<div id="profile-top" style="background:url('.file_create_url($account->field_cover[LANGUAGE_NONE][0]['uri']).');">';
             if(!empty($account->field_cover[LANGUAGE_NONE])){
-                echo file_create_url($account->field_cover[LANGUAGE_NONE][0]['uri']);
+                //echo file_create_url($account->field_cover[LANGUAGE_NONE][0]['uri']);
             }
            
             

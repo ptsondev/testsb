@@ -68,6 +68,9 @@ img{
 	padding-top: 3px;
 }
 
+.post-content img{
+    width:auto;
+}
 #main-menu{
 	display:inline-block;
 	float:left;     
@@ -999,6 +1002,8 @@ body.front #main-region{
 .u-post-tool{
     margin:10px 0;
     border-bottom: 1px solid #ccc;
+    position: relative;
+    min-height: 50px;
 }
 .u-post-tool .fa-comments{
     float:right;
@@ -1056,9 +1061,67 @@ h3.u-post-title{
 .page-user-update .file-icon{
     width:auto;
 }
+
+.twitter-share-button{
+    background: url('../images/tweet-btn.png') no-repeat;
+    display: inline-block;
+    width:60px;
+    height:20px;
+    background-size:100%;
+    font-size:0;
+    overflow: hidden;
+    position: absolute;
+    top:0;
+    left: 0;
+}
+.u-post-tool .ggplus-like{
+    position: absolute;
+    top:0;
+    left:80px; 
+}
+.u-post-tool .fb-like{
+    position: absolute;
+    top:0;
+    left:160px; 
+}
 @media (max-width: 1024px) {
     #main-menu{
         margin-left:0;
+    }
+    .timeline .timeline-items .timeline-item{
+        min-height:290px; 
+    }
+    .tour-detail-2 .content{
+        height:220px;
+    }
+    #header-r2 #bcform-search-destination{
+        display: block;
+        width:100%;
+        margin-left:0;
+    } 
+    #header-r2 #main-menu-region{
+        position: fixed;
+        right: 20px;
+    }
+    #txtSearchPlace{
+        width:100%;
+    }
+    #home-slide .slide-content{
+        width:200px;
+        height:200px;
+        top:60%;
+    }
+    body.front #main-region{
+        margin-top:300px;
+    }
+    #travellers-info{
+        min-height: 300px;
+    }
+    .timeline .timeline-items .timeline-item::after{
+        right:-10%;
+    }
+    .timeline h2{
+        margin-right: 20px !important;
     }
 }
 
@@ -1076,11 +1139,118 @@ h3.u-post-title{
 	#main-menu{
 		position: absolute;
 		width:100%;
-		top:10px;
+		top:30px;
 		left: 10px;
 		z-index: 99;
 		background:#FFF;	
 		display:none;
 	}
+        
+    #header-r2 #main-menu-region {
+        position: absolute;
+        float: none;
+        left: 1%;
+        top: 20px;
+        display: inline-block;
+        width: 96%;
+    }
+    #main-menu li{
+        width:100%;
+    }
+    #main-menu li a,
+    #main-menu li a:hover{
+        color:#f35369;
+        padding:5px 15px;
+    }
+    #btnShowMenu{
+        float:right;
+    }
+    #search-region{
+        padding-top:10px;
+    }
+    #home-slide h4{
+        line-height: 20px;
+    }
+    #home-slide .rslides_tabs{
+        bottom:10px;
+    }
+    body.front #main-region{
+        margin-top:160px;
+    }
+    #main-menu{
+        border:1px solid #ccc;
+    }
+    #header-r2 #site-logo{
+        position: absolute;
+        z-index:999;
+    }
+    #header-r2{
+        min-height: 50px;
+    }
 }
 
+@media (max-width: 480px) {
+    #home-slide .slide-content{
+        width:300px;
+        height:70px;
+        top:140px;
+        padding:5px;
+        border-width: 2px;
+        
+    }
+    #home-slide h4,
+    #home-slide .des{
+        font-size:18px;
+        margin:5px;
+    }
+    body.front #main-region{
+        margin-top:40px;
+    }
+    #top-des h2{
+        margin:10px 0;
+        font-size:20px;
+    }
+    .timeline .timeline-items .timeline-item{
+        min-height: 180px;
+    }
+    .tour-detail-2 .content{
+        height: 140px;
+    }
+    .timeline .timeline-items .timeline-item h3{
+        font-size:16px;
+    }
+    .u-post-tool .fa-comments{
+        display: inline-block;
+        width:100%;
+        margin:30px 0 10px 0;
+        float: none;
+    }
+    #user-profile{
+        margin-bottom: 80px;
+    }
+    #user-tools{
+        left:0px;
+        right:auto;
+        bottom:-90px;
+    }
+    .u-post-tool{
+        overflow: hidden;
+    }
+    #user-tools a{
+        margin-left: 0;
+        margin-right: 5px;
+    }
+}
+
+@media (max-width: 320px) {
+    #profile-top #fullname{
+        bottom: 120px;
+        left: 40px;
+    }
+    #home-slide .slide-content{
+        display: none;
+    }
+    body.front #main-region{
+        margin-top: 0;
+    }
+}

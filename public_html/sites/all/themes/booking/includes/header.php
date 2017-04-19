@@ -32,7 +32,7 @@
                </li>
 
                 <li><a href="">Travel Book</a></li>                
-                <li><a href="">Travel Blog</a></li>
+                <li><a href="<?php echo url('blog')?>">Travel Blog</a></li>
                 <li><a href="">Liên Hệ</a></li>    
                 <?php if(user_is_logged_in()) { ?>
 					<li><a href="<?php echo url('user');?>">Trang cá nhân</a></li>
