@@ -288,6 +288,7 @@ form div.password-confirm{
 
 #custom-login-area{
 	background:#FFF;
+        color:#333;
 	padding:20px;
 	border:1px solid #ccc;
 	-webkit-border-radius: 10px;
@@ -304,6 +305,7 @@ form div.password-confirm{
 #custom-login-area a{
     font-style: italic;
     text-decoration: underline;
+    color:#333 !important;
 }
 #custom-login-area  li{
 	padding:0;
@@ -1240,6 +1242,11 @@ h3.u-post-title{
         margin-left: 0;
         margin-right: 5px;
     }
+    #custom-login-area{
+        position: absolute !important;
+        top:60px !important;
+        z-index: 999 !important;
+    }
 }
 
 @media (max-width: 320px) {
@@ -1252,5 +1259,11 @@ h3.u-post-title{
     }
     body.front #main-region{
         margin-top: 0;
+    }
+    .timeline .timeline-items .timeline-item{
+        min-height: 120px;
+    }
+    .tour-detail-2 .content{
+        height: 80px;
     }
 }
