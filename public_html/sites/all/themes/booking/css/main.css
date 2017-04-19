@@ -1213,10 +1213,10 @@ h3.u-post-title{
         font-size:20px;
     }
     .timeline .timeline-items .timeline-item{
-        min-height: 180px;
+        min-height: 160px;
     }
     .tour-detail-2 .content{
-        height: 140px;
+        height: 120px;
     }
     .timeline .timeline-items .timeline-item h3{
         font-size:16px;
@@ -1261,9 +1261,9 @@ h3.u-post-title{
         margin-top: 0;
     }
     .timeline .timeline-items .timeline-item{
-        min-height: 120px;
+        min-height: 100px;
     }
     .tour-detail-2 .content{
-        height: 80px;
+        height: 70px;
     }
 }

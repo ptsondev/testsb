@@ -5,17 +5,18 @@
 <article class="<?php print $classes; ?> destination-main-body" data-nid="<?php print $node->nid; ?>" >
   
 
-  <div class="content">
-      
-    
+  <div class="content">    
+    <?php 
+        if(s_is_mobile()){
+                    echo theme('full_custom_tour_data', array('nid'=>$node->nid));
+                }else{ ?>
         <div class="info-group" id="place-info">
                 <h3 class="group-title"><?php echo t('Destination information'); ?></h3>
-                <?php 
-                  echo theme('place_detail', array('place_id'=>$node->field_destination[LANGUAGE_NONE][0]['nid']));
-                ?>
+                
+                <?php  echo theme('place_detail', array('place_id'=>$node->field_destination[LANGUAGE_NONE][0]['nid'])); ?>
         </div>
-              
-      
+                <?php } ?>      
+      <!--
       <div class="info-group col-sm-12 col-xs-12" id="tour-detail" data-bgid="<?php echo $node->field_background[LANGUAGE_NONE][0]['fid']; ?>">
           <h3 class="group-title"><?php echo t('Tour detail'); ?></h3>
           <div class="timeline">
@@ -89,8 +90,8 @@
                 offset: 150
             });
           </script>
-      </div><!-- End tour detail -->
-      
+      </div>
+      -->
       <div class="row edit-mode"> 
          <div class="col-sm-6 col-xs-12">
               <div class="info-group" id="tour-info">
