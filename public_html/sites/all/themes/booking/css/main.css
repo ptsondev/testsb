@@ -1202,7 +1202,7 @@ h3.u-post-title{
         top:140px;
         padding:5px;
         border-width: 2px;
-        
+        display: none;
     }
     #home-slide h4,
     #home-slide .des{
