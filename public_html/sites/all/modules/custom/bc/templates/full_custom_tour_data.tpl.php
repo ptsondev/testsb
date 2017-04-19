@@ -2,7 +2,7 @@
 $node = node_load($nid);
 $place = node_load($node->field_destination[LANGUAGE_NONE][0]['nid']);
 ?>
-<div class="info-group" id="place-info">
+<div class="info-group full-data" id="place-info">
     <h3 class="group-title"><?php echo t('Destination information'); ?></h3>
     <h4><i class="fa fa-info-circle" aria-hidden="true"></i><?php echo t('General Information');?></h4>
     <?php echo $place->field_general_info[LANGUAGE_NONE][0]['value'];?>

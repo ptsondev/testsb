@@ -1086,6 +1086,10 @@ h3.u-post-title{
     top:0;
     left:160px; 
 }
+.info-group.full-data h4{
+    color:#f35369;
+    margin:5px 0;
+}
 @media (max-width: 1024px) {
     #main-menu{
         margin-left:0;
