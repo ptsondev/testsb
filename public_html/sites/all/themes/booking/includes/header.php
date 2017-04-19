@@ -39,12 +39,11 @@
 					<li><a href="<?php echo url('user/logout');?>">Thoát</a></li>
 				<?php }else{ // user is anonymous ?>				
 					<li><a id="btn-login" href="<?php echo url('user/login');?>">Đăng nhập</a></li>
-					<li><a href="<?php echo url('user/register');?>">Đăng ký</a></li>                
-					<?php echo theme('custom_login_area'); 	
-				}
-				?>
+					<li><a href="<?php echo url('user/register');?>">Đăng ký</a></li>                					
+				<?php } ?>
             </ul>
         </div>    
+        <?php echo theme('custom_login_area'); 	 ?>
     </div>
 
     <?php if(drupal_is_front_page()){ ?>
