@@ -15,8 +15,8 @@
                 
                 <?php  echo theme('place_detail', array('place_id'=>$node->field_destination[LANGUAGE_NONE][0]['nid'])); ?>
         </div>
-                <?php } ?>      
-      <!--
+                    
+      
       <div class="info-group col-sm-12 col-xs-12" id="tour-detail" data-bgid="<?php echo $node->field_background[LANGUAGE_NONE][0]['fid']; ?>">
           <h3 class="group-title"><?php echo t('Tour detail'); ?></h3>
           <div class="timeline">
@@ -91,7 +91,7 @@
             });
           </script>
       </div>
-      -->
+                <?php } ?>
       <div class="row edit-mode"> 
          <div class="col-sm-6 col-xs-12">
               <div class="info-group" id="tour-info">

@@ -34,7 +34,7 @@ jQuery(document).ready(function($){
     	e.preventDefault();
 	});
 	
-    if( $('#txtSearchPlace').length){
+    if( $('#txtSearchPlace').length || $('#txtDes').length){
     		var availablePlaces = [];
 	    	jQuery.ajax({
 	            method: "POST",
@@ -42,12 +42,11 @@ jQuery(document).ready(function($){
 	            url: ajaxPath,
 	                data: {action: "getAvaiablePlaces"},
 	                success: function (response) {
-	                	console.log(response);
 	                    availablePlaces = jQuery.parseJSON(response);
 	                }
 	        });
 	    
-        $( "#txtSearchPlace" ).autocomplete({
+        $( "#txtSearchPlace, #txtDes" ).autocomplete({
           source: availablePlaces
         });
     };
@@ -547,7 +546,7 @@ jQuery(document).ready(function($){
            var nid = $(this).data('nid');
            $('#u-post-'+nid+' .comment-form').toggle();
         });
-    }
+    }   
 });
 
 
@@ -597,6 +596,8 @@ function formatNumber (num) {
 }
 
 function removeFormatNumber(num){
-    //num = num.toString();
+    if(!num){
+        return 0;
+    }
     return parseInt(num.replace(/\,/g, ''));
 }

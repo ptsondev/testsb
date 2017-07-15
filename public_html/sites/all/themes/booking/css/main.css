@@ -1090,6 +1090,179 @@ h3.u-post-title{
     color:#f35369;
     margin:5px 0;
 }
+/* Booking request */
+#booking-request-form{    
+}
+#booking-request-form #txtDes,
+#booking-request-form #txtDes:focus{
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    padding:5px;
+    width:100%;
+}
+#booking-request-form #sPPN{
+    width:100%;
+    margin-bottom:18px;
+}
+#booking-request-form .search-filter{
+    padding: 5px 0 10px;
+}
+#booking-request-form h4{
+    color:#f35369;
+    font-weight: bold;
+}
+#booking-request-form #filter-des{
+    position: relative;
+}
+#booking-request-form #btnCheckIn,
+#booking-request-form #btnCheckOut{
+    position: absolute;
+    right:40px;
+    top:45px;    
+}
+#booking-request-form #btnCheckIn{
+    right:140px;
+}
+#booking-request-form .dCheck{
+    display: none;
+}
+#booking-request-form #filter-room input[type=number]{
+    width:40px;
+}
+#booking-request-form #filter-room .fa{
+    cursor: pointer;
+}
+#booking-request-form .ui-datepicker-trigger{
+    width:15px;
+    cursor: pointer;
+}
+#booking-request-form h4.inl{
+    display: inline-block;
+    width:85px;
+    margin:5px 0;
+}
+#filer-rating h4.inl{
+    width: auto;
+    vertical-align: text-bottom;
+}
+#booking-request-form .f-rating {
+    display: inline-block;
+    padding: 0;
+}
+#booking-request-form  .buttons{
+    display: block;
+    
+    margin:10px auto;
+}
+#booking-request-form  .buttons input{
+    width:120px;
+}
+#booking-request-form #btnSaveBookingReQuest{
+    background: #ccc;
+}
+.node-type-booking-request h4.inl{
+    width:auto !important;
+}
+
+.btnDeal{
+    color:#f35369;
+    cursor: pointer;
+}
+.view-booking-request table{
+    width:100%;
+}
+.view-booking-request td{
+    padding:5px;
+}
+.view-booking-request table a{
+    color:#f35369;
+}
+#own-hotel{
+    position: absolute;
+    right: 10px;
+    width: 700px;
+    top: 0;
+    background: #FFF;
+    padding: 10px;
+    display: none;
+}
+#own-hotel label{
+    width:100px;
+}
+#own-hotel label.focus{
+    color:#f35369;
+}
+.view-booking-request table .views-field-php-2{
+    position: relative;
+}
+.node a{
+    color:#f35369;
+}
+#list-deals .deal{
+    padding:10px;
+}
+#list-deals .deal:nth-child(odd){
+    background: #eee;
+}
+#list-deals .deal:nth-child(even){
+    background:#fffff0;
+}
+#list-deals .deal .hotel-name{
+    font-size:22px;
+}
+#list-deals .deal .total-price{
+    margin:5px 0;
+}
+#list-deals .deal .ttp{
+    font-size:32px;
+    font-weight: bold;
+    color:#f35369;
+}
+.deal input[type=button]{
+    width:160px;
+    text-align: center;
+    margin:2px 0;
+    background: #fff;
+    color:#f35369;
+    border:1px solid #ccc;
+}
+.deal input[type=button]:hover{
+    background: #f35369;
+    color:#fff;
+    border:1px solid transparent;
+}
+#showMap{
+    margin-left: 20px;
+}
+#rooms-info .deal-decide{
+    margin-top:10px;
+    float: right;
+}
+.rdeal-hot{
+    font-size:18px;
+    background: #f35369;
+    color:#FFF;
+    padding:0 10px;
+}
+.rdeal-hot .price-total-deal{
+    font-size:22px;
+    font-weight: bold;
+}
+#rooms-info .room{
+    border:1px solid #ccc;
+    padding:10px 0;
+    margin-top:20px;
+}
+#rooms-info .room:hover{
+    -webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+}
+#tripadvisor-rating{
+    margin-bottom: 10px;
+}
+/* END Booking request */
 @media (max-width: 1024px) {
     #main-menu{
         margin-left:0;

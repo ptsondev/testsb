@@ -188,3 +188,14 @@ function s_is_mobile(){
     }
     return false;        
 }
+
+/**
+ * Get list hotel own by current users
+ */
+function get_own_hotels(){
+    global $user;
+    $hotels = db_query('SELECT nid, title FROM node WHERE TYPE=:type AND status=1 AND uid=:uid', array(
+        ':type'=>'hotel', ':uid'=>$user->uid
+    ))->fetchAll();
+    return $hotels;    
+}

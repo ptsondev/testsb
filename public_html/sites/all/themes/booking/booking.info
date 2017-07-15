@@ -24,6 +24,7 @@ stylesheets[all][] = css/animate.css
 stylesheets[all][] = css/timelify.css
 stylesheets[all][] = js/fancybox/jquery.fancybox.css
 stylesheets[all][] = css/jquery.mCustomScrollbar.css
+stylesheets[all][] = css/jquery.rateyo.css
 stylesheets[all][] = css/main.css
 
 ; Scripts
@@ -37,8 +38,10 @@ scripts[] = js/modernizr.2.5.3.min.js
 scripts[] = js/jssor.slider.min.js
 scripts[] = js/jquery.timelify.js
 scripts[] = js/fancybox/jquery.fancybox.js
+scripts[] = js/jquery.rateyo.js
 scripts[] = js/jquery.mCustomScrollbar.concat.min.js
 scripts[] = js/html2canvas.js
 scripts[] = js/canvas2image.js
 scripts[] = js/js.js
+scripts[] = js/booking.js
 

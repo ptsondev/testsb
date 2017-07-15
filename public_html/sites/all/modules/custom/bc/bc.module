@@ -3,7 +3,7 @@
 require_once('consts.php');
 require_once('libs.php');
 //require_once('forms/search_destination.php');
-
+        
 $arr_theme = array(   
     'support_online' => 'Support Online',
     'custom_login_area' => 'Custom login area',   
@@ -18,9 +18,12 @@ $arr_theme = array(
     'add_urgent_contact' => 'Add urgent contact',
     'add_ticket' => 'Add Ticket',
     'add_new_post' => 'Add New Post',
-    'user_update_profile' => 'User update Profile'
+    'user_update_profile' => 'User update Profile',    
+    'own_hotel' => 'Own hotel',    
     //'tour_detail' => 'Tour Detail',
     //'place_detail' => 'Place Detail'
+    // Booking
+    'booking_request' => 'Booking Request'
 );
 define('ARR_THEME', serialize($arr_theme));
 
@@ -102,6 +105,8 @@ function bc_menu_alter(&$items) {
 }
 
 function bc_form_alter(&$form, &$form_state, $form_id){
+    form_load_include($form_state, 'inc', 'node', 'node.pages'); // sher fix bug
+    
     //var_dump($form_id);
     if($form_id=='user_register_form') {
         unset($form['account']['mail']['#description']);
@@ -166,7 +171,7 @@ function bc_form_alter(&$form, &$form_state, $form_id){
 
 function update_location_item(&$form_state, $form_id){
     //var_dump($form_state);die;
-    
+    /* Khoa tam o local
     if(isset($form_state['nid']) && !empty($form_state['nid']['#value'])){
         db_query('update items SET lat=:lat, lng=:lng WHERE nid=:nid', array(
 				':nid' => $form_state['nid']['#value'],
@@ -174,7 +179,7 @@ function update_location_item(&$form_state, $form_id){
 				':lng' => $form_state['location_lng']['#value'],
 			));   
     }
-    
+    */
 }
 function bc_validate_agree_terms(&$form_state, $form_id){
     if(!$form_state['terms_agree']['#checked']){
@@ -542,6 +547,71 @@ function bc_ajax_process(){
     }else if($action=='getFullCustomTourData2'){
         $nid = check_plain($_REQUEST['nid']);
         echo theme('full_custom_tour_data2', array('nid'=>$nid));
+        return;
+    }else if($action=='bookingRequest'){         
+        $filter = $_REQUEST['filter'];            
+        $des = db_query('SELECT nid, title FROM node WHERE type=:type AND title LIKE :title', array(
+            ':type' => 'destination', ':title'=>'%'.db_like($filter['des']).'%'
+        ))->fetchObject();
+        
+        $node = new stdClass();
+        $node->type='booking_request';
+        $node->uid = $user->uid;
+        $node->status = $filter['status'];
+        $node->title='Booking request by '.getUserName($user) . ' - '.$des->title;        
+        
+        if(is_numeric($des->nid)){
+            $node->field_destination[LANGUAGE_NONE][0]['nid'] = $des->nid;
+        }
+        $node->field_check_in[LANGUAGE_NONE][0]['value'] = $filter['checkIn'];
+        $node->field_check_out[LANGUAGE_NONE][0]['value'] = $filter['checkOut'];
+        if(is_numeric($filter['nRoom'])){
+            $node->field_n_room[LANGUAGE_NONE][0]['value'] = $filter['nRoom'];
+        }
+        if(is_numeric($filter['nAdult'])){
+            $node->field_n_adult[LANGUAGE_NONE][0]['value'] = $filter['nAdult'];
+        }
+        if(is_numeric($filter['nChildren'])){
+            $node->field_n_children[LANGUAGE_NONE][0]['value'] = $filter['nChildren'];
+        }
+        if(is_numeric($filter['dPPN'])){
+            $node->field_price_per_night[LANGUAGE_NONE][0]['value'] = $filter['dPPN'];
+        }
+        $node->field_guest_rating[LANGUAGE_NONE][0]['value'] = $filter['rStar'];
+        $node->field_star_rating[LANGUAGE_NONE][0]['value'] = $filter['rTripAdvisor'];
+        $k=0;
+        foreach($filter['cType'] as $type){
+            $node->field_accomodation_type[LANGUAGE_NONE][$k++]['value']=$type;
+        }        
+        node_save($node);
+    }else if($action=='loadRoomsByHotel'){  
+        $hid = $_REQUEST['hid'];
+        $hotel = node_load($hid);
+        $tmp = new stdClass();
+        $tmp->rooms='';
+        foreach($hotel->field_room[LANGUAGE_NONE] as $k){
+            $room = field_collection_item_load($k);
+            $tmp->rooms.= '<option data-price="'.snh_display_price($room->field_price[LANGUAGE_NONE][0]['value']).'"  value="'.$room->item_id.'">'.$room->field_title[LANGUAGE_NONE][0]['value'].'</option>';
+        }
+        $first_room =  field_collection_item_load($hotel->field_room[LANGUAGE_NONE][0]);
+        $tmp->price = snh_display_price($first_room->field_price[LANGUAGE_NONE][0]['value']);
+        echo json_encode($tmp);
+        return;
+    }else if($action=='submitDeal'){  
+        $deal = $_REQUEST['deal'];
+        
+        $nid = db_insert('deals') // Table name no longer needs {}
+        ->fields(array(
+          'bkrid' => $deal['bkrid'],
+          'hid' => $deal['hid'],
+            'rid' => $deal['rid'],
+            'price' => $deal['price'],
+            'uid' => $user->uid,
+          'created' => REQUEST_TIME,
+        ))
+        ->execute();
+                      
+        echo snh_display_price($deal['price']);
         return;
     }
     
