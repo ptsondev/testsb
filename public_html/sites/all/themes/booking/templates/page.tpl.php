@@ -42,8 +42,5 @@ if(!empty($page['sidebar_first'])){
     </div>
 </main>
 
-<div id="main-footer">
-</div>
 
-
-
+<?php include_once(PATH_TO_INCLUDES . 'footer.php');  ?>

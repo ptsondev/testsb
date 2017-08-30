@@ -4,8 +4,10 @@ jQuery(document).ready(function($){
         isHome=true;
     }
     $(window).bind('scroll', function() {
-	parallax();
+    //	parallax();
     });	
+    var ww = window.screen.width;
+    
         
         fullURL = window.location.protocol + "//" + window.location.host;
 	ajaxPath = fullURL+'/ajax-process';
@@ -22,11 +24,14 @@ jQuery(document).ready(function($){
 	$('#btnShowMenu').click(function(){
 		$('#main-menu').toggle();
 	});
-        $("body").click(function (e) {
-            if (e.target.className !== 'menu' && e.target.id !== 'btnShowMenu') {
-                $('#main-menu').hide();
-            }
-        });
+        
+        if(ww < 800){
+            $("body").click(function (e) {
+                if (e.target.className !== 'menu' && e.target.id !== 'btnShowMenu') {
+                    $('#main-menu').hide();
+                }
+            });
+        }
         
 	$('a.dropdown-toggle').click(function(e){
 		$(this).next('ul').toggle();
@@ -50,6 +55,8 @@ jQuery(document).ready(function($){
           source: availablePlaces
         });
     };
+    
+    $("#btn-register").fancybox();
     
     /*$('.timeline').timelify({
         animLeft: "fadeInLeft",

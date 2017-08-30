@@ -32,7 +32,8 @@ box-shadow: 0px 0px 2px 1px rgba(25,196,143,1);
 
 
 body{
-	font-family: 'Roboto Condensed', sans-serif;
+	/*font-family: 'Roboto Condensed', sans-serif;*/
+        font-family: Open Sans, sans-serif;
 	font-size:16px;
 	color:#2f2f2f;
 }
@@ -71,63 +72,175 @@ img{
 .post-content img{
     width:auto;
 }
+#site-logo img{
+    width:180px;
+}
 #main-menu{
 	display:inline-block;
 	float:left;     
+        padding-top: 0;
+        margin-left: 10px;
 }
 .front #main-header{
     height:170px;
 }
+#main-menu li{
+    border-left:1px solid #ccc;
+    padding:0;
+}
+#main-menu li:last-child{
+    border-right: 1px solid #ccc;
+}
+#main-menu .dep-2 li{
+    border:none;
+}
+.popup{
+    display: none;
+}
 
+#popup-register{
+    width: 600px;
+}
+#p-register-left,
+#p-register-right{
+    display: inline-block;
+    float: left;
+    width:300px;
+    height:420px;
+    background: url('../images/register.png') no-repeat;
+    background-size:cover;
+}
+#p-register-right{
+    background: none;
+    padding:0 20px;
+}
+#p-register-right input{
+    font-size:14px;
+    width:100%;
+    border-radius: 0;
+    padding:10px 5px;
+}
+#p-register-right .form-item,
+#p-register-right .form-actions{
+    margin: 0 0 15px;
+}
+#p-register-right .description{
+    display: none;
+}
+#p-register-right  a.facebook-action-connect{
+    background: url('../images/fb-connect2.png') no-repeat;
+    background-size:contain;
+    display:inline-block;
+    width:100%;
+    height:50px;    
+    cursor: pointer;
+}
+#p-register-right   img{
+    width: 0;
+}
+
+#p-register-right h4.line{
+    margin:30px 0;
+}
+h4.line{
+   position: relative;
+   text-align: center;
+}
+h4.line::before{
+    content: ' ';
+    width:40%;
+    position: absolute;
+    background: #212121;
+    height:2px;
+    left:0;
+    top:10px;
+}
+h4.line::after{
+    content: ' ';
+    width:40%;
+    position: absolute;
+    background: #212121;
+    height:2px;
+    right:0;
+    top:10px;
+}
 #user-navigation{
 	float:right;
 	display:inline-block;
 	position:relative;
 	z-index: 999;
-        padding:18px; 
-        border-left:1px dashed #fff;
+        width:430px;
 }
 #user-navigation li{
     list-style:none;
 }
+#user-navigation .form-item{
+    margin:10px 0;
+}
+#user-navigation input[type=text],
+#user-navigation input[type=password]{
+    border:1px solid #333;
+    background: #fff;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    padding: 5px;
+    display: inline-block;
+    float: left;
+    width:120px;
+    margin-right: 5px;
+    font-size:12px;
+}
+#user-navigation input[type=submit]{
+    height:30px;    
+    font-size: 12px;
+    padding:0 15px;
+}
+#user-navigation  #edit-actions{
+    display: inline-block;
+    float: left;
+    margin: 0;    
+    margin-right: 10px;
+}
+#anonymous-more{
+    display: inline-block;
+    float: left;
+    font-size: 12px;
+    width:100px;
+}
+#anonymous-more #btn-register{
+    color:#1782f3;
+    text-transform: uppercase;
+}
 .not-front #main-region{
     padding-top:70px;
 }
-#header-r2 #bcform-search-destination{
-    display: inline-block;
-    margin-left: 30px;
-    float: left;
-    width:300px;
+#bcform-search-destination{
+    background:rgba(255, 255, 255, 0.6);
+    width:100%;
+    padding:20px;
+    height: 80px;
 }
-#header-r2 #bcform-search-destination #txtSearchPlace{
-    margin-top: 4px;
-    border:none;
+#bcform-search-destination .form-item{
+    margin:0;
 }
-#header-r2 #bcform-search-destination .form-item{
-    margin: 0;
+
+#main-header{
+    border-bottom: 1px solid #ccc;
 }
 #header-r2.active{
-    background: #f35369;
+    
 }
 #header-r2 li a{
-    color:#fff;
+    color:#212121;
+    font-size:12px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 #header-r2 .dropdown-menu a{
     color:#333;
 }
-#header-r2 li>a:focus, 
-#header-r2 li>a:hover{
-    background:none;
-    color:#FFF;
-}
-#header-r2{ 
-    z-index:999;
-    position: fixed;
-    display: inline-block;
-    width:100%;
-    color:#FFF;
-    padding:5px 30px;
-}
+
 
 #header-r2 #site-logo{
 	font-size:30px;
@@ -139,7 +252,7 @@ img{
 
 #header-r2 #main-menu-region{
     display: inline-block;
-    float: right;
+    float: left;
 }
 
 #main-menu-region .dropdown-menu a{
@@ -171,7 +284,7 @@ img{
 #search-region{
     position:relative;
     z-index:2;
-    padding-top:60px;
+    padding-top:170px;
 }
 #home-slide{
 	position:absolute;
@@ -235,9 +348,9 @@ img{
 #home-slide .rslides_tabs li:last-child{
 	margin-right:0;
 }
-#home-slide .rslides_tabs a{
-	color:#FFF;
-	background:#FFF;
+#home-slide .rslides_tabs a{	
+	background:opacity;
+        border: 1px solid #1a4fa0;
 	font-size:0;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
@@ -248,7 +361,7 @@ img{
 }
 
 #home-slide .rslides_tabs .rslides_here a{
-	background:#f35369; /*xanh*/
+	background:#1a4fa0; /*xanh*/
 }
 
 #main-region .main-wrapper{
@@ -317,7 +430,13 @@ form div.password-confirm{
 }
 
 body.front #main-region{
-	margin-top:450px;        
+	margin-top:330px;        
+}
+
+#title-top-6-des{
+    text-transform: uppercase;
+    font-size:16px;
+    font-weight: bold;
 }
 #user-profile{
 	margin-top:40px;
@@ -369,15 +488,26 @@ body.front #main-region{
 }
 
 #txtSearchPlace{
-    width:94% ;
-    padding:6px;
-    font-size:20px;
-    margin-top:24px;
-  
-    border:1px solid #000; 
+    width:84%;
+    margin-right: 1%;
+    display: inline-block;
+    float: left;
+    padding:10px 5px;
+    font-size:16px;
+    border:none;
+     -webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+    background: url('../images/homeSearch.png') no-repeat 5px 5px #fff;
+    background-size: 30px 30px;
+    padding-left: 40px;
 }
-#txtSearchPlace:focus{
-   
+#btnHomeSearch{
+   width:15%;
+    display: inline-block;
+    float: left;
+    height:41px;
+    background: #1782f3;
 }
 
 #loginor{
@@ -469,24 +599,41 @@ body.front #main-region{
 .top-des-wrapper{
 	position:relative;
 	margin-bottom: 30px;
+        overflow: hidden;
+        height: 200px;
+        -webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;     
 }
 .top-des-wrapper .title{
 	position:absolute;
-	bottom:-30px;
-	left:0px;
-	padding: 10px;
-	background: #FFF;
-	opacity: 0;
-	width:100%;
-	
+	top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);	
 }
-.top-des-wrapper:hover .title{
-	animation: top_des_title 0.3s forwards;
-	-ms-animation: top_des_title 0.3s forwards;
-	-webkit-animation: top_des_title 0.3s forwards;
+.top-des-wrapper img{      
+position:absolute;
+	top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);	
 }
+.top-des-wrapper:hover img{    
+    animation: img_hover 0.3s forwards;
+    -ms-animation: img_hover 0.3s forwards;
+    -webkit-animation: img_hover 0.3s forwards;
+}
+@keyframes img_hover{
+    from{
+        width:100%;
+    }
+    to{
+        width:110%;
+        filter: brightness(85%);
+    }
+}
+
 #top-des a{
-	color:#4b4b4b;
+	color:#ffffff;
 	font-size: 20px;
 }
 
@@ -510,17 +657,48 @@ body.front #main-region{
     	opacity: 0.8;
     }
 }
+#pre-f1,
+#pre-f2{
+    font-size: 12px;
+}
+#pre-f1{
+    background: #e1e1e1;
+    padding:8px 0 15px;
+}
+#pre-f2{
+    background: #ebebeb;
+    padding:8px 0 30px;
+}
 
+#main-footer{
+    background: url('../images/footer.png') no-repeat;
+    background-size:cover;
+    height: 120px;
+    width:100%;
+    padding-top: 60px;
+    color:#fff;
+    position: absolute;
+}
+#cpright{
+    font-size:12px;
+    padding-top:30px;
+}
+.front #main-footer{
+    background-color:#ebebeb;
+}
 .dropdown-submenu {
     position: relative;
 }
 
 .dropdown-submenu .dropdown-menu.dep-2 {
-    top: 0;
-    left: 100%;
+    bottom: 0;
+    left: 0;
+    
     margin-top: -1px;
 }
- 
+.dropdown-submenu .dropdown-menu.dep-2 li{
+    background: #FFF;
+}
 #search-results .item{
 	margin-bottom:20px;
 }
@@ -730,12 +908,12 @@ body.front #main-region{
 .u-post-tool input,
 .form-submit,
 #user-tools a{
-    background:#f35369;
+    background:#ff8f00;
     color:#FFF; 
     border:none;
-    -webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;        
+    -webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;        
 }
 .edit-mode input[type=radio]{
     margin-left: 10px;

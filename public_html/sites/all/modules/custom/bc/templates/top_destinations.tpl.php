@@ -3,11 +3,12 @@
     $nodes = node_load_multiple($top_des);
     $destinations = array_values($nodes);
 ?>
+<h2 class="col-sm-12" id="title-top-6-des">
+    <i class="fa fa-heart-o" aria-hidden="true"></i> 
+    Top 6 những điểm đến được yêu thích 
+</h2>
 
-<div id="top-des">
-    <h2 class="col-sm-12"><i class="fa fa-heart-o" aria-hidden="true"></i> 
-        Top 6 những điểm đến được yêu thích 
-    <i class="fa fa-heart-o" aria-hidden="true"></i></h2>
+<div id="top-des">    
     
     <div id="top-1" class="col-sm-6 col-xs-12">
         <a href="<?php echo url('node/'.$destinations[0]->nid);?>">

@@ -6,10 +6,12 @@
             if($messages){
                  echo '<div id="site-message">'.$messages.'</div>';
             }
-            echo theme('top_destinations');
+            echo theme('top_destinations');            
         ?>
 	</div>			
+        <?php 
+            echo theme('home_prefooter');
+        ?>
 </div>
 
-<div id="main-footer">
-</div>
+<?php include_once(PATH_TO_INCLUDES . 'footer.php');  ?>

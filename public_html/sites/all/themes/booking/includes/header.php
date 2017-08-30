@@ -2,48 +2,47 @@
     $ch = drupal_is_front_page()? '':'active';
 ?>
 <div id="main-header">    
-    <div id="header-r2" class="<?php echo $ch;?>">
-        <div id="site-logo"><a href="<?php echo $base_url;?>">Smart Booking</a></div>            
+    <div id="header-r2" class="container <?php echo $ch;?>">
+        <div id="site-logo"><a href="<?php echo $base_url;?>"><img src="<?php echo $logo; ?>" /></a></div>
         <div id="main-menu-region">    
             <i id="btnShowMenu" class="fa fa-bars" aria-hidden="true"></i>
             <ul class="nav navbar-nav" id="main-menu">              
-              <!--<li><a href="<?php echo $base_url;?>">Trang Chủ</a></li>                -->
+                <?php //if(user_is_logged_in()) { ?>
                 <li class="dropdown-submenu">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Travel Plan
-                    <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li class="dropdown-submenu">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Điểm đến du lịch
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Kế hoạch du lịch
                         <span class="caret"></span></a>
-                          <ul class="dropdown-menu dep-2"> 
-                            <li><a href="">Điểm đến theo vị trí địa lý</a></li>                
-                            <li><a href="">Điểm đến theo chủ đề</a></li>                
-                          </ul>
-                       </li>
-                       <li class="dropdown-submenu">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Kế hoạch du lịch của tôi
-                        <span class="caret"></span></a>
-                          <ul class="dropdown-menu dep-2"> 
-                            <li><a href="">Đã thực hiện</a></li>                
-                            <li><a href="">Đang thực hiện</a></li>                
-                          </ul>
-                        </li>                      
+                    <ul class="dropdown-menu dep-2"> 
+                        <li><a href="">Danh sách yêu thích</a></li>                                             
+                        <li><a href="">Đang thực hiện</a></li>                
+                        <li><a href="">Đã hoàn thành</a></li>   
                     </ul>
-               </li>
-
-                <li><a href="">Travel Book</a></li>                
-                <li><a href="<?php echo url('blog')?>">Travel Blog</a></li>
-                <li><a href="">Liên Hệ</a></li>    
-                <?php if(user_is_logged_in()) { ?>
-					<li><a href="<?php echo url('user');?>">Trang cá nhân</a></li>
-					<li><a href="<?php echo url('user/logout');?>">Thoát</a></li>
-				<?php }else{ // user is anonymous ?>				
-					<li><a id="btn-login" href="<?php echo url('user/login');?>">Đăng nhập</a></li>
-					<li><a href="<?php echo url('user/register');?>">Đăng ký</a></li>                					
-				<?php } ?>
-            </ul>
-        </div>    
-        <?php echo theme('custom_login_area'); 	 ?>
+                </li>
+                <?php //} ?>
+                
+                <li><a href="<?php echo url('blog')?>">Blog Du Lịch</a></li>
+            </ul>                       
+        </div>   
+        
+        <div id="user-navigation">
+            <?php if (user_is_logged_in()) { ?>
+                <li><a href="<?php echo url('user'); ?>">Trang cá nhân</a></li>
+                <li><a href="<?php echo url('user/logout'); ?>">Thoát</a></li>
+            <?php
+            } else { // user is anonymous 
+                $form = drupal_get_form('user_login');
+                echo drupal_render($form);
+                echo '<div class="popup" id="popup-register">';
+                    echo '<div id="p-register-left"></div>';
+                    echo '<div id="p-register-right">';
+                        $form = drupal_get_form('user_register_form');
+                        echo drupal_render($form);
+                        echo '<h4 class="line">Hoặc</h4>';
+                        echo fboauth_action_display('connect');
+                    echo '</div>';
+                echo '</div>';
+            }
+            ?>				                 
+        </div>        
     </div>
 
     <?php if(drupal_is_front_page()){ ?>
@@ -60,9 +59,10 @@
 
         <div id="home-slide">
             <ul class="rslides">
-                <li><img src="<?php echo PATH_TO_IMAGES; ?>s1.jpg" /><div class="slide-content"><h4>Bình Thuận</h4><div class="des">Nắng vàng biển xanh.</div></div></li>
-                <li><img src="<?php echo PATH_TO_IMAGES; ?>s2.jpg" /><div class="slide-content"><h4>Đà Lạt</h4><div class="des">Vùng đất nghỉ dưỡng.</div></div></li>
-                <li><img src="<?php echo PATH_TO_IMAGES; ?>s3.jpg" /><div class="slide-content"><h4>Nha Trang</h4><div class="des">Chém gió... chém cho có.</div></div></li>
+                <li><img src="<?php echo PATH_TO_IMAGES; ?>banner1.png" /></li>
+                <li><img src="<?php echo PATH_TO_IMAGES; ?>banner1.png" /></li>
+                <li><img src="<?php echo PATH_TO_IMAGES; ?>banner1.png" /></li>
+                <!--<li><img src="<?php echo PATH_TO_IMAGES; ?>banner1.png" /><div class="slide-content"><h4>Nha Trang</h4><div class="des">Chém gió... chém cho có.</div></div></li>-->
             </ul>
         </div>
 

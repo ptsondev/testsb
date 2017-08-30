@@ -6,6 +6,7 @@ require_once('libs.php');
         
 $arr_theme = array(   
     'support_online' => 'Support Online',
+    'home_prefooter' => 'Home Prefooter',
     'custom_login_area' => 'Custom login area',   
     'bc_user_profile' => 'User Profile',
     'bc_user_wall' => 'User Wall',
@@ -109,6 +110,7 @@ function bc_form_alter(&$form, &$form_state, $form_id){
     
     //var_dump($form_id);
     if($form_id=='user_register_form') {
+        /*
         unset($form['account']['mail']['#description']);
         unset($form['account']['pass']['#description']);
         //var_dump($form['account']['pass']);
@@ -121,12 +123,41 @@ function bc_form_alter(&$form, &$form_state, $form_id){
             '#title' =>'Toi dong y voi nhung dieu khoan tren'
         );
         $form['#validate'][] = 'bc_validate_agree_terms';
-
+        */
+        
+        unset($form['account']['name']['#description']);
+        unset($form['account']['name']['#title']);
+        $form['account']['name']['#attributes']['placeholder']='Tên đăng nhập';
+        unset($form['account']['mail']['#description']);
+        unset($form['account']['mail']['#title']);
+        $form['account']['mail']['#attributes']['placeholder']='Email';
+        $form['account']['pass']['#process'] = array('form_process_password_confirm', 'register_alter_password_confirm');
+        
+       
     }
     if($form_id=='user_login_block')  {
         $form['links']['#markup']='<div class="item-list"><ul>
                 <li class="last"><a href="/user/password" title="Request new password via e-mail.">'.t('Request new password').'</a></li>
             </ul></div>';
+    }
+    if($form_id=='user_login')  {
+        //var_dump($form);
+        unset($form['name']['#title']);
+        unset($form['name']['#description']);
+        $form['name']['#attributes']['placeholder']='Username/Email';
+        
+        unset($form['pass']['#title']);
+        unset($form['pass']['#description']);
+        $form['pass']['#attributes']['placeholder']='Password';
+        
+        $form['actions']['submit']['#value']='LOGIN';
+        
+        $form['links']['#markup']='<div id="anonymous-more">
+                <div><a id="btn-register" href="#popup-register">Đăng Ký</a></div>
+                <div><a id="btn-forgetpass" href="/user/password">Quên Mật Khẩu</a></div>
+            </div>';
+        $form['links']['#weight']=9999;
+        
     }
     
     if ($form_id == 'hotel_node_form') {
@@ -169,6 +200,16 @@ function bc_form_alter(&$form, &$form_state, $form_id){
     }
 }
 
+ function register_alter_password_confirm($element) {
+   unset($element['pass1']['#title']);
+   unset($element['pass1']['#description']);
+   $element['pass1']['#attributes']['placeholder'] = 'Mật khẩu';
+   unset($element['pass2']['#title']);
+   unset($element['pass2']['#description']);
+   $element['pass2']['#attributes']['placeholder'] = 'Xác nhận mật khẩu';
+   return $element;
+ }
+ 
 function update_location_item(&$form_state, $form_id){
     //var_dump($form_state);die;
     /* Khoa tam o local
@@ -669,9 +710,15 @@ function bcform_search_destination($form_state, $form_id){
     $form['#method'] = 'get';
     $form['key']=array(
         '#type' => 'textfield',
-        '#attributes'=> array('placeholder'=>t('Where to go?')),
+        '#attributes'=> array('placeholder'=>'Bạn muốn đi nơi đâu?'),
         '#id' => 'txtSearchPlace',
         //'#autocomplete_path' => 'destination/autocomplete',           
+    );  
+    
+    $form['submit']=array(
+        '#type' => 'submit',
+        '#value' => 'Tìm kiếm',
+        '#id' => 'btnHomeSearch'
     );  
     return $form;
 }

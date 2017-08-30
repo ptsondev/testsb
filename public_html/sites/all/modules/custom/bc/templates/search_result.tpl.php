@@ -9,6 +9,11 @@ $nids = db_query('SELECT nid FROM node WHERE type=:type AND title LIKE :key',
     array(':type'=>'destination', ':key'=>'%' . db_like($key) . '%'))->fetchCol();
 
    $nodes = node_load_multiple($nids);
+   if(!empty($nodes)){
+       $first = reset($nodes);       
+       drupal_goto(url('node/'.$first->nid));
+       return;
+   }
    foreach($nodes as $node){
         echo '<div class="des item col-sm-6 col-xs-12">';
             echo '<a href="'.url('node/'.$node->nid).'">';
