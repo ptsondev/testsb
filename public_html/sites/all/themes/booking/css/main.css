@@ -1441,7 +1441,13 @@ box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
     margin-bottom: 10px;
 }
 /* END Booking request */
-@media (max-width: 1024px) {
+@media (max-width: 1023px) {
+    #search-region{
+        padding-top:120px;
+    }
+    body.front #main-region{
+        margin-top:240px;
+    }
     #main-menu{
         margin-left:0;
     }
@@ -1461,7 +1467,13 @@ box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
         right: 20px;
     }
     #txtSearchPlace{
-        width:100%;
+        width:64%;
+    }
+    #bcform-search-destination{
+        height:54px;
+    }
+    #btnHomeSearch{
+        width:34%;
     }
     #home-slide .slide-content{
         width:200px;
@@ -1523,7 +1535,7 @@ box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
         float:right;
     }
     #search-region{
-        padding-top:10px;
+        padding-top:20px;
     }
     #home-slide h4{
         line-height: 20px;
@@ -1544,9 +1556,25 @@ box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
     #header-r2{
         min-height: 50px;
     }
+    #user-navigation #user-login{
+        display: none;
+    }
 }
 
 @media (max-width: 480px) {
+    #main-footer img{
+        width:150px;
+    }
+    #cpright{
+        padding-top:12px;
+        font-size:10px;
+    }
+    #title-top-6-des{
+        font-size:13px;
+    }
+    #bcform-search-destination{
+        padding:5px;
+    }
     #home-slide .slide-content{
         width:300px;
         height:70px;

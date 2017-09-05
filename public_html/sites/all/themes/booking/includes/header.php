@@ -6,6 +6,7 @@
         <div id="site-logo"><a href="<?php echo $base_url;?>"><img src="<?php echo $logo; ?>" /></a></div>
         <div id="main-menu-region">    
             <i id="btnShowMenu" class="fa fa-bars" aria-hidden="true"></i>
+            <!--<i id="btnShowUserNavigation" class="fa fa-user-circle" aria-hidden="true"></i>-->
             <ul class="nav navbar-nav" id="main-menu">              
                 <?php //if(user_is_logged_in()) { ?>
                 <li class="dropdown-submenu">
