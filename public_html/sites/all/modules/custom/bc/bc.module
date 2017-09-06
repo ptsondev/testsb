@@ -12,6 +12,7 @@ $arr_theme = array(
     'bc_user_wall' => 'User Wall',
     'travel_blog' => 'Travel blog',
     'top_destinations' => 'Top Destinations',
+    'top_videos' => 'Top Videos',
     'search_result' => 'Search Result',
     'add_customer' => 'Add Customer',
     'add_todo' => 'Add To do thing',
@@ -21,6 +22,8 @@ $arr_theme = array(
     'add_new_post' => 'Add New Post',
     'user_update_profile' => 'User update Profile',    
     'own_hotel' => 'Own hotel',    
+    'sb_custom_register' => 'SB Custom Register',
+    'travel_plan' => 'Travel plan',
     //'tour_detail' => 'Tour Detail',
     //'place_detail' => 'Place Detail'
     // Booking
@@ -154,7 +157,7 @@ function bc_form_alter(&$form, &$form_state, $form_id){
         
         $form['links']['#markup']='<div id="anonymous-more">
                 <div><a id="btn-register" href="#popup-register">Đăng Ký</a></div>
-                <div><a id="btn-forgetpass" href="/user/password">Quên Mật Khẩu</a></div>
+                <div><a id="btn-forgetpass" href="#popup-forgetpass">Quên Mật Khẩu</a></div>
             </div>';
         $form['links']['#weight']=9999;
         
@@ -653,6 +656,55 @@ function bc_ajax_process(){
         ->execute();
                       
         echo snh_display_price($deal['price']);
+        return;
+    }else if($action=='submitCustomRegister'){
+        $error = array();
+        $name = $_REQUEST['name'];
+        $email = $_REQUEST['email'];
+        $pass = $_REQUEST['pass'];
+        
+        $exist = user_load_by_name($name);
+        if($exist){
+            $error['name']='Tên đăng nhập này đã được sử dụng';
+        }
+        
+        if(!valid_email_address($email)){
+            $error['mail']='Email không hợp lệ';
+        }
+        $exist = user_load_by_mail($email);
+        if($exist){
+            $error['mail']='Email này đã được sử dụng';
+        }
+        
+        if(empty($error)){
+            // create new user
+            $new_user = array(
+                'name' => $name,
+                'pass' => $pass, // note: do not md5 the password
+                'mail' => $email,
+                'status' => 1,
+                'init' => $email,
+                'roles' => array(
+                  DRUPAL_AUTHENTICATED_RID => 'authenticated user',
+                  //3 => 'custom role',
+                ),
+          );
+
+           // The first parameter is sent blank so a new user is created.
+           user_save('', $new_user);           
+        }else{
+            echo json_encode($error);
+            die;
+        }
+    }else if($action=='addToFavorite'){
+        $nid = $_REQUEST['nid'];        
+        $exist = db_query('SELECT * FROM sb_user_tour WHERE uid=:uid AND nid=:nid AND type=:type', 
+                array(':uid'=>$user->uid, ':nid'=>$nid, ':type'=>MARK_FAVORITE))->fetchAll();
+        if(!$exist){
+            db_query('INSERT INTO sb_user_tour (uid, nid, type, created) VALUES (:uid, :nid, :type, :created)', 
+                    array(':uid'=>$user->uid, ':nid'=>$nid, ':type'=>MARK_FAVORITE, ':created'=>time()));
+        }        
+        echo url('travel-plan');
         return;
     }
     

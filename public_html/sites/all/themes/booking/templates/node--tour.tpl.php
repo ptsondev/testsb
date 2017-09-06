@@ -168,8 +168,9 @@
       </div>
       
       <div id="tour-buttons">
+        <input type="button" value="Cho vào danh sách yêu thích" id="btnAddToFavorite" />  
         <input type="button" value="<?php echo t('Customize this tour');?>" id="btnCustomTour" /> 
-        <input type="button" value="<?php echo t('Save this tour to your list'); ?>" id="btnSaveCustomTour" />
+        <input type="button" value="Lưuxxx" id="btnSaveCustomTour" />
       </div>
       
       <hr />

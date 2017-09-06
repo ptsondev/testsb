@@ -25,6 +25,62 @@ jQuery(document).ready(function($){
 		$('#main-menu').toggle();
 	});
         
+        $('#btn-re-submit').click(function(){            
+            var reName = $('#re-name').val();            
+            var reEmail = $('#re-email').val();
+            var rePass = $('#re-pass').val();
+            var rePass2 = $('#re-pass2').val();
+            var error = false;
+            if(jQuery.trim(reName)==''){                
+                $('#re-name').addClass('error');        
+                $('#re-name-ems').text('Tên đăng nhập không được để trống..');
+                error = true;
+            }else{
+                $('#re-name').removeClass('error');        
+            }
+            if(jQuery.trim(reEmail)==''){                
+                $('#re-email').addClass('error');        
+                $('#re-email-ems').text('Email không được để trống..');
+                error = true;
+            }else{
+                $('#re-email').removeClass('error');        
+            }
+            if(jQuery.trim(rePass)==''){                
+                $('#re-pass').addClass('error');        
+                $('#re-pass-ems').text('Mật khẩu không được để trống..');
+                error = true;
+            }else{
+                $('#re-pass').removeClass('error');        
+            }
+            if(rePass != rePass2){                
+                $('#re-pass2').addClass('error');        
+                $('#re-pass2-ems').text('Mật khẩu xác nhận không đúng');
+                error = true;
+            }else{
+                $('#re-pass2').removeClass('error');        
+            }
+            
+            if(!error){
+                // pass simple case, submit ajax
+                jQuery.ajax({
+	            method: "POST",
+	            async:false,
+	            url: ajaxPath,
+	                data: {action: "submitCustomRegister", name:reName, email:reEmail, pass:rePass},
+	                success: function (response) {
+                            if(response=="1"){
+                                // đăng ký thành công
+                                document.location.href="/";
+                            }else{
+                                response = jQuery.parseJSON(response);
+                                $('#re-name-ems').text(response['name']);
+                                $('#re-email-ems').text(response['mail']);                            
+                            }
+	                }
+	        });
+            }
+        });
+        
         if(ww < 800){
             $("body").click(function (e) {
                 if (e.target.className !== 'menu' && e.target.id !== 'btnShowMenu') {
@@ -56,7 +112,7 @@ jQuery(document).ready(function($){
         });
     };
     
-    $("#btn-register").fancybox();
+    $("#btn-register, #btn-forgetpass, #btnShowLocation, #btnShowPhotos").fancybox();
     
     /*$('.timeline').timelify({
         animLeft: "fadeInLeft",
@@ -341,6 +397,22 @@ jQuery(document).ready(function($){
                 scrollTop: $('#main-content').offset().top + 'px'
             }, 'fast');*/
         }
+    });
+    
+    /* 
+     * ADD TO FAVORITE LIST
+     * */
+    $('#btnAddToFavorite').click(function(){
+        nid = $('article.node-tour').data('nid');
+        jQuery.ajax({
+	    method: "POST",
+	    async:false,
+	    url: ajaxPath,
+	    data: {action: "addToFavorite", nid:nid},
+	    success: function (response) { 
+                window.location.href = response;
+            }
+	});
     });
     
     /*

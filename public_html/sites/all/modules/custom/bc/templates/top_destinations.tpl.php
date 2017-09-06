@@ -1,24 +1,25 @@
 <?php 
-    $top_des = db_query_range('SELECT nid FROM node WHERE type=:type AND status=1', 0, 6, array(':type'=>'destination'))->fetchCol();
-    $nodes = node_load_multiple($top_des);
-    $destinations = array_values($nodes);
-
 $destinations = views_get_view_result('top_6_destinations');
-
     
-        $des_1 = node_load($destinations[0]->nid); 
+    $des_1 = node_load($destinations[0]->nid); 
     $des_2 = node_load($destinations[1]->nid); 
     $des_3 = node_load($destinations[2]->nid); 
     $des_4 = node_load($destinations[3]->nid); 
     $des_5 = node_load($destinations[4]->nid); 
     $des_6 = node_load($destinations[5]->nid); 
+    $des_7 = node_load($destinations[6]->nid); 
+    $des_8 = node_load($destinations[7]->nid); 
+    $des_9 = node_load($destinations[8]->nid); 
+    $des_10 = node_load($destinations[9]->nid); 
+    $des_11 = node_load($destinations[10]->nid); 
+    $des_12 = node_load($destinations[11]->nid); 
 ?>
-<h2 class="col-sm-12" id="title-top-6-des">
+<h2 class="col-sm-12 title-top" id="title-top-6-des">
     <i class="fa fa-heart-o" aria-hidden="true"></i> 
-    Top 6 những điểm đến được yêu thích 
+    Top 10 những điểm đến được yêu thích 
 </h2>
 
-<div id="top-des">    
+<div id="top-des" class="list-top">    
     
     <div id="top-1" class="col-sm-6 col-xs-12">
         <a href="<?php echo url('node/'.$des_1->nid);?>">
@@ -66,6 +67,38 @@ $destinations = views_get_view_result('top_6_destinations');
             <div class="top-des-wrapper">
                 <img src="<?php echo image_style_url('square', $des_6->field_photos[LANGUAGE_NONE][0]['uri']);?>" />
                 <div class="title"><?php echo $des_6->title; ?></div>
+            </div>
+        </a>        
+    </div>
+    <div id="top-7" class="col-sm-3 col-xs-12">
+        <a href="<?php echo url('node/'.$des_7->nid);?>">
+            <div class="top-des-wrapper">
+                <img src="<?php echo image_style_url('square', $des_7->field_photos[LANGUAGE_NONE][0]['uri']);?>" />
+                <div class="title"><?php echo $des_7->title; ?></div>
+            </div>
+        </a>        
+    </div>
+    <div id="top-8" class="col-sm-3 col-xs-12">
+        <a href="<?php echo url('node/'.$des_8->nid);?>">
+            <div class="top-des-wrapper">
+                <img src="<?php echo image_style_url('square', $des_8->field_photos[LANGUAGE_NONE][0]['uri']);?>" />
+                <div class="title"><?php echo $des_8->title; ?></div>
+            </div>
+        </a>        
+    </div>
+    <div id="top-9" class="col-sm-3 col-xs-12">
+        <a href="<?php echo url('node/'.$des_9->nid);?>">
+            <div class="top-des-wrapper">
+                <img src="<?php echo image_style_url('square', $des_9->field_photos[LANGUAGE_NONE][0]['uri']);?>" />
+                <div class="title"><?php echo $des_9->title; ?></div>
+            </div>
+        </a>        
+    </div>
+    <div id="top-10" class="col-sm-3 col-xs-12">
+        <a href="<?php echo url('node/'.$des_10->nid);?>">
+            <div class="top-des-wrapper">
+                <img src="<?php echo image_style_url('square', $des_10->field_photos[LANGUAGE_NONE][0]['uri']);?>" />
+                <div class="title"><?php echo $des_10->title; ?></div>
             </div>
         </a>        
     </div>

@@ -6,6 +6,12 @@ jQuery(document).ready(function($){
         halfStar: true
     });
     
+    $('#des-rStar').rateYo({
+        rating: 4,
+        numStars: 5,
+        halfStar: true
+    });
+    
     $(".rateYo").each(function(){
        var rating = $(this).data('rating');        
         $(this).rateYo({            

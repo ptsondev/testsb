@@ -12,3 +12,7 @@ define('DEAL_WISHLIST', 2);
 define('DEAL_DENY', -1);
 
 define('VID_DESTINATION_SUBJECT', 5);
+
+define('MARK_FAVORITE', 1);
+define('MARK_DOING', 2);
+define('MARK_DONE', 3);

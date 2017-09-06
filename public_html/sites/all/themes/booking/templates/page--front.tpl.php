@@ -6,10 +6,11 @@
             if($messages){
                  echo '<div id="site-message">'.$messages.'</div>';
             }
-            echo theme('top_destinations');            
+            echo theme('top_destinations');                      
         ?>
 	</div>			
         <?php 
+            echo theme('top_videos');          
             echo theme('home_prefooter');
         ?>
 </div>
