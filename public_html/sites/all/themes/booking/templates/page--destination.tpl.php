@@ -29,16 +29,18 @@ $des_bg = image_style_url('width_2_height', $node->field_background[LANGUAGE_NON
                     <div class="pull-right"><label id="lblrate">Đánh giá <span class="num"><?php echo ($rate/20); ?></span>/</label><div id="des-rStar" class="my-rate"></div></div>
                 </div>
                 <?php $map = $node->field_link_google_map[LANGUAGE_NONE][0]['value']; ?>
-                <div id="popup-location" style="display: none;">
-                    <?php $xy = getCoordinatesByAddress('Hồ Chí Minh, Việt Nam');
-                        var_dump($xy);
-                    $html ='';
-                    $html.='<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.MAPKEY.'"></script>';
-            //$html.='<div id="map-canvas" style="width:100%; height:500px;"></div><div id="marker-tooltip"></div>';
-            //$html.='<script>initialize(' . $item->lat . ', ' . $item->lng . ');</script>';
-            //$html.='<script>addMarker(' . $item->nid . ',' . $item->lat . ', ' . $item->lng . ', "",  "");</script>';          
-                    //echo $html;
-                    ?>
+                <div id="location-wrapper" style="width:0;height:0;overflow:hidden;">
+                    <div id="popup-location" style="">
+                        <?php 
+                        $item = getCoordinatesByAddress(   $node->title.' , Việt Nam');                        
+                        $html ='';
+                        $html.='<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.MAPKEY.'"></script>';
+                        $html.='<div id="map-canvas" style="width:800px; height:500px;"></div><div id="marker-tooltip"></div>';
+                        $html.='<script>initialize(' . $item->lat . ', ' . $item->lng . ', 10);</script>';
+                        //$html.='<script>addMarker(' . $item->nid . ',' . $item->lat . ', ' . $item->lng . ', "",  "");</script>';          
+                        echo $html;
+                        ?>
+                    </div>
                 </div>
                 
                 <div id="des-r32">

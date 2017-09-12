@@ -1,13 +1,13 @@
 jQuery(document).ready(function($){	
-    ajaxPath = window.location.protocol + "//" + window.location.host+'/ajax-process';
+    ajaxPath = window.location.protocol + "//" + window.location.host+'/ajax-process';           
 });
 
 
 
-function initialize(lat, lng) {
+function initialize(lat, lng, z=15) {
     var mapOptions = {
         center: {lat: lat, lng:  lng},
-        zoom: 15
+        zoom: z
     };
     this.map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
     

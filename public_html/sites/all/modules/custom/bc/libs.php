@@ -157,10 +157,9 @@ function getData($url) {
 
 function getCoordinatesByAddress($address) {
     $address = str_replace(" ", "+", $address);
-    $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $address . "&key=" . MAPKEY;
+    $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $address;    
     $data = json_decode(getData($url));	
-	//var_dump($data);die;
-    if (!$data->results)
+	if (!$data->results)
         return null;
     $location = $data->results[0]->geometry->location;
     return $location;

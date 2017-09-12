@@ -138,7 +138,21 @@ jQuery(document).ready(function($){
       $('#txtSearchKey').toggle(); 
    });
    
-    $("#btn-register, #btn-forgetpass, #btnShowLocation, #btnShowPhotos").fancybox();
+    $("#btn-register, #btn-forgetpass, #btnShowPhotos").fancybox();
+    
+    $("#btnShowLocation").fancybox({
+      'hideOnContentClick': false, // so you can handle the map
+      'overlayColor'      : '#ccffee',
+      'overlayOpacity'    : 0.8,
+      'autoDimensions': true, // the selector #mapcontainer HAS css width and height
+      'onComplete': function(){
+        google.maps.event.trigger(map, "resize");          
+      },
+      'onCleanup': function() {
+       var myContent = this.href;
+       $(myContent).unwrap();
+      } // fixes inline bug
+     });
     
     /*$('.timeline').timelify({
         animLeft: "fadeInLeft",

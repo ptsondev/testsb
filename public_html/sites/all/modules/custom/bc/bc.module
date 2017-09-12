@@ -189,8 +189,11 @@ function bc_form_alter(&$form, &$form_state, $form_id){
             $html='';
             $html.='<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.MAPKEY.'"></script>';
             $html.='<div id="map-canvas" style="width:100%; height:500px;"></div><div id="marker-tooltip"></div>';
-            $html.='<script>initialize(' . $item->lat . ', ' . $item->lng . ');</script>';
-            $html.='<script>addMarker(' . $item->nid . ',' . $item->lat . ', ' . $item->lng . ', "",  "");</script>';          
+            $html.='<script>jQuery(document).ready(function($){';
+                $html.= 'initialize(' . $item->lat . ', ' . $item->lng . ');';
+                $html.='addMarker(' . $item->nid . ',' . $item->lat . ', ' . $item->lng . ', "",  "");';
+            $html.= '});</script>';          
+            
             $form['location_map']=array(
 		'#markup' => $html,
 		'#weight' => 90
@@ -713,12 +716,13 @@ function bc_ajax_process(){
             echo '<div class="error">Vui lòng nhập đúng địa chỉ Email</div>';
             return;
         }
-        if(!user_load_by_mail($mail)){
+        $account = user_load_by_mail($mail);
+        if(!$account){
             echo '<div class="error">Địa chỉ mail này không tồn tại trong hệ thống. Hãy thử lại</div>';
             return;
         }
         // gửi mail reset pass ở đây
-        _user_mail_notify('password_reset', $user);
+        _user_mail_notify('password_reset', $account);
         echo '<div class="success">Hãy kiểm tra Email</div>';
         return;
     }
