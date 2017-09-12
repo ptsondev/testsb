@@ -6,10 +6,12 @@ jQuery(document).ready(function($){
         halfStar: true
     });
     
+    var desRStar = $('#lblrate .num').text();
     $('#des-rStar').rateYo({
-        rating: 4,
+        rating: desRStar,
         numStars: 5,
-        halfStar: true
+        halfStar: true,
+        readOnly: true
     });
     
     $(".rateYo").each(function(){

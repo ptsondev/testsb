@@ -6,6 +6,6 @@
 	?>
         <div id="loginor"><h3>Hoặc</h3></div>
 	<h4>Đăng nhập với các mạng xã hội</h4>
-	<?php print fboauth_action_display('connect'); ?>
+	<?php //print fboauth_action_display('connect'); ?>
 	
 </div>

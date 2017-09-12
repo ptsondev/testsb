@@ -1,4 +1,4 @@
-<?php 
+<?php   
 include_once(PATH_TO_INCLUDES . 'header.php');
 $des_bg = image_style_url('width_2_height', $node->field_background[LANGUAGE_NONE][0]['uri']);
 ?>
@@ -19,15 +19,27 @@ $des_bg = image_style_url('width_2_height', $node->field_background[LANGUAGE_NON
             ?>
             <div id="main-content" class="<?php echo $class; ?> col-xs-12">
                 <div id="r21">
+                    
                     <h1 id="des-title"><?php echo $title;?></h1> 
                     <a href="#popup-location" id="btnShowLocation"></a>
                     <?php 
                     $url = $base_url.url('node/'.$node->nid); ?>
                     <a href="http://www.facebook.com/share.php?u=<?php echo $url ?>&title=[<?php echo $node->title;?>]" id="btnShare"></a>    
-                    
-                    <div class="pull-right"><label id="lblrate">Đánh giá <span class="num">4/</span></label><div id="des-rStar"></div></div>
+                    <?php $rate = $node->field_newtravelex_rating[LANGUAGE_NONE][0]['average']; ?>
+                    <div class="pull-right"><label id="lblrate">Đánh giá <span class="num"><?php echo ($rate/20); ?></span>/</label><div id="des-rStar"></div></div>
                 </div>
-                <div id="popup-location" style="display: none;">Map here</div>
+                <?php $map = $node->field_link_google_map[LANGUAGE_NONE][0]['value']; ?>
+                <div id="popup-location" style="display: none;">
+                    <?php $xy = getCoordinatesByAddress('Hồ Chí Minh, Việt Nam');
+                        var_dump($xy);
+                    $html ='';
+                    $html.='<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.MAPKEY.'"></script>';
+            //$html.='<div id="map-canvas" style="width:100%; height:500px;"></div><div id="marker-tooltip"></div>';
+            //$html.='<script>initialize(' . $item->lat . ', ' . $item->lng . ');</script>';
+            //$html.='<script>addMarker(' . $item->nid . ',' . $item->lat . ', ' . $item->lng . ', "",  "");</script>';          
+                    //echo $html;
+                    ?>
+                </div>
                 
                 <div id="des-r32">
                     <div class="item tempo">
@@ -41,11 +53,14 @@ $des_bg = image_style_url('width_2_height', $node->field_background[LANGUAGE_NON
                     <div class="item tour">
                         <div class="icon"></div>
                         <div class="info">
+                            <?php 
+                                $count = db_query('SELECT count(*) FROM field_data_field_destination WHERE field_destination_nid=:nid AND bundle=:bundle', array(':nid'=>$node->nid, ':bundle'=>'tour'))->fetchField();
+                            ?>
                             <div class="key">Tour hiện có</div>
-                            <div class="value">3 Tours</div>
+                            <div class="value"><?php echo $count; ?> Tours</div>
                         </div>
                     </div>
-                    
+                    <!--
                     <div class="item hotel">
                         <div class="icon"></div>
                         <div class="info">
@@ -53,6 +68,7 @@ $des_bg = image_style_url('width_2_height', $node->field_background[LANGUAGE_NON
                             <div class="value">635.488₫ -  2.483.315₫</div>
                         </div>
                     </div>
+                    -->
                 </div>
                 <?php
                 if($messages){

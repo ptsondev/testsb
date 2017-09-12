@@ -43,7 +43,8 @@
                         //echo drupal_render($form);
                         echo theme('sb_custom_register');
                         echo '<h4 class="line">Hoặc</h4>';
-                        echo fboauth_action_display('connect');
+                        //echo fboauth_action_display('connect');
+                        echo '<a href="'.url('user/simple-fb-connect').'">FB CN</a>';
                     echo '</div>';
                 echo '</div>';
                 

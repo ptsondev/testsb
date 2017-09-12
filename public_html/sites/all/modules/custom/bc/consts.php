@@ -4,7 +4,7 @@ define('PATH_TO_IMAGES', drupal_get_path('theme', 'booking').'/images/');
 define('PATH_TO_INCLUDES', drupal_get_path('theme', 'booking').'/includes/');
 
 define("MAPKEY", "AIzaSyAPcwqJJDe-Ja2UuHIHGbBJEkDUgeiCmSE");
-define("MAPKEY_CLIENT", "AIzaSyAPcwqJJDe-Ja2UuHIHGbBJEkDUgeiCmSE");
+define("MAPKEY_CLIENT", "3Iy5N0QVahM92Abm4YAv0yqz");
 define("MAP_R", 300);
 
 define('DEAL_BOOKING', 1);
