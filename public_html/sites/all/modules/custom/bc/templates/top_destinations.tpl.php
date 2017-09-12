@@ -11,8 +11,8 @@ $destinations = views_get_view_result('top_6_destinations');
     $des_8 = node_load($destinations[7]->nid); 
     $des_9 = node_load($destinations[8]->nid); 
     $des_10 = node_load($destinations[9]->nid); 
-    $des_11 = node_load($destinations[10]->nid); 
-    $des_12 = node_load($destinations[11]->nid); 
+    //$des_11 = node_load($destinations[10]->nid); 
+    //$des_12 = node_load($destinations[11]->nid); 
 ?>
 <h2 class="col-sm-12 title-top" id="title-top-6-des">
     <i class="fa fa-heart-o" aria-hidden="true"></i> 

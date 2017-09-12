@@ -1,4 +1,4 @@
-<div id="place-tabs">
+<div class="col-sm-3 col-xs-12" id="place-tabs">
     <div class="tab tab-general-info current" data-ref="general-info">
         <i class="fa fa-info-circle" aria-hidden="true"></i> <?php echo t('General Information');?>
     </div>
@@ -23,7 +23,7 @@
 </div>
 
 <?php $place = node_load($place_id); ?>
-<div id="place-tabs-ref">
+<div class="col-sm-9 col-xs-12" id="place-tabs-ref">
     <div id="place-general-info" class="tab-ref">
       <?php echo $place->field_general_info[LANGUAGE_NONE][0]['value'];?>
     </div>

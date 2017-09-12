@@ -23,6 +23,7 @@ $arr_theme = array(
     'user_update_profile' => 'User update Profile',    
     'own_hotel' => 'Own hotel',    
     'sb_custom_register' => 'SB Custom Register',
+    'sb_custom_forgot_password' => 'SB Custom Forgot Password',
     'travel_plan' => 'Travel plan',
     //'tour_detail' => 'Tour Detail',
     //'place_detail' => 'Place Detail'
@@ -706,6 +707,20 @@ function bc_ajax_process(){
         }        
         echo url('travel-plan');
         return;
+    }else if($action == 'ForgetPass'){
+        $mail = $_REQUEST['mail'];
+        if(!valid_email_address($mail)){
+            echo '<div class="error">Vui lòng nhập đúng địa chỉ Email</div>';
+            return;
+        }
+        if(!user_load_by_mail($mail)){
+            echo '<div class="error">Địa chỉ mail này không tồn tại trong hệ thống. Hãy thử lại</div>';
+            return;
+        }
+        // gửi mail reset pass ở đây
+        _user_mail_notify('password_reset', $user);
+        echo '<div class="success">Hãy kiểm tra Email</div>';
+        return;
     }
     
     echo "1";
@@ -748,11 +763,11 @@ function bc_mail($key, &$message, $params) {
 }
 
 function bc_user_login(&$edit, $account) {
-    /*if(user_has_role(RID_PAGE_MANAGER, $account)){
-        $edit['redirect'] = 'admin/manage-service';		
-	}else{
+    if(user_has_role(RID_MANAGE, $account)){
+        $edit['redirect'] = 'admin/manage-destination';		
+    }else{
         $edit['redirect'] = '<front>';    	
-    }*/
+    }
 }
 
 

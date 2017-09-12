@@ -26,7 +26,7 @@ $des_bg = image_style_url('width_2_height', $node->field_background[LANGUAGE_NON
                     $url = $base_url.url('node/'.$node->nid); ?>
                     <a href="http://www.facebook.com/share.php?u=<?php echo $url ?>&title=[<?php echo $node->title;?>]" id="btnShare"></a>    
                     <?php $rate = $node->field_newtravelex_rating[LANGUAGE_NONE][0]['average']; ?>
-                    <div class="pull-right"><label id="lblrate">Đánh giá <span class="num"><?php echo ($rate/20); ?></span>/</label><div id="des-rStar"></div></div>
+                    <div class="pull-right"><label id="lblrate">Đánh giá <span class="num"><?php echo ($rate/20); ?></span>/</label><div id="des-rStar" class="my-rate"></div></div>
                 </div>
                 <?php $map = $node->field_link_google_map[LANGUAGE_NONE][0]['value']; ?>
                 <div id="popup-location" style="display: none;">

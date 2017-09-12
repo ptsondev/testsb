@@ -1,14 +1,24 @@
-<article class="<?php print $classes; ?> tour-main-body" data-nid="<?php print $node->nid; ?>" >
-    <h3><span class="cicon info"></span>Thông tin hành trình</h3>
-    <?php  echo theme('place_detail', array('place_id'=>$node->field_destination[LANGUAGE_NONE][0]['nid'])); ?>
-    
-    
-    
-     
+<?php //echo snh_social_share();
+//$x = strtotime('Nov-16-2016');
+//var_dump($x);die;
+?>
+<article class="<?php print $classes; ?> destination-main-body" data-nid="<?php print $node->nid; ?>" >
+  
+
+  <div class="content">    
+    <?php 
+        if(s_is_mobile()){
+                    echo theme('full_custom_tour_data', array('nid'=>$node->nid));
+                }else{ ?>
+        <div class="info-group" id="place-info">
+                <h3 class="group-title"><?php echo t('Destination information'); ?></h3>
+                
+                <?php  echo theme('place_detail', array('place_id'=>$node->field_destination[LANGUAGE_NONE][0]['nid'])); ?>
+        </div>
                     
-      <h3 class="group-title"><span class="cicon detail"></span><?php echo t('Tour detail'); ?></h3>
-          
-      <div id="tour-detail" data-bgid="<?php echo $node->field_background[LANGUAGE_NONE][0]['fid']; ?>">
+      
+      <div class="info-group col-sm-12 col-xs-12" id="tour-detail" data-bgid="<?php echo $node->field_background[LANGUAGE_NONE][0]['fid']; ?>">
+          <h3 class="group-title"><?php echo t('Tour detail'); ?></h3>
           <div class="timeline">
           <?php
           $day = 1;          
@@ -29,8 +39,8 @@
                 //$tour_detail = node_load($detail->field_tour_detail_ref[LANGUAGE_NONE][0]['nid']);                    
                 $tmp = image_style_url('width_2_height', $detail->field_avatar[LANGUAGE_NONE][0]['uri']);                    
                     
-                echo '<li  fid="'.$detail->item_id.'" class="is-hidden timeline-item">';              
-                    echo '<div class="li-wrapper" style="background:url('.$tmp.'); background-size:100%;">';
+                echo '<li  fid="'.$detail->item_id.'" style="background:url('.$tmp.'); background-size:100%;" class="is-hidden timeline-item">';              
+                                  
                     echo '<div class="li-inner">';
                        // echo '<a class="link-detail-tour" href="#detail-'.$detail->item_id.'">';
                             echo '<h3 class="trip-name">'.$detail->field_des_name[LANGUAGE_NONE][0]['value'].'</h3>';
@@ -63,7 +73,6 @@
                         </div>
                     </div>
                     <?php 
-                echo '</div>';
                 echo '</li>';
               
               $k++;            
@@ -82,7 +91,7 @@
             });
           </script>
       </div>
-                
+                <?php } ?>
       <div class="row edit-mode"> 
          <div class="col-sm-6 col-xs-12">
               <div class="info-group" id="tour-info">
@@ -176,5 +185,41 @@
           print drupal_render($form);
           ?>
       </div>
+  </div> <!-- /content -->
   
-</article>
+</article> <!-- /article #node -->
+
+
+<?php 
+ /* Nhung tour khac cung dia diem */
+    echo '<div id="list-tour-by-des">';
+        echo '<h3>'.t('Other Tours').'</h3>';
+        $nids = db_query('SELECT entity_id FROM field_data_field_destination WHERE field_destination_nid=:t_nid AND bundle=:tour AND entity_id<>:nid'
+                , array(':t_nid'=>$node->field_destination[LANGUAGE_NONE][0]['nid'], ':tour'=>'tour', ':nid'=>$node->nid))->fetchCol();
+        $tours = node_load_multiple($nids);
+        foreach($tours as $tour){
+            echo '<a href="'.url('node/'.$tour->nid).'">'.$tour->title.'</a>';
+        }
+    echo '</div>';
+?>
+
+<?php
+$bg = '';
+if(isset($node->field_background) && !empty($node->field_background[LANGUAGE_NONE])){
+    $bg = image_style_url('width_2_height', $node->field_background[LANGUAGE_NONE][0]['uri']);
+}
+?>
+<!-- override css -->
+<style>
+    #main-region::before{
+        content:" ";
+        position:fixed;
+        top:0;
+        left:0;
+        z-index:-1;
+        background:url('<?php echo $bg; ?>') no-repeat;
+        background-size:100%;
+        width:100%;
+        height:100%;
+    }
+</style>

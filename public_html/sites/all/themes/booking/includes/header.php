@@ -23,7 +23,11 @@
                 <?php } ?>
                 
                 <li><a href="<?php echo url('blog')?>">Blog Du Lịch</a></li>
-            </ul>                       
+            </ul>   
+            <div id="search-bar">
+                <div id="btnShowSearch"></div>
+                <input type="text" id="txtSearchKey" />
+            </div>
         </div>   
         
         
@@ -44,14 +48,14 @@
                         echo theme('sb_custom_register');
                         echo '<h4 class="line">Hoặc</h4>';
                         //echo fboauth_action_display('connect');
-                        echo '<a href="'.url('user/simple-fb-connect').'">FB CN</a>';
+                        echo '<a id="btnFbConnect" href="'.url('user/simple-fb-connect').'"></a>';
                     echo '</div>';
                 echo '</div>';
                 
                 echo '<div class="popup" id="popup-forgetpass">';
                     echo '<div id="p-register-left"></div>';
                     echo '<div id="p-register-right">';
-                        echo 'Quên mật khẩu ư? Ráng chịu!!!!';
+                        echo theme('sb_custom_forgot_password');
                     echo '</div>';
                 echo '</div>';
             }

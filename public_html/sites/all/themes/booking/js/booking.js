@@ -7,7 +7,7 @@ jQuery(document).ready(function($){
     });
     
     var desRStar = $('#lblrate .num').text();
-    $('#des-rStar').rateYo({
+    $('.my-rate').rateYo({
         rating: desRStar,
         numStars: 5,
         halfStar: true,

@@ -95,7 +95,7 @@ jQuery(document).ready(function($){
     	e.preventDefault();
 	});
 	
-    if( $('#txtSearchPlace').length || $('#txtDes').length){
+    if( $('#txtSearchKey').length || $('#txtDes').length){
     		var availablePlaces = [];
 	    	jQuery.ajax({
 	            method: "POST",
@@ -107,11 +107,37 @@ jQuery(document).ready(function($){
 	                }
 	        });
 	    
-        $( "#txtSearchPlace, #txtDes" ).autocomplete({
+        $( "#txtSearchPlace, #txtDes, #txtSearchKey" ).autocomplete({
           source: availablePlaces
         });
     };
     
+    $('#btnSubmitForgetPass').click(function(){
+       var mail = $('#fgEmail').val();
+       jQuery.ajax({
+	    method: "POST",
+	    async:false,
+	    url: ajaxPath,
+	    data: {action: "ForgetPass", mail:mail},
+	    success: function (response) { 
+                $('#sms-notice').html(response);
+            }
+	});
+       
+    });
+    
+    $('#txtSearchKey').on('keypress', function (e) {
+         if(e.which === 13){
+             var place = $(this).val();
+             //alert('search');
+             window.location.href= fullURL+'/search-result?key='+place;
+             //http://sb.dev/search-result?key=Ddasd
+         }
+   });
+   $('#btnShowSearch').click(function(){
+      $('#txtSearchKey').toggle(); 
+   });
+   
     $("#btn-register, #btn-forgetpass, #btnShowLocation, #btnShowPhotos").fancybox();
     
     /*$('.timeline').timelify({
@@ -403,7 +429,7 @@ jQuery(document).ready(function($){
      * ADD TO FAVORITE LIST
      * */
     $('#btnAddToFavorite').click(function(){
-        nid = $('article.node-tour').data('nid');
+        nid = $(this).data('nid');
         jQuery.ajax({
 	    method: "POST",
 	    async:false,
