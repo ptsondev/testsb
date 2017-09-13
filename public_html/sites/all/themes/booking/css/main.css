@@ -647,8 +647,7 @@ h2.title-top i{
         display: inline-block;
         width:100%;
 }
-.user-info-group .group-title,
-.info-group .group-title{
+.user-info-group .group-title{
     position: absolute;
     top:-45px;
     left: 30px;
@@ -800,6 +799,7 @@ position:absolute;
 }
 .timeline .timeline-items .timeline-item{
     margin-bottom:50px; 
+    padding: 5px;
     /*top: !important;*/
 }
 .timeline h2{
@@ -842,9 +842,12 @@ position:absolute;
 }
 
 .timeline .timeline-items .timeline-item::after{
-    background: url(../images/location.png) no-repeat center center #fff;
-    background-size: 60%;
-    border:1px solid #333; 
+    background: url(../images/tour4.png) no-repeat center center #fff;
+    background-size: 100%;
+    border:none;
+    width:40px;
+    height:40px;
+    border-radius: 0;
 }
 
 .timeline .timeline-items .timeline-item.centered::before{
@@ -856,33 +859,32 @@ position:absolute;
 .timeline .timeline-items .timeline-item h3{
     color:#444;
     font-size:20px;
-    font-weight: 400;
-    display:inline-block;
-    float:left;
+    font-weight: 400;    
+    width:100%;
+    margin:0;
     border:none;
 }
 .timeline .timeline-items .timeline-item{
-    min-height:350px;    
+    min-height:320px;    
     left:0 !important;
     width:90%;
 }
 .timeline .timeline-items .timeline-item time{
-    float: right;
-    padding-top:20px;
     color:#888;
 }
 .timeline::before{
-    background-color:#f35369;
+    background-color:#ff8f00;
     right:3%;
     left:auto;
     /* style tiep truong hop responsive */
 }
 .timeline .timeline-items .timeline-item::before{
     border-top-color:#333!important;
+    display: none;
 }
 .timeline .timeline-items .timeline-item::after{
     left:auto;
-    right:-9%;
+    right:-8%;
 }
 .timeline h2{
     margin: 0;
@@ -991,6 +993,9 @@ position:absolute;
     right:-15px;
     top:4px;
     cursor: pointer; 
+    background:#ff8f00;
+    color:#FFF;
+    padding: 3px;
 }
 .detail-tour-content{
     display: none;
@@ -1009,7 +1014,7 @@ position:absolute;
 }
 
 #tour-buttons{
-    margin-bottom: 30px;
+    padding:5px 15px 15px;
     display: inline-block;
     width:100%;
 }
@@ -1114,9 +1119,9 @@ position:absolute;
 .timeline  .li-wrapper{
     position: absolute;
     display: inline-block;
-    width:96%;
-    height: 96%;
-    z-index: 9;
+    width:97%;
+    height:97%;
+    z-index:9;
 }
 .tour-detail-2{
     position:absolute;
@@ -1659,11 +1664,36 @@ box-shadow: 0px 4px 6px 4px rgba(153,153,153,0.4);
     padding:0 20px;
 }
 .destination-main-body h3,
-.tour-main-body h3{
+.tour-main-body h3,
+h3.group-title{
     border-bottom: 2px solid #ff8f00;
     margin: 20px 0 0;
     display: inline-block;
     padding: 5px 0;
+}
+h3.group-title{
+    font-weight: bold;
+    margin:0;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+.info-groupx{
+    margin-top: 20px;
+    font-size:13px;
+    border-top:1px solid #ddd;
+    padding:15px;
+}
+#tour-info,
+#travellers-info{
+    margin:0;
+    border: none;
+}
+.info-groupx input,
+.info-groupx select{
+    border:1px solid #ddd;
+       -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
 }
 .cicon{
       display: inline-block;
@@ -1815,9 +1845,6 @@ h1#des-title{
     margin:0;
 }
 #tour-r2{
-    -webkit-box-shadow: 0px 0px 5px 0px rgba(153,153,153,1);
-    -moz-box-shadow: 0px 0px 5px 0px rgba(153,153,153,1);
-    box-shadow: 0px 0px 5px 0px rgba(153,153,153,1);
     display: inline-block;
     width:100%;
     min-height: 200px;
@@ -1834,11 +1861,36 @@ h1#des-title{
 }
 #next-tour-detail{
     padding: 60px 15px 15px 15px;
+        -webkit-box-shadow: 0px 0px 5px 0px rgba(153,153,153,1);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(153,153,153,1);
+    box-shadow: 0px 0px 5px 0px rgba(153,153,153,1);
 }
 #main-tour-content #lblrate,
 #tour-rStar{
     display: inline-block;
     float: left;
+}
+
+#tour-more-tools{
+    margin-top: 40px;
+    display: none;
+    width:100%;
+     -webkit-box-shadow: 0px 0px 5px 0px rgba(153,153,153,1);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(153,153,153,1);
+    box-shadow: 0px 0px 5px 0px rgba(153,153,153,1);    
+}
+#btnSaveCustomTour,
+#btnSaveImage{
+    padding: 5px 10px;    
+    color:#FFF;
+    background: #ff8f00;
+       -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    display: inline-block;
+    float:left;
+    margin-right: 16px;
+    cursor: pointer;
 }
 @media (min-width: 1024px) {
     #main-des-wrapper #main-content{

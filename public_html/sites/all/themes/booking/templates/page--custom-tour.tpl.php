@@ -124,8 +124,8 @@ $avatar = image_style_url('square', $node->field_background[LANGUAGE_NONE][0]['u
                               <input type="button" value="Lưu" id="btnSaveCustomTour" />
                               <input type="button" value="Xuất file ảnh infographic" id="btnSaveImage" data-nid="<?php echo $node->nid;?>" class="update" />        
                               -->
-                              <div id="btnSaveCustomTour"><i class="fa fa-floppy-o" aria-hidden="true"></i> Lưu</div>
-                              <div id="btnSaveImage" data-nid="<?php echo $node->nid;?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Xuất file ảnh infographic</div>
+                              <div id="btnSaveCustomTour" class="update" ><i class="fa fa-floppy-o" aria-hidden="true"></i> Lưu</div>
+                              <div id="btnSaveImage" data-nid="<?php echo $node->nid;?>"><i class="fa fa-file-image-o" aria-hidden="true"></i> Xuất file ảnh infographic</div>
                               
                                 <div id="export-img"></div>
                                 <div id="export-img2"></div>

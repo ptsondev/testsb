@@ -218,9 +218,9 @@ jQuery(document).ready(function($){
                 var tmp = [name, phone, email, old];
 
                 var newMember = '<li>';
-                newMember += '<span class="cu-name">'+name+'</span> -';
-                newMember += '<span class="cu-phone">'+phone+'</span> -';
-                newMember += '<span class="cu-email">'+email+'</span> -';
+                newMember += '<span class="cu-name">'+name+'</span> - ';
+                newMember += '<span class="cu-phone">'+phone+'</span> - ';
+                newMember += '<span class="cu-email">'+email+'</span> - ';
                 newMember += '<span class="cu-old">'+old+'</span>';
                 newMember +='<i class="fa fa-times" aria-hidden="true" title="Remove this member"></i></li>';
                 $('#list-customers ol').append(newMember);
@@ -429,13 +429,12 @@ jQuery(document).ready(function($){
     // Begin customize tour
     $('#btnCustomTour').click(function(){
         if(confirmLogin()){ 
-            //$('#tour-detail').animate({ 'zoom': 0.4 }, 400);
-            //window.parent.document.body.style.zoom = 0.4;
+            $('#tour-more-tools').show();
             $('.edit-mode').show();
             $('.view-mode').hide();
-            /*$('html, body').animate({
-                scrollTop: $('#main-content').offset().top + 'px'
-            }, 'fast');*/
+            $('body').animate({
+                scrollTop: $('#tour-more-tools').offset().top + 'px'
+            }, 'fast');
         }
     });
     

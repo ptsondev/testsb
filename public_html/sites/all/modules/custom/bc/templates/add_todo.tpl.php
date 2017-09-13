@@ -8,15 +8,15 @@
         </select>
     </div>
     <div class="col-sm-2 col-xs-6"><input type="text" placeholder="" class="txtName"/>  </div>
-    <div class="col-sm-2 col-xs-6"><input type="text" placeholder="" class="txtTime"/>  </div>
+    <div class="col-sm-2 col-xs-6"><input type="date" placeholder="" class="txtTime"/>  </div>
     <div class="col-sm-2 col-xs-6">
         <select class="txtStatus">
-            <option><?php echo t('Starting');?></option>
-            <option><?php echo t('Pending');?></option>
-            <option><?php echo t('Done');?></option>
+            <option>Mới</option>
+            <option>Đang thực hiện</option>
+            <option>Đã hoàn thành</option>
         </select>
     </div>  
     <div class="col-sm-2 col-xs-6"><input type="text" placeholder="" class="txtNote"/>  </div>
         
-    <i class="fa fa-plus" aria-hidden="true" title="Add this member to list"></i>
+    <i class="fa fa-plus" aria-hidden="true" title="Thêm vào list"></i>
 </div>
