@@ -78,7 +78,7 @@ function display_photos_as_gallery($node){
     <div style="filter: alpha(opacity=70); opacity: 0.7; position: absolute; display: block; top: 0px; left: 0px; width: 100%; height: 100%;"></div>
     <div style="position:absolute;display:block;background:url('img/loading.gif') no-repeat center center;top:0px;left:0px;width:100%;height:100%;"></div>
     </div>
-    <div data-u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 1400px; height: 900px; overflow: hidden;">
+    <div data-u="slides" u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 1400px; height: 900px; overflow: hidden;">
 
 
     <?php 

@@ -5,7 +5,8 @@ $avatar = image_style_url('square', $node->field_background[LANGUAGE_NONE][0]['u
 
 <main id="main-region" class="tour-main-region">
     <div class="main-wrapper inner container">    
-        <div id="main-tour-content" class="col-md-9 col-sm-12">
+        
+         <div id="main-tour-content" class="col-md-9 col-sm-12">
             <div id="tour-r1">
                 <div class="col-sm-3"><img src="<?php echo $avatar; ?>" /></div>
                 <div class="col-sm-5">            
@@ -129,28 +130,16 @@ $avatar = image_style_url('square', $node->field_background[LANGUAGE_NONE][0]['u
                               
                                 <div id="export-img"></div>
                                 <div id="export-img2"></div>
-                            </div>
+                            </div>                                                    
                           
-                          <div id="fb-chat-region">
-                              <div class="fb-comment-embed" data-href="<?php echo url('node/'.$node->nid);?>" data-width="560" data-include-parent="false"></div>
-                          </div>
+                          </div>    
+                
+                 <div id="fb-chat-region" >
+                    <?php $cur_url = url('node/'.$node->nid, array('absolute' => TRUE)); ?>
+                    <div class="fb-comments" data-href="<?php echo $cur_url;?>" data-numposts="5"></div>              
+                 </div>
 
-                          <!--
-
-                            <hr />
-                            <div id="comment-area">          
-                                <?php           
-                                echo '<h2> <i class="fa fa-comments" aria-hidden="true"></i> '.t('Tell me how was you feel about this tour?').'</h2>';
-                                //$comments = comment_get_thread($node, COMMENT_MODE_THREADED, 20);
-                                //var_dump($comments);
-                                $k = views_embed_view($name='comment_by_tour', $display_id = 'default');
-                                echo $k;
-                                $form = drupal_get_form("comment_node_tour_form", (object) array('nid' => $node->nid));
-                                print drupal_render($form);
-                                ?>
-                            </div>
-                          -->
-                          </div>                
+              
             </div>
         </div>
         
@@ -173,6 +162,7 @@ $avatar = image_style_url('square', $node->field_background[LANGUAGE_NONE][0]['u
                     echo '</div><a></div></div>';
                 
                 echo '<div id="popup-photos" style="display:none;">';
+                    //var_dump($des->field_photos);
                     display_photos_as_gallery($des);    
                 echo '</div>';
             ?>

@@ -131,26 +131,13 @@ $avatar = image_style_url('square', $node->field_background[LANGUAGE_NONE][0]['u
                                 <div id="export-img2"></div>
                             </div>
                           
-                          <div id="fb-chat-region">
-                              <div class="fb-comment-embed" data-href="<?php echo url('node/'.$node->nid);?>" data-width="560" data-include-parent="false"></div>
-                          </div>
-
-                          <!--
-
-                            <hr />
-                            <div id="comment-area">          
-                                <?php           
-                                echo '<h2> <i class="fa fa-comments" aria-hidden="true"></i> '.t('Tell me how was you feel about this tour?').'</h2>';
-                                //$comments = comment_get_thread($node, COMMENT_MODE_THREADED, 20);
-                                //var_dump($comments);
-                                $k = views_embed_view($name='comment_by_tour', $display_id = 'default');
-                                echo $k;
-                                $form = drupal_get_form("comment_node_tour_form", (object) array('nid' => $node->nid));
-                                print drupal_render($form);
-                                ?>
-                            </div>
-                          -->
-                          </div>                
+                          
+                          </div>      
+                
+                  <div id="fb-chat-region">
+                    <?php $cur_url = url('node/'.$node->nid, array('absolute' => TRUE)); ?>
+                    <div class="fb-comments" data-href="<?php echo $cur_url;?>" data-numposts="5"></div>              
+                 </div>
             </div>
         </div>
         
