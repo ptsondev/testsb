@@ -429,8 +429,7 @@ jQuery(document).ready(function($){
     // Begin customize tour
     $('#btnCustomTour').click(function(){
         if(confirmLogin()){ 
-            $('#tour-more-tools').show();
-            $('.edit-mode').show();
+            $('#tour-detail .edit-mode').show();
             $('.view-mode').hide();
             $('body').animate({
                 scrollTop: $('#tour-more-tools').offset().top + 'px'
@@ -457,18 +456,13 @@ jQuery(document).ready(function($){
     /*
      *  SAVE CUSTOM TOUR 
      */
-    $('#btnSaveCustomTour').click(function(){
-        var addNew = 1;
-        if($(this).hasClass('update')){
-            addNew = 0;
-        }
+    $('#btnSaveCustomTour').click(function(){        
         var tour={};
-        tour.addNew = addNew;
-        tour.id = $('article.node-tour').data('nid');
-        if(!tour.id){
-            tour.id = $('article.node-custom-tour').data('nid');
-        }
-        
+        tour.addNew = 1;
+        tour.id = $(this).data('nid');
+        if($(this).hasClass('update')){
+            tour.addNew = 0;            
+        }        
         // tour information
         tour.background = $('#tour-detail').data('bgid');
         tour.destination = $('#des-ref').data('nid');
@@ -558,8 +552,6 @@ jQuery(document).ready(function($){
         });
         tour.trips = trips;
         
-        //console.log(tour.background);
-        //return;
         
         jQuery.ajax({
 	    method: "POST",
@@ -568,8 +560,8 @@ jQuery(document).ready(function($){
 	    data: {action: "addCustomTour", tour:tour},
 	    success: function (response) { 
                 //alert(response);
-                //console.log(response);
-                window.location.href = response;
+                console.log(response);
+                //window.location.href = response;
             }
 	});
         

@@ -13,10 +13,7 @@
     </div>
     <div class="tab tab-prepare" data-ref="prepare">
         <i class="fa fa-lightbulb-o" aria-hidden="true"></i> <?php echo t('To do task');?>
-    </div>    
-    <div class="tab tab-photos" data-ref="photos">
-        <i class="fa fa-file-image-o" aria-hidden="true"></i> <?php echo t('Photos');?>
-    </div>
+    </div>        
     <div class="tab tab-videos" data-ref="videos">
         <i class="fa fa-film" aria-hidden="true"></i> <?php echo t('Videos');?>
     </div>
@@ -38,9 +35,6 @@
     </div>
     <div id="place-prepare" class="tab-ref">
        <?php echo $place->field_todo_info[LANGUAGE_NONE][0]['value'];?>
-    </div> 
-    <div id="place-photos" class="tab-ref">
-       <?php  display_photos_as_gallery($place); ?>
     </div> 
     <div id="place-videos" class="tab-ref">        
        <?php 

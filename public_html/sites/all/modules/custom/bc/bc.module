@@ -298,7 +298,7 @@ function bc_ajax_process(){
         $tour = $_REQUEST['tour'];
         //echo (var_dump($tour['toDoWorks']));return;
         $node = node_load($tour['id']);
-        if($tour['addNew']){
+        if($tour['addNew']==1){
             $node->nid = NULL; // save new, not edit
             $node->vid = NULL;
             $node->type='custom_tour';
@@ -315,6 +315,7 @@ function bc_ajax_process(){
         $node->field_transportation_type[LANGUAGE_NONE][0]['value'] = check_plain($tour['transport']);
         $node->field_expect_budget[LANGUAGE_NONE][0]['value'] = check_plain($tour['budget']);
         
+        $node->field_clone_from[LANGUAGE_NONE][0]['nid'] = $tour['id'];
         
         //customers        
         $existed_custumers = (isset($node->field_traveller) && !empty($node->field_traveller[LANGUAGE_NONE]))? TRUE:FALSE;
@@ -586,6 +587,7 @@ function bc_ajax_process(){
         }
 
         node_save($node);
+        //var_dump($node);die;
         echo url('node/'.$node->nid);
         return;
     }else if($action=='getFullCustomTourData'){

@@ -50,8 +50,12 @@
     </h2>    
         <?php 
             global $user;
-            $nids = db_query('SELECT nid FROM sb_user_tour WHERE uid=:uid AND type=:type ORDER BY created ASC', 
-                    array(':uid'=>$user->uid, ':type'=>MARK_DOING))->fetchCol();
+            /*$nids = db_query('SELECT nid FROM sb_user_tour WHERE uid=:uid AND type=:type ORDER BY created ASC', 
+                    array(':uid'=>$user->uid, ':type'=>MARK_DOING))->fetchCol();*/
+            $nids = db_query('SELECT nid FROM node WHERE type=:type AND uid=:uid', array(
+                ':type'=>'custom_tour',
+                ':uid'=>$user->uid
+            ))->fetchCol();
             $nodes = node_load_multiple($nids);
             
             for($i=0; $i<2; $i++){

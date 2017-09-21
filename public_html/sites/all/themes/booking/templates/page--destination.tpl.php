@@ -28,7 +28,6 @@ $des_bg = image_style_url('width_2_height', $node->field_background[LANGUAGE_NON
                     <?php $rate = $node->field_newtravelex_rating[LANGUAGE_NONE][0]['average']; ?>
                     <div class="pull-right"><label id="lblrate">Đánh giá <span class="num"><?php echo ($rate/20); ?></span>/</label><div id="des-rStar" class="my-rate"></div></div>
                 </div>
-                <?php $map = $node->field_link_google_map[LANGUAGE_NONE][0]['value']; ?>
                 <div id="location-wrapper" style="width:0;height:0;overflow:hidden;">
                     <div id="popup-location" style="">
                         <?php 
@@ -44,13 +43,13 @@ $des_bg = image_style_url('width_2_height', $node->field_background[LANGUAGE_NON
                 </div>
                 
                 <div id="des-r32">
-                    <div class="item tempo">
+                    <!--<div class="item tempo">
                         <div class="icon"></div>
                         <div class="info">
                             <div class="key">Thời Tiết</div>
                             <div class="value">25-30*C</div>
                         </div>
-                    </div>
+                    </div>-->
                     
                     <div class="item tour">
                         <div class="icon"></div>

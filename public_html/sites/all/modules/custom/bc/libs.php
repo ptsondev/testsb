@@ -198,3 +198,11 @@ function get_own_hotels(){
     ))->fetchAll();
     return $hotels;    
 }
+
+function check_is_already_clone_tour($uid, $tour_nid){    
+    $existed = db_query('SELECT nid FROM node WHERE type=:custom_tour AND uid=:uid AND nid IN'
+            . '(SELECT entity_id FROM field_data_field_clone_from WHERE field_clone_from_nid=:tour_nid)',
+            array(':custom_tour'=>'custom_tour', ':uid'=>$uid, ':tour_nid'=>$tour_nid))->fetchField();
+    return $existed;
+    
+}
