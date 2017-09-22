@@ -81,6 +81,9 @@ img{
 #site-logo img{
     width:180px;
 }
+#export-img{
+    background: #FFF;    
+}
 #main-menu{
 	display:inline-block;
 	float:left;     
@@ -393,6 +396,9 @@ h4.line::after{
 
 #main-region .main-wrapper{
     background:rgba(255, 255, 255, 0.9);
+}
+#main-region.p-user .main-wrapper{
+    background: none;
 }
 
 form .form-item label{
@@ -1006,6 +1012,10 @@ position:absolute;
     color:#FFF;
     padding: 3px;
 }
+.add-ticket .txtDateTime{
+    font-size:10px;
+    padding:2px 0;
+}
 .detail-tour-content{
     display: none;
 }
@@ -1291,12 +1301,15 @@ position:absolute;
 #main-des-wrapper #sidebar{
     display: inline-block;    
 }
-#galery-wrapper2{
+#galery-wrapper2,
+#pu-sidebar-wrapper-1,
+#pu-content{
     -webkit-box-shadow: -3px 0px 5px 0px rgba(0,0,0,0.13);
     -moz-box-shadow: -3px 0px 5px 0px rgba(0,0,0,0.13);
     box-shadow: -3px 0px 5px 0px rgba(0,0,0,0.13);
 }
-#galery-wrapper{
+#galery-wrapper,
+#pu-sidebar-wrapper-2{
     background: #FFF;
     -webkit-box-shadow: 15px 15px 0px 0px rgba(255,143,0,1);
 -moz-box-shadow: 15px 15px 0px 0px rgba(255,143,0,1);
@@ -1396,13 +1409,18 @@ display: inline-block;
     color:#999;
 }
 .u-post-main{
-    background: #FFF;
-    border-top:1px solid #ccc;
-    border-bottom:1px solid #ccc;
     margin:15px 0;
     padding: 10px;
 }
-
+.u-post-main .sum{
+    border-bottom:1px solid #ccc;
+    padding-bottom: 10px;
+}
+h3.u-post-title a{
+    color:#333;
+    margin-bottom: 10px;
+    display: block;
+}
 .u-post .comment-form{
     display: none;
 }
@@ -1899,6 +1917,181 @@ h1#des-title{
     float:left;
     margin-right: 16px;
     cursor: pointer;
+}
+
+#pu-controls input[type=button],
+#pu-controls a{
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    padding:5px 10px;
+    text-align: center;
+    border:none;
+    background: #FFF;
+    width:170px;
+    display: inline-block;
+    color:#333;
+}
+.p-user #sidebar{
+    margin-top: 50px;
+}
+.p-user#main-region{
+    position: relative;
+    top:-150px;
+}
+#popup-update-info h4,
+#puu-right h4{
+    border-bottom: 1px solid #ccc;
+    padding:5px 5%;
+}
+#pu-content{
+    margin-top:20px;
+    background: #FFF;
+    padding:10px 20px;
+}
+#pu-sidebar-wrapper-2{
+    padding:0;
+}
+#user-profile-sidebar img{
+    padding:30px;
+}
+#user-profile-sidebar{
+    text-align: center;
+}
+#user-profile-sidebar .u-name{
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    padding:8px;
+    font-size:18px;
+    font-weight: bold;
+}
+#user-profile-sidebar .u-slogan{
+    padding:30px;
+    font-style: italic;
+}
+#user-profile-sidebar .u-update-info,
+#user-profile-sidebar .u-update-password{
+    padding:5px 10px 20px;
+}
+#user-profile-sidebar a{
+    color:#1e88e5;
+}
+#popup-update-info{
+    width:300px;
+}
+#popup-update-info img{
+    width: 50%;
+    display: block;
+    margin:auto;
+    margin-bottom: 20px;
+}
+#frmUUpdateInfo input,
+#puu-right input{
+    width:90%;
+    margin:5px 5%;
+    border:2px solid #ccc;
+    padding:10px;
+}
+#frmUUpdateInfo input{
+    padding:5px;
+}
+#frmUUpdateInfo input.form-submit,
+#puu-right  input.form-submit{
+    border: none;
+}
+#puu-left,
+#puu-right{
+    display: inline-block;
+    float: left;
+    overflow: hidden;
+    width: 300px;
+    height: 420px;
+    background: url('../images/puu-pass.png') no-repeat;
+        background-size: auto auto;
+    background-size: cover;
+}
+#puu-right{
+    background:none;
+    padding:20px;
+}
+#puu-right .des{
+    padding:10px;
+    font-size:12px;
+    font-style:italic;
+}
+#popup-update-password .frm-e{
+    margin:5px 5%;
+    width:90%;
+    color:red;
+    font-style:italic;
+}
+.node-post-form #field-content-values tr{
+    position: relative;
+    display: inline-block;
+    margin-top: 40px;
+}
+.node-post-form #field-content-values tr td.field-multiple-drag:after{
+    content: " ";
+    position: absolute;
+    background: red;
+    width: 10px;
+    height: 10px;
+    left: 0;
+    top: -30px;
+    z-index: 999999;
+}
+
+.node-post-form #edit-title{
+    width:100%;
+    border:none;
+    border-bottom: 1px solid #333;
+    border-radius: 0;
+    background:url('../images/pen.png') no-repeat;
+    background-size:contain;
+    padding-left: 30px;
+}
+.node-post-form .field-name-field-num-person,
+.node-post-form .field-name-field-transform,
+.node-post-form .field-name-field-cost,
+.node-post-form .field-name-field-newtravelex-rating{
+    display: inline-block;
+    float: left;
+    width: 200px;
+}
+.node-post-form .form-item label{
+    width:100%;
+        font-size: 14px;
+    font-weight: normal;
+}
+.node-post-form .form-item input[type=text],
+.node-post-form .form-item select{
+    width:180px;
+    border:1px solid #ccc;
+    border-radius: 0;
+}
+.node-post-form .field-name-field-summary{
+    width:100%;
+    display: inline-block;
+    margin:10px 0;
+}
+.node-post-form  a.ckeditor_links{
+    display: none !important; 
+}
+.node-post-form  #edit-submit{
+    background:#1976d2;
+    margin-top: 30px;
+}
+.node-post-form  .field-name-field-image .description{
+    display: none !important;
+}
+.node-post-form .form-type-fivestar {
+    margin:18px;
+}
+.node-post-form  #edit-field-summary-und-0-value{
+    width:100%;
+}
+.u-post-info a{
+    color:#333;
 }
 @media (min-width: 1024px) {
     #main-des-wrapper #main-content{

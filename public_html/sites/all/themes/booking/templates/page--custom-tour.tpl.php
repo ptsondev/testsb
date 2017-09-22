@@ -53,9 +53,24 @@ $avatar = image_style_url('square', $node->field_background[LANGUAGE_NONE][0]['u
 
                                 <div class="col-sm-6 col-xs-12">
                                     <div class="info-groupx" id="travellers-info">
-                                        <h3 class="group-title"><?php echo t('Travellers Information'); ?></h3>
+                                        <h3 class="group-title">Danh sách hành khách</h3>
                                          <div id="edit-travellers-info" class="btn-edit"></div>
-                                         <div id="list-customers" class="edit-modexxx"><?php echo theme('add_customer'); ?><ol></ol></div>
+                                         <div id="list-customers" class="edit-modexxx"><?php echo theme('add_customer'); ?>                                             
+                                             <ol><?php 
+                                                    if(!empty($node->field_traveller[LANGUAGE_NONE])){
+                                                        foreach($node->field_traveller[LANGUAGE_NONE] as $item){
+                                                            $person = field_collection_item_load($item['value']);
+                                                            $tmp = array();                                                                        
+                                                            $tmp[]= '<span class="cu-name">'.$person->field_human[LANGUAGE_NONE][0]['value'].'</span>';
+                                                            $tmp[]=  '<span class="cu-phone">'.$person->field_phone[LANGUAGE_NONE][0]['value'].'</span>';
+                                                            $tmp[]=  '<span class="cu-email">'.$person->field_email[LANGUAGE_NONE][0]['value'].'</span>';
+                                                            $tmp[]=  '<span class="cu-old">'.$person->field_old[LANGUAGE_NONE][0]['value'].'</span>';
+
+                                                            echo '<li>'. implode(' - ', $tmp).' <i class="fa fa-times" aria-hidden="true" title="Remove this member"></i></li>';
+                                                        }
+                                                    }
+                                               ?></ol>
+                                         </div>
                                     </div>      
                                 </div>
                               </div>
@@ -70,7 +85,24 @@ $avatar = image_style_url('square', $node->field_background[LANGUAGE_NONE][0]['u
                                   <div class="col-sm-2 col-xs-6">Mã vé</div>
                                   <div class="col-sm-2 col-xs-6">Ghi chú</div>
                                   <?php echo theme('add_ticket'); ?>
-                                  <div id="ticket-result"></div>
+                                  <div id="ticket-result">
+                                      <?php                 
+                                        if(!empty($node->field_tickets[LANGUAGE_NONE])){
+                                            foreach($node->field_tickets[LANGUAGE_NONE] as $item){
+                                                $ticket = field_collection_item_load($item['value']);
+                                                echo '<div class="item">';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$ticket->field_datetime[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$ticket->field_start[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$ticket->field_goal[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$ticket->field_transport_type[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$ticket->field_ticket_num[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$ticket->field_note[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<i class="fa fa-times" aria-hidden="true" title="Remove this row"></i>';
+                                                echo '</div>';
+                                            }
+                                        }
+                                        ?>
+                                  </div>
                               </div>
                             </div>
 
@@ -85,7 +117,25 @@ $avatar = image_style_url('square', $node->field_background[LANGUAGE_NONE][0]['u
                                   <div class="col-sm-2 col-xs-6"><?php echo t('Status'); ?></div>
                                   <div class="col-sm-2 col-xs-6"><?php echo t('Note'); ?></div>
                                   <?php echo theme('add_todo'); ?>
-                                  <div id="todo-result"></div>
+                                  <div id="todo-result">
+                                       <?php 
+                                        //var_dump($node->field_to_do);
+                                        if(!empty($node->field_to_do[LANGUAGE_NONE])){
+                                            foreach($node->field_to_do[LANGUAGE_NONE] as $item){
+                                                $todo = field_collection_item_load($item['value']);
+                                                echo '<div class="item">';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$todo->field_title[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$todo->field_index[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$todo->field_human[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$todo->field_deadline[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$todo->field_status[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$todo->field_note[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<i class="fa fa-times" aria-hidden="true" title="Remove this row"></i>';
+                                                echo '</div>';
+                                            }
+                                        }
+                                        ?>
+                                  </div>
                               </div>
                             </div>
 
@@ -99,7 +149,27 @@ $avatar = image_style_url('square', $node->field_background[LANGUAGE_NONE][0]['u
                                   <div class="col-sm-2 col-xs-6"><?php echo t('Total'); ?></div>
                                   <div class="col-sm-2 col-xs-6"><?php echo t('Note'); ?></div>
                                   <?php echo theme('add_budget_cost'); ?>
-                                  <div id="cost-result"></div>            
+                                  <div id="cost-result">
+                                       <?php 
+                                        $nscl = (isset($node->field_expect_budget) && !empty($node->field_expect_budget[LANGUAGE_NONE])) ? $node->field_expect_budget[LANGUAGE_NONE][0]['value']:0;
+
+                                        if(!empty($node->field_expense[LANGUAGE_NONE])){
+                                            foreach($node->field_expense[LANGUAGE_NONE] as $item){
+                                                $expense = field_collection_item_load($item['value']);
+                                                echo '<div class="item">';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$expense->field_human[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$expense->field_expense_type[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$expense->field_number[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$expense->field_init[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$expense->field_total[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$expense->field_note[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<i class="fa fa-times" aria-hidden="true" title="Remove this row"></i>';
+                                                echo '</div>';
+                                                $nscl -=$expense->field_total[LANGUAGE_NONE][0]['value'];
+                                            }
+                                        }
+                                        ?>
+                                  </div>            
                                   <div id="budget-after">Ngân sách còn lại: <span id="nscl"><?php echo snh_display_number($nscl);?></span></div>
                               </div>
                             </div>
@@ -114,7 +184,25 @@ $avatar = image_style_url('square', $node->field_background[LANGUAGE_NONE][0]['u
                                   <div class="col-sm-2 col-xs-6">Quan hệ</div>
                                   <div class="col-sm-2 col-xs-6"><?php echo t('Note'); ?></div>
                                   <?php echo theme('add_urgent_contact'); ?>
-                                  <div id="urgent-contact-result"></div>
+                                  <div id="urgent-contact-result">
+                                      <?php 
+                                        if(!empty($node->field_urgent_contact[LANGUAGE_NONE])){
+                                            foreach($node->field_urgent_contact[LANGUAGE_NONE] as $item){
+                                                $contact = field_collection_item_load($item['value']);
+                                                echo '<div class="item">';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$contact->field_human[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$contact->field_home_phone[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$contact->field_phone[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$contact->field_address[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$contact->field_relation_ship[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<div class="col-sm-2 col-xs-6">'.$contact->field_note[LANGUAGE_NONE][0]['value'].'</div>';
+                                                    echo '<i class="fa fa-times" aria-hidden="true" title="Remove this row"></i>';
+                                                echo '</div>';
+                                            }
+                                        }
+                                        ?>
+                                      
+                                  </div>
                               </div>
                             </div>
 
@@ -124,7 +212,7 @@ $avatar = image_style_url('square', $node->field_background[LANGUAGE_NONE][0]['u
                               <input type="button" value="Lưu" id="btnSaveCustomTour" />
                               <input type="button" value="Xuất file ảnh infographic" id="btnSaveImage" data-nid="<?php echo $node->nid;?>" class="update" />        
                               -->
-                              <div id="btnSaveCustomTour" class="update" data-nid="<?php echo $node->nid;?>"><i class="fa fa-floppy-o" aria-hidden="true"></i> Lưu</div>
+                              <div id="btnSaveCustomTour" class="update" data-nid="<?php echo $node->nid;?>" data-clonefrom="<?php echo $node->field_clone_from[LANGUAGE_NONE][0]['nid'];?>"><i class="fa fa-floppy-o" aria-hidden="true"></i> Lưu</div>
                               <div id="btnSaveImage" data-nid="<?php echo $node->nid;?>"><i class="fa fa-file-image-o" aria-hidden="true"></i> Xuất file ảnh infographic</div>
                               
                                 <div id="export-img"></div>

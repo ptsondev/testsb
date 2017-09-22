@@ -174,7 +174,7 @@ jQuery(document).ready(function($){
 		closeEffect	: 'none'
 	});
 
-     $( "#u-start-date, #u-end-date" ).datepicker({'dateFormat': 'M-d-yy'});
+     $( "#u-start-date, #u-end-date, #txtUdob" ).datepicker({'dateFormat': 'M-d-yy'});
     
     $('.btn-edit, .tour-detail-controls i.fa-pencil-square-o').on('click', function(){
         // validate is user logged in
@@ -391,7 +391,7 @@ jQuery(document).ready(function($){
     });
     
     
-    $('#list-todo, #list-cost, #list-urgent-contact').on('click', '.item .fa-times', function(){
+    $('#list-todo, #list-cost, #list-urgent-contact, #list-ticket').on('click', '.item .fa-times', function(){
        $(this).parents('.item').remove(); 
     });
     
@@ -460,9 +460,10 @@ jQuery(document).ready(function($){
         var tour={};
         tour.addNew = 1;
         tour.id = $(this).data('nid');
+        tour.cloneFrom = $(this).data('clonefrom');
         if($(this).hasClass('update')){
             tour.addNew = 0;            
-        }        
+        }                
         // tour information
         tour.background = $('#tour-detail').data('bgid');
         tour.destination = $('#des-ref').data('nid');
@@ -559,9 +560,8 @@ jQuery(document).ready(function($){
 	    url: ajaxPath,
 	    data: {action: "addCustomTour", tour:tour},
 	    success: function (response) { 
-                //alert(response);
-                console.log(response);
-                //window.location.href = response;
+                //console.log(response);
+                window.location.href = response;
             }
 	});
         
@@ -579,6 +579,7 @@ jQuery(document).ready(function($){
      
      // save to image
      $("#btnSaveImage").click(function() { 
+         $('#export-img').show();
          var nid = $(this).data('nid');         
         jQuery.ajax({
             method: "POST",
@@ -587,18 +588,20 @@ jQuery(document).ready(function($){
             data: {action: "getFullCustomTourData", nid: nid},
             success: function (response) {
                 $('#export-img').html(response);
-                // save
-                html2canvas($("#export-img"), {
-                    onrendered: function(canvas) {
-                        theCanvas = canvas;
-                        document.body.appendChild(canvas);
-
-                        // Convert and download as image 
-                        Canvas2Image.saveAsPNG(canvas); 
-                        $("#export-img").html(canvas);       
-                        $(document).scrollTop( $("#btnSaveImage").offset().top );  
-                    }
-                });     
+                //setTimeout(function(){
+                    // save
+                    html2canvas($("#export-img"), {
+                        onrendered: function(canvas) {                            
+                            // draw to canvas...
+                            canvas.toBlob(function(blob) {
+                                saveAs(blob, "newTravelEx_trip.png");
+                                $('#export-img').hide();
+                            });                            
+                        }
+                    });     
+                //}, 2000);
+                
+                //$('#export-img').hide();
         
             }
         });
@@ -657,8 +660,91 @@ jQuery(document).ready(function($){
            $('#u-post-'+nid+' .comment-form').toggle();
         });
     }   
-});
+    
+    
+    /* User - blog */
+    $('#btnPopupUpdateInfo, #btnPopupUpdatePassword').fancybox();
+    $('#btnSaveUInfo').click(function(e){
+        //$('#frmUUpdateInfo').submit(); this line for debug
+        $("#frmUUpdateInfo").ajaxSubmit({
+            url: ajaxPath,
+            type: 'post',
+            success: function(res) {
+                location.reload();
+            }
+        });
+        e.preventDefault();
+        //location.reload();
+        return false;
+    });
+    
+    $('#btnAcceptChangePass').click(function(){
+       var pass = $('#txtOldPass').val();
+       var newPass = $('#txtNewPass').val();
+       var newPass2 = $('#txtNewPass2').val();
+            //validate
+            var error = false;
+            if(jQuery.trim(pass)==''){                
+                $('#txtOldPass').addClass('error');        
+                $('#txtOldPass-ems').text('Vui lòng nhập mật khẩu cũ.');
+                error = true;
+            }else{
+                $('#txtOldPass').removeClass('error');    
+                $('#txtOldPass-ems').text('');
+            }
+            
+            if(jQuery.trim(newPass)==''){                
+                $('#txtNewPass').addClass('error');        
+                $('#txtNewPass-ems').text('Vui lòng nhập mật khẩu mới.');
+                error = true;
+            }else{
+                $('#txtNewPass').removeClass('error');    
+                $('#txtNewPass-ems').text('');
+            }
+            
+            if(jQuery.trim(newPass2)==''){                
+                $('#txtNewPass2').addClass('error');        
+                $('#txtNewPass2-ems').text('Xác nhận lại mật khẩu mới.');
+                error = true;
+            }else{
+                $('#txtNewPass2').removeClass('error');    
+                $('#txtNewPass2-ems').text('');
+            }
+            
+            if(newPass!=newPass2){
+                $('#txtNewPass2').addClass('error');        
+                $('#txtNewPass2-ems').text('Mật khẩu xác nhận không trùng khớp');
+                error = true;
+            }
+            
+            // pass, call ajax
+            if(!error){
+                // pass simple case, submit ajax
+                jQuery.ajax({
+	            method: "POST",
+	            async:false,
+	            url: ajaxPath,
+	                data: {action: "userUpdatePassword", oldPass:pass, newPass:newPass},
+	                success: function (response) {
+                            if(response!="1"){
+                                $('#txtAny-ems').text(response);
+                            }else{
+                                alert('Mật khẩu đã thay đổi thành công');
+                                $('.fancybox-close').trigger('click');
+                            }
+	                }
+	        });
+            }
+            
+    });
+    
+    
+    
 
+    
+    //$('.node-post-form  #edit-field-content-und-add-more').val('+ Tạo mới');
+    //$('.node-post-form  #edit-submit').val('Đăng Bài');
+});
 
 function downloadCanvas(link, canvasId, filename) {
     link.href = document.getElementById(canvasId).toDataURL();

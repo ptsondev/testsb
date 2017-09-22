@@ -177,7 +177,7 @@ function findByCoordinatesFromNear($from_lat, $from_lng, $r = MAP_R) {
 
 
 function getUserName($account){
-    return $account->name;
+    return $account->field_full_name[LANGUAGE_NONE][0]['value'];
 }
 
 function s_is_mobile(){
@@ -205,4 +205,12 @@ function check_is_already_clone_tour($uid, $tour_nid){
             array(':custom_tour'=>'custom_tour', ':uid'=>$uid, ':tour_nid'=>$tour_nid))->fetchField();
     return $existed;
     
+}
+
+function check_if_user_can_update_info($uid_update){
+    global $user;
+    if($user->uid != $uid_update){
+        return FALSE;
+    }
+    return TRUE;
 }

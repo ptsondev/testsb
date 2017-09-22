@@ -3,10 +3,10 @@
     <div class="col-sm-2 col-xs-6">
         <select class="slType">
             <option><?php echo t('Transport'); ?></option>
-            <option><?php echo t('Stay'); ?></option>
-            <option><?php echo t('Foods'); ?></option>
-            <option><?php echo t('Relax'); ?></option>
-            <option><?php echo t('Other'); ?></option>
+            <option>Lưu trú</option>
+            <option>Ăn uống</option>
+            <option>Giải trí</option>
+            <option>Khác</option>
         </select>
     </div>
     <div class="col-sm-2 col-xs-6"><input type="number" placeholder="" class="txtQuality"/> </div>

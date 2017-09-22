@@ -2,6 +2,9 @@
 $node = node_load($nid);
 $place = node_load($node->field_destination[LANGUAGE_NONE][0]['nid']);
 ?>
+
+<div class="clearfix"></div>
+
 <div class="info-group full-data" id="place-info">
     <h3 class="group-title"><?php echo t('Destination information'); ?></h3>
     <h4><i class="fa fa-info-circle" aria-hidden="true"></i><?php echo t('General Information');?></h4>
@@ -30,12 +33,11 @@ $place = node_load($node->field_destination[LANGUAGE_NONE][0]['nid']);
         echo '<img src="'.$tmp.'" />';
         echo '<div class="content">';
                             if(isset($detail->field_des_des) && !empty($detail->field_des_des[LANGUAGE_NONE])){
-                                //echo  'vawevwae';
                                 echo $detail->field_des_des[LANGUAGE_NONE][0]['value'];
                             }    
-                            if(isset($detail->field_video_youtube) && !empty($detail->field_video_youtube[LANGUAGE_NONE])){
+                            /*if(isset($detail->field_video_youtube) && !empty($detail->field_video_youtube[LANGUAGE_NONE])){
                                 display_video($detail, 400, 300);
-                            }
+                            }*/
       
         echo '</div>';
         echo '<hr />';

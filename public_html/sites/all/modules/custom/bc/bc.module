@@ -28,7 +28,9 @@ $arr_theme = array(
     //'tour_detail' => 'Tour Detail',
     //'place_detail' => 'Place Detail'
     // Booking
-    'booking_request' => 'Booking Request'
+    'booking_request' => 'Booking Request',
+    'user_update_info' => 'User Update Info',
+    'user_update_password' => 'User Update Password',
 );
 define('ARR_THEME', serialize($arr_theme));
 
@@ -111,8 +113,16 @@ function bc_menu_alter(&$items) {
 
 function bc_form_alter(&$form, &$form_state, $form_id){
     form_load_include($form_state, 'inc', 'node', 'node.pages'); // sher fix bug
-    
-    //var_dump($form_id);
+    //echo '<pre>';
+    //var_dump($form['field_summary']);
+    if($form_id=='post_node_form'){
+        unset($form['title']['#title']);
+        $form['title']['#attributes']['placeholder']='Tiêu đề';
+        
+        //unset($form['field_summary'][LANGUAGE_NONE][0]['value']['#title']);
+        //$form['field_summary'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder']='Tổng quan';
+        
+    }
     if($form_id=='user_register_form') {
         /*
         unset($form['account']['mail']['#description']);
@@ -296,13 +306,16 @@ function bc_ajax_process(){
         
         /* init from clone, important */
         $tour = $_REQUEST['tour'];
-        //echo (var_dump($tour['toDoWorks']));return;
-        $node = node_load($tour['id']);
-        if($tour['addNew']==1){
+        //var_dump($tour);die;
+        //echo (var_dump($tour['toDoWorks']));return;        
+        if($tour['id']==0){
+            $node = node_load($tour['cloneFrom']);
             $node->nid = NULL; // save new, not edit
             $node->vid = NULL;
             $node->type='custom_tour';
             $node->uid = $user->uid;
+        }else{
+            $node = node_load($tour['id']);
         }
         //$node->title .= ' - '.$user->name;
         
@@ -315,7 +328,7 @@ function bc_ajax_process(){
         $node->field_transportation_type[LANGUAGE_NONE][0]['value'] = check_plain($tour['transport']);
         $node->field_expect_budget[LANGUAGE_NONE][0]['value'] = check_plain($tour['budget']);
         
-        $node->field_clone_from[LANGUAGE_NONE][0]['nid'] = $tour['id'];
+        $node->field_clone_from[LANGUAGE_NONE][0]['nid'] = $tour['cloneFrom'];
         
         //customers        
         $existed_custumers = (isset($node->field_traveller) && !empty($node->field_traveller[LANGUAGE_NONE]))? TRUE:FALSE;
@@ -727,7 +740,49 @@ function bc_ajax_process(){
         _user_mail_notify('password_reset', $account);
         echo '<div class="success">Hãy kiểm tra Email</div>';
         return;
-    }
+    }else if($action == 'update_user_info'){
+        $uid = $_REQUEST['hdUID'];
+        $account = user_load($uid);
+        $account->field_full_name[LANGUAGE_NONE][0]['value']=$_REQUEST['txtUname'];
+        $account->field_dob[LANGUAGE_NONE][0]['value']=$_REQUEST['txtUdob'];
+        $account->field_slogan[LANGUAGE_NONE][0]['value']=$_REQUEST['txtUslogan'];        
+        
+        // avatar 
+        //var_dump($_REQUEST['fAvatar']);
+        //$file = file_save_upload('fAvatar');
+        //var_dump($file);
+        
+        
+        $target_dir = 'public://';
+        $target_file = $target_dir . basename($_FILES["fAvatar"]["name"]);
+        if (move_uploaded_file($_FILES["fAvatar"]["tmp_name"], $target_file)) {
+              $file = file_save((object)array(
+                'filename' =>  basename($_FILES["fAvatar"]["name"]),
+                'uri' =>  $target_file,
+                'status' => FILE_STATUS_PERMANENT,
+                'filemime' => file_get_mimetype( $target_file),
+              ));              
+            $account->field_avatar[LANGUAGE_NONE][0]['fid']=$file->fid;        
+        } else {            
+        }
+            
+        user_save($account);        
+    }else if($action=='userUpdatePassword'){
+        global $user;
+        $oldPass = $_REQUEST['oldPass'];
+        $newPass = $_REQUEST['newPass'];
+        require_once DRUPAL_ROOT . '/' . variable_get('password_inc', 'includes/password.inc');
+        $check = user_check_password($oldPass, $user);
+        if($check){
+            $user->pass = user_hash_password($newPass);
+            user_save($user);
+            echo "1"; // success
+            return;
+        }else{
+            echo "Mật khẩu không chính xác, vui lòng kiểm tra lại";
+            return;
+        }
+    }    
     
     echo "1";
     die;

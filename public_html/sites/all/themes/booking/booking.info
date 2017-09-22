@@ -41,7 +41,9 @@ scripts[] = js/fancybox/jquery.fancybox.js
 scripts[] = js/jquery.rateyo.js
 scripts[] = js/jquery.mCustomScrollbar.concat.min.js
 scripts[] = js/html2canvas.js
+scripts[] = js/FileSaver.min.js
 scripts[] = js/canvas2image.js
+scripts[] = js/jquery.form.js
 scripts[] = js/js.js
 scripts[] = js/booking.js
 

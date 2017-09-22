@@ -54,7 +54,7 @@ $avatar = image_style_url('square', $node->field_background[LANGUAGE_NONE][0]['u
 
                                 <div class="col-sm-6 col-xs-12">
                                     <div class="info-groupx" id="travellers-info">
-                                        <h3 class="group-title"><?php echo t('Travellers Information'); ?></h3>
+                                        <h3 class="group-title">Danh sách hành khách</h3>
                                          <div id="edit-travellers-info" class="btn-edit"></div>
                                          <div id="list-customers" class="edit-modexxx"><?php echo theme('add_customer'); ?><ol></ol></div>
                                     </div>      
@@ -128,13 +128,13 @@ $avatar = image_style_url('square', $node->field_background[LANGUAGE_NONE][0]['u
                               <?php
                                 global $user;
                                 $update_existed = check_is_already_clone_tour($user->uid, $node->nid);
-                                $update = 'data-nid="'.$node->nid.'"';
+                                $update = 'data-nid="0"';
                                 if($update_existed){
                                     $update = 'class="update" data-nid="'.$update_existed.'"';
                                 }
                                 //
                               ?>
-                              <div id="btnSaveCustomTour" <?php echo $update;?>><i class="fa fa-floppy-o" aria-hidden="true"></i> Lưu</div>
+                              <div id="btnSaveCustomTour" <?php echo $update;?> data-clonefrom="<?php echo $node->nid; ?>"><i class="fa fa-floppy-o" aria-hidden="true"></i> Lưu</div>
                               <div id="btnSaveImage" data-nid="<?php echo $node->nid;?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Xuất file ảnh infographic</div>
                               
                                 <div id="export-img"></div>
