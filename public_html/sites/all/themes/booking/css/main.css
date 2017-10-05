@@ -1954,6 +1954,9 @@ h1#des-title{
 }
 #user-profile-sidebar img{
     padding:30px;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
 }
 #user-profile-sidebar{
     text-align: center;
@@ -1984,16 +1987,24 @@ h1#des-title{
     display: block;
     margin:auto;
     margin-bottom: 20px;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
 }
 #frmUUpdateInfo input,
-#puu-right input{
+#puu-right input,
+#frmUUpdateInfo select{
     width:90%;
     margin:5px 5%;
     border:2px solid #ccc;
     padding:10px;
 }
-#frmUUpdateInfo input{
-    padding:5px;
+#frmUUpdateInfo input,
+#frmUUpdateInfo select{
+    padding:2px;
+}
+#edit-draft{
+    margin-left: 20px;
 }
 #frmUUpdateInfo input.form-submit,
 #puu-right  input.form-submit{
@@ -2040,7 +2051,10 @@ h1#des-title{
     top: -30px;
     z-index: 999999;
 }
-
+#frmUUpdateInfo  .name input{
+    margin:5px 0;
+    width:100%;
+}
 .node-post-form #edit-title{
     width:100%;
     border:none;

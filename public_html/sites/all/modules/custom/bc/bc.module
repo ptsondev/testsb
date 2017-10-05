@@ -742,16 +742,18 @@ function bc_ajax_process(){
         return;
     }else if($action == 'update_user_info'){
         $uid = $_REQUEST['hdUID'];
-        $account = user_load($uid);
-        $account->field_full_name[LANGUAGE_NONE][0]['value']=$_REQUEST['txtUname'];
+        $account = user_load($uid);        
+        $account->field_first_name[LANGUAGE_NONE][0]['value']=$_REQUEST['txtUFname'];
+        $account->field_last_name[LANGUAGE_NONE][0]['value']=$_REQUEST['txtULname'];
+        
         $account->field_dob[LANGUAGE_NONE][0]['value']=$_REQUEST['txtUdob'];
+        $account->field_nationality[LANGUAGE_NONE][0]['value']=$_REQUEST['slNationality'];
+        $account->field_phone[LANGUAGE_NONE][0]['value']=$_REQUEST['txtPhone'];
+         
+        $account->field_live[LANGUAGE_NONE][0]['value']=$_REQUEST['txtUlive'];        
+        $account->field_work[LANGUAGE_NONE][0]['value']=$_REQUEST['txtUwork'];        
         $account->field_slogan[LANGUAGE_NONE][0]['value']=$_REQUEST['txtUslogan'];        
-        
-        // avatar 
-        //var_dump($_REQUEST['fAvatar']);
-        //$file = file_save_upload('fAvatar');
-        //var_dump($file);
-        
+       
         
         $target_dir = 'public://';
         $target_file = $target_dir . basename($_FILES["fAvatar"]["name"]);
@@ -782,6 +784,24 @@ function bc_ajax_process(){
             echo "Mật khẩu không chính xác, vui lòng kiểm tra lại";
             return;
         }
+    }else if($action=='updateCoverPhoto'){
+        $account = user_load($user->uid);
+        
+        $target_dir = 'public://';
+        $target_file = $target_dir . basename($_FILES["fileUpdateCover"]["name"]);        
+        if (move_uploaded_file($_FILES["fileUpdateCover"]["tmp_name"], $target_file)) {
+              $file = file_save((object)array(
+                'filename' =>  basename($_FILES["fileUpdateCover"]["name"]),
+                'uri' =>  $target_file,
+                'status' => FILE_STATUS_PERMANENT,
+                'filemime' => file_get_mimetype( $target_file),
+              ));              
+            $account->field_cover[LANGUAGE_NONE][0]['fid']=$file->fid;        
+        } else {            
+        }
+            
+        user_save($account);
+        
     }    
     
     echo "1";
@@ -865,6 +885,8 @@ function bc_node_insert($node){
 			));
 		}
         //}
+    }else if($node->type=='post'){
+        drupal_goto('blog');
     }
 }
 

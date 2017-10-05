@@ -3,7 +3,7 @@
 ?>
 
 <?php
-$nids = db_query_range('SELECT nid FROM node WHERE type=:type AND status=1', 0, 30, array(':type' => 'post'))->fetchCol();
+$nids = db_query_range('SELECT nid FROM node WHERE type=:type AND status=1 ORDER BY created DESC', 0, 30, array(':type' => 'post'))->fetchCol();
 $posts = node_load_multiple($nids);
 
 foreach ($posts as $post) {
@@ -34,8 +34,7 @@ foreach ($posts as $post) {
         echo '</div>';
 
         echo '<div class="u-post-tool">';
-            echo '<a class="twitter-share-button"href="https://twitter.com/intent/tweet">Tweet</a>';
-            echo '<div class="ggplus-like"><script src="https://apis.google.com/js/platform.js" async defer></script><g:plusone></g:plusone></div>';
+            echo '<script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script><script type="IN/Share" data-counter="right"></script>';
             echo '<div class="fb-like" data-href="'.url('node/'.$post->nid).'" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>';
             
             

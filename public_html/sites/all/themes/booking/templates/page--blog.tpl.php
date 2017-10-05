@@ -12,9 +12,13 @@ echo '<div id="profile-top" style="background:url('.file_create_url($account->fi
             <div id="main-content" class="col-sm-9 col-xs-12">
                 <div id="pu-controls">
                     <?php 
-                     if(check_if_user_can_update_info($account->uid)){
+                     if(check_if_user_can_update_info(arg(1))){                         
                          ?>
-                    <input type="button" value="Cập nhật cover" />                    
+                    <form style="display: none;" method="POST" id="frmUUpdateCover" action="<?php echo url('ajax-process');?>" enctype="multipart/form-data">
+                        <input type="hidden" value="updateCoverPhoto" name="action" />
+                        <input type="file"  id="fileUpdateCover" name="fileUpdateCover" accept="image/*"/>
+                    </form>
+                    <a href="" id="btnUpdateCover" >Cập nhật cover</a>
                     <a href="<?php echo url('user/'.$account->uid.'/add-new-post');?>">Tạo bài viết</a>
                     <?php }else{ ?>
                     <input type="button" value="Gửi lời mời kết bạn" />

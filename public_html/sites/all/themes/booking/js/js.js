@@ -739,8 +739,23 @@ jQuery(document).ready(function($){
     });
     
     
-    
+    $('#fileUpdateCover').on('change', function () {
+        $("#frmUUpdateCover").ajaxSubmit({
+            url: ajaxPath,
+            type: 'post',
+            success: function(res) {
+                location.reload();                
+            }
+        });
+        e.preventDefault();
+        //location.reload();
+        return false;
+    });
 
+    $('#btnUpdateCover').click(function(){
+        $('#fileUpdateCover').trigger('click');
+        return false;
+    });
     
     //$('.node-post-form  #edit-field-content-und-add-more').val('+ Tạo mới');
     //$('.node-post-form  #edit-submit').val('Đăng Bài');
