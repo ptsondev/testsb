@@ -20,8 +20,8 @@ echo '<div id="profile-top" style="background:url('.file_create_url($account->fi
                     <a href="" id="btnUpdateCover" >Cập nhật cover</a>
                     <a href="<?php echo url('user/'.$account->uid.'/add-new-post');?>">Tạo bài viết</a>
                     <?php }else{ ?>
-                    <input type="button" value="Gửi lời mời kết bạn" />
-                    <input type="button" value="Theo dõi" />
+                    <!--<input type="button" value="Gửi lời mời kết bạn" />
+                    <input type="button" value="Theo dõi" />-->
                     <?php } // end if ?>
                 </div>
                 <div id="pu-content">

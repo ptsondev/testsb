@@ -223,6 +223,17 @@ $avatar = image_style_url('square', $node->field_background[LANGUAGE_NONE][0]['u
                           </div>      
                 
                   <div id="fb-chat-region">
+                       <?php 
+                         echo '<div class="u-post-tool">';
+            echo '<a class="twitter-share-button"href="https://twitter.com/intent/tweet">Tweet</a>';
+            echo '<div class="ggplus-like"><script src="https://apis.google.com/js/platform.js" async defer></script><g:plusone></g:plusone></div>';
+            echo '<div class="fb-like" data-href="'.url('node/'.$node->nid).'" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>';
+            
+            
+        echo '</div>';
+        
+                     ?>
+                      
                     <?php $cur_url = url('node/'.$node->nid, array('absolute' => TRUE)); ?>
                     <div class="fb-comments" data-href="<?php echo $cur_url;?>" data-numposts="5"></div>              
                  </div>

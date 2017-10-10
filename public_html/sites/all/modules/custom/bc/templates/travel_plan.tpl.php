@@ -12,7 +12,8 @@
             for($i=0; $i<2; $i++){
                 $node = array_pop($nodes);
                 if($node){                
-                    echo '<div id="top-'.($i+1).'" class="col-sm-6 col-xs-12">';
+                    echo '<div id="top-'.($i+1).'" class="list-item col-sm-6 col-xs-12">';
+                        echo '<div class="btnDelete" data-nid="'.$node->nid.'" data-group="favorite"></div>';
                         echo '<a href="'.('node/'.$node->nid).'">';
                             echo '<div class="top-des-wrapper">';
                                 echo '<img src="'.image_style_url('width_2_height', $node->field_background[LANGUAGE_NONE][0]['uri']).'" />';
@@ -27,7 +28,8 @@
             for($i=0; $i<4; $i++){
                 $node = array_pop($nodes);
                 if($node){                
-                    echo '<div id="top-'.($i+2).'" class="col-sm-3 col-xs-6">';
+                    echo '<div id="top-'.($i+2).'" class="list-item col-sm-3 col-xs-6">';
+                        echo '<div class="btnDelete"  data-nid="'.$node->nid.'" data-group="favorite"></div>';
                         echo '<a href="'.('node/'.$node->nid).'">';
                             echo '<div class="top-des-wrapper">';
                                 echo '<img src="'.image_style_url('square', $node->field_background[LANGUAGE_NONE][0]['uri']).'" />';
@@ -61,7 +63,8 @@
             for($i=0; $i<2; $i++){
                 $node = array_pop($nodes);
                 if($node){                
-                    echo '<div id="top-'.($i+1).'" class="col-sm-6 col-xs-12">';
+                    echo '<div id="top-'.($i+1).'" class="list-item col-sm-6 col-xs-12">';
+                        echo '<div class="btnDelete"  data-nid="'.$node->nid.'" data-group="doing"></div>';
                         echo '<a href="'.('node/'.$node->nid).'">';
                             echo '<div class="top-des-wrapper">';
                                 echo '<img src="'.image_style_url('width_2_height', $node->field_background[LANGUAGE_NONE][0]['uri']).'" />';
@@ -77,6 +80,7 @@
                 $node = array_pop($nodes);
                 if($node){                
                     echo '<div id="top-'.($i+2).'" class="col-sm-3 col-xs-6">';
+                        echo '<div class="btnDelete"  data-nid="'.$node->nid.'" data-group="doing"></div>';
                         echo '<a href="'.('node/'.$node->nid).'">';
                             echo '<div class="top-des-wrapper">';
                                 echo '<img src="'.image_style_url('square', $node->field_background[LANGUAGE_NONE][0]['uri']).'" />';
@@ -109,6 +113,7 @@
                 $node = array_pop($nodes);
                 if($node){                
                     echo '<div id="top-'.($i+1).'" class="col-sm-6 col-xs-12">';
+                        echo '<div class="btnDelete"  data-nid="'.$node->nid.'" data-group="done"></div>';
                         echo '<a href="'.('node/'.$node->nid).'">';
                             echo '<div class="top-des-wrapper">';
                                 echo '<img src="'.image_style_url('width_2_height', $node->field_background[LANGUAGE_NONE][0]['uri']).'" />';
@@ -124,6 +129,7 @@
                 $node = array_pop($nodes);
                 if($node){                
                     echo '<div id="top-'.($i+2).'" class="col-sm-3 col-xs-6">';
+                        echo '<div class="btnDelete"  data-nid="'.$node->nid.'" data-group="done"></div>';
                         echo '<a href="'.('node/'.$node->nid).'">';
                             echo '<div class="top-des-wrapper">';
                                 echo '<img src="'.image_style_url('square', $node->field_background[LANGUAGE_NONE][0]['uri']).'" />';

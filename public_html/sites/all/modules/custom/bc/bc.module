@@ -20,6 +20,7 @@ $arr_theme = array(
     'add_urgent_contact' => 'Add urgent contact',
     'add_ticket' => 'Add Ticket',
     'add_new_post' => 'Add New Post',
+    'update_post' => 'Upate Post',
     'user_update_profile' => 'User update Profile',    
     'own_hotel' => 'Own hotel',    
     'sb_custom_register' => 'SB Custom Register',
@@ -119,6 +120,10 @@ function bc_form_alter(&$form, &$form_state, $form_id){
         unset($form['title']['#title']);
         $form['title']['#attributes']['placeholder']='Tiêu đề';
         
+        $form['actions']['submit']['#value']='Đăng bài';   
+        //var_dump($form['actions']); 
+        $form['actions']['preview']['#value']='Lưu bài viết';
+        $form['actions']['delete']['#value']='Xóa bài viết';        
         //unset($form['field_summary'][LANGUAGE_NONE][0]['value']['#title']);
         //$form['field_summary'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder']='Tổng quan';
         
@@ -214,7 +219,7 @@ function bc_form_alter(&$form, &$form_state, $form_id){
         //var_dump($form);
         unset($form['subject']);
         unset($form['actions']['preview']);
-    }
+    }    
 }
 
  function register_alter_password_confirm($element) {
@@ -802,6 +807,17 @@ function bc_ajax_process(){
             
         user_save($account);
         
+    }else if($action=='deleteMyTour'){
+        $nid = $_REQUEST['nid'];
+        $group = $_REQUEST['group'];
+        if($group=='favorite'){
+            db_query('DELETE FROM sb_user_tour WHERE uid=:uid AND nid=:nid', array(
+                ':uid'=>$user->uid, ':nid'=>$nid
+            ));
+        }else{
+            node_delete($nid);
+        }
+        echo "1";
     }    
     
     echo "1";

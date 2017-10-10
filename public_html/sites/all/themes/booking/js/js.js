@@ -579,14 +579,16 @@ jQuery(document).ready(function($){
      
      // save to image
      $("#btnSaveImage").click(function() { 
-         $('#export-img').show();
-         var nid = $(this).data('nid');         
+        $('#export-img').show();
+        var nid = $(this).data('nid');         
         jQuery.ajax({
             method: "POST",
             async: false,
             url: ajaxPath,
             data: {action: "getFullCustomTourData", nid: nid},
             success: function (response) {
+                response += $('#tour-more-tools').html();
+                
                 $('#export-img').html(response);
                 //setTimeout(function(){
                     // save
@@ -755,6 +757,22 @@ jQuery(document).ready(function($){
     $('#btnUpdateCover').click(function(){
         $('#fileUpdateCover').trigger('click');
         return false;
+    });
+    
+    $('.list-top .btnDelete').click(function(){
+       var nid = $(this).data('nid'); 
+       var group = $(this).data('group'); 
+       
+       jQuery.ajax({
+	    method: "POST",
+	    async:false,
+	    url: ajaxPath,
+	    data: {action: "deleteMyTour", nid:nid, group:group},
+	    success: function (response) { 
+                $(this).parent().hide();
+            }
+	});
+        $(this).parent().hide();
     });
     
     //$('.node-post-form  #edit-field-content-und-add-more').val('+ Tạo mới');

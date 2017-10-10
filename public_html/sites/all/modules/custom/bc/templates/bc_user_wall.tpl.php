@@ -1,11 +1,15 @@
 <?php
 $uid = arg(1);
 $account = user_load($uid);
-//echo theme('bc_user_header');
+$more_condition = '';
+global $user;
+if($uid!=$user->uid){
+    $more_condition='AND status=1 ';
+}
 ?>
 
 <?php
-$nids = db_query_range('SELECT nid FROM node WHERE type=:type AND status=1 AND uid=:uid', 0, 10, array(':type' => 'post', ':uid' => $uid))->fetchCol();
+$nids = db_query_range('SELECT nid FROM node WHERE type=:type '.$more_condition.' AND uid=:uid', 0, 10, array(':type' => 'post', ':uid' => $uid))->fetchCol();
 $posts = node_load_multiple($nids);
 
 foreach ($posts as $post) {
@@ -18,6 +22,10 @@ foreach ($posts as $post) {
                     echo '<div class="u-post-date">'. date('d-M-Y h:i:s', $post->created).'</div>';
                 echo '</div>';
             echo '</div>';
+            
+            if($user->uid==$uid){
+                echo '<a href="'.url('user/'.$uid.'/update-post/'.$post->nid).'" class="btnUpdatePost">Edit</a>';
+            }
         echo '</div>';
         
         echo '<div class="u-post-main">';  

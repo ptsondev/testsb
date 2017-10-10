@@ -25,9 +25,9 @@ foreach ($posts as $post) {
             echo '</div>';    
             
             echo '<div class="post-main-content row">';         
-                echo '<div class="col-sm-4"><img src="'.image_style_url('width_2_height',$post->field_image[LANGUAGE_NONE][0]['uri']).'" /></div>';
+                echo '<div class="col-sm-4"><a href="'.url('node/'.$post->nid).'"><img src="'.image_style_url('width_2_height',$post->field_image[LANGUAGE_NONE][0]['uri']).'" /></a></div>';
                 echo '<div class="col-sm-8">';
-                    echo '<h3 class="u-post-title">' . $post->title . '</h3>';
+                    echo '<h3 class="u-post-title"><a href="'.url('node/'.$post->nid).'">' . $post->title . '</a></h3>';
                     echo text_summary($post->field_content[LANGUAGE_NONE][0]['value'], $format = NULL, $size = 150).'...';
                 echo '</div>';
             echo '</div>';
