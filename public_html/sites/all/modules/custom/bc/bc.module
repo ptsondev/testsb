@@ -715,7 +715,8 @@ function bc_ajax_process(){
           );
 
            // The first parameter is sent blank so a new user is created.
-           user_save('', $new_user);           
+           $account = user_save('', $new_user);       
+           _user_mail_notify('status_activated', $account);
         }else{
             echo json_encode($error);
             die;
