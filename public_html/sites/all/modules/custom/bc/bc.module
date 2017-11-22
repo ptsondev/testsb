@@ -865,6 +865,15 @@ function bc_user_login(&$edit, $account) {
         $edit['redirect'] = 'admin/manage-destination';		
     }else{
         $edit['redirect'] = '<front>';    	
+    }       
+}
+
+function bc_init(){
+    if(arg(0)=='user' && is_numeric(arg(1)) && arg(2)=='edit'){
+        if(isset($_REQUEST['pass-reset-token'])){
+            drupal_goto('xbb');
+            return;
+        }
     }
 }
 
