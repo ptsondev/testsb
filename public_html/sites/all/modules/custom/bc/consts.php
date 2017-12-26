@@ -3,6 +3,9 @@
 define('PATH_TO_IMAGES', drupal_get_path('theme', 'booking').'/images/');
 define('PATH_TO_INCLUDES', drupal_get_path('theme', 'booking').'/includes/');
 
+define('PATH_TO_IMAGES_MOBILE', drupal_get_path('theme', 'booking_mobile').'/images/');
+define('PATH_TO_INCLUDES_MOBILE', drupal_get_path('theme', 'booking_mobile').'/includes/');
+
 define("MAPKEY", "AIzaSyAT_pglltCg9NM75JoLW8laF4sxQPkWTO0");
 define("MAPKEY_CLIENT", "3Iy5N0QVahM92Abm4YAv0yqz");
 define("MAP_R", 300);

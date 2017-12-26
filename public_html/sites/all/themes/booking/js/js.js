@@ -122,9 +122,30 @@ jQuery(document).ready(function($){
 	    success: function (response) { 
                 $('#sms-notice').html(response);
             }
-	});
-       
+	});       
     });
+    
+     $('#btnSubmitChangePass').click(function(){
+         var pass = $('#chpPass').val();
+         var pass2 = $('#chpPass2').val();
+         jQuery.ajax({
+	    method: "POST",
+	    async:false,
+	    url: ajaxPath,
+	    data: {action: "ChangePass2", pass:pass, pass2:pass2},
+	    success: function (response) { 
+                if(response!="1"){
+                     $('#sms-notice').html(response);
+                }else{
+                    $('#sms-notice').html('Thay đổi mật khẩu thành công');
+                    setTimeout(function(){
+                        window.location.href= fullURL;
+                    }, 1000);
+                }
+            }
+	});     
+     });
+    
     
     $('#txtSearchKey').on('keypress', function (e) {
          if(e.which === 13){
@@ -665,7 +686,12 @@ jQuery(document).ready(function($){
     
     
     /* User - blog */
-    $('#btnPopupUpdateInfo, #btnPopupUpdatePassword').fancybox();
+    $('#btnPopupUpdateInfo, #btnPopupUpdatePassword ,#btn-changepass').fancybox();    
+    var url = window.location.pathname;
+    if(url.indexOf('my-new-password') !=-1){
+        $('#btn-changepass').trigger('click');
+    }
+    
     $('#btnSaveUInfo').click(function(e){
         //$('#frmUUpdateInfo').submit(); this line for debug
         $("#frmUUpdateInfo").ajaxSubmit({

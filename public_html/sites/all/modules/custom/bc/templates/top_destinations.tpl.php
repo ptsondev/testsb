@@ -29,7 +29,7 @@ $destinations = views_get_view_result('top_6_destinations');
             </div>
         </a>
     </div>
-    <div id="top-2" class="col-sm-6 col-xs-12">
+    <div id="top-2" class="col-sm-6 col-xs-6">
         <a href="<?php echo url('node/'.$des_2->nid);?>">
             <div class="top-des-wrapper">
                 <img src="<?php echo image_style_url('width_2_height', $des_2->field_photos[LANGUAGE_NONE][0]['uri']);?>" />
@@ -38,7 +38,7 @@ $destinations = views_get_view_result('top_6_destinations');
         </a>
     </div>
 
-    <div id="top-3" class="col-sm-3 col-xs-12">
+    <div id="top-3" class="col-sm-3 col-xs-6">
         <a href="<?php echo url('node/'.$des_3->nid);?>">
             <div class="top-des-wrapper">
                 <img src="<?php echo image_style_url('square', $des_3->field_photos[LANGUAGE_NONE][0]['uri']);?>" />
@@ -46,7 +46,7 @@ $destinations = views_get_view_result('top_6_destinations');
             </div>
         </a>        
     </div>
-    <div id="top-4" class="col-sm-3 col-xs-12">
+    <div id="top-4" class="col-sm-3 col-xs-6">
         <a href="<?php echo url('node/'.$des_4->nid);?>">
             <div class="top-des-wrapper">
                 <img src="<?php echo image_style_url('square', $des_4->field_photos[LANGUAGE_NONE][0]['uri']);?>" />
@@ -54,7 +54,7 @@ $destinations = views_get_view_result('top_6_destinations');
             </div>
         </a>        
     </div>
-    <div id="top-5" class="col-sm-3 col-xs-12">
+    <div id="top-5" class="col-sm-3 col-xs-6">
         <a href="<?php echo url('node/'.$des_5->nid);?>">
             <div class="top-des-wrapper">
                 <img src="<?php echo image_style_url('square', $des_5->field_photos[LANGUAGE_NONE][0]['uri']);?>" />
@@ -70,7 +70,7 @@ $destinations = views_get_view_result('top_6_destinations');
             </div>
         </a>        
     </div>
-    <div id="top-7" class="col-sm-3 col-xs-12">
+    <div id="top-7" class="col-sm-3 col-xs-6">
         <a href="<?php echo url('node/'.$des_7->nid);?>">
             <div class="top-des-wrapper">
                 <img src="<?php echo image_style_url('square', $des_7->field_photos[LANGUAGE_NONE][0]['uri']);?>" />
@@ -78,7 +78,7 @@ $destinations = views_get_view_result('top_6_destinations');
             </div>
         </a>        
     </div>
-    <div id="top-8" class="col-sm-3 col-xs-12">
+    <div id="top-8" class="col-sm-3 col-xs-6">
         <a href="<?php echo url('node/'.$des_8->nid);?>">
             <div class="top-des-wrapper">
                 <img src="<?php echo image_style_url('square', $des_8->field_photos[LANGUAGE_NONE][0]['uri']);?>" />
@@ -86,7 +86,7 @@ $destinations = views_get_view_result('top_6_destinations');
             </div>
         </a>        
     </div>
-    <div id="top-9" class="col-sm-3 col-xs-12">
+    <div id="top-9" class="col-sm-3 col-xs-6">
         <a href="<?php echo url('node/'.$des_9->nid);?>">
             <div class="top-des-wrapper">
                 <img src="<?php echo image_style_url('square', $des_9->field_photos[LANGUAGE_NONE][0]['uri']);?>" />
@@ -94,7 +94,7 @@ $destinations = views_get_view_result('top_6_destinations');
             </div>
         </a>        
     </div>
-    <div id="top-10" class="col-sm-3 col-xs-12">
+    <div id="top-10" class="col-sm-3 col-xs-6">
         <a href="<?php echo url('node/'.$des_10->nid);?>">
             <div class="top-des-wrapper">
                 <img src="<?php echo image_style_url('square', $des_10->field_photos[LANGUAGE_NONE][0]['uri']);?>" />

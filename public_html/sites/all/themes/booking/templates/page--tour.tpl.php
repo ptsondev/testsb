@@ -178,7 +178,7 @@ $avatar = image_style_url('square', $node->field_background[LANGUAGE_NONE][0]['u
                         if(isset($des->field_photos[LANGUAGE_NONE][2])){
                             echo '<img class="p50 right" src="'.image_style_url('square', $des->field_photos[LANGUAGE_NONE][2]['uri']).'">';                            
                         }
-                    echo '</div><a></div></div>';
+                    echo '</div></a></div></div>';
                 
                 echo '<div id="popup-photos" style="display:none;">';
                     //var_dump($des->field_photos);

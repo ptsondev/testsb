@@ -25,6 +25,7 @@ $arr_theme = array(
     'own_hotel' => 'Own hotel',    
     'sb_custom_register' => 'SB Custom Register',
     'sb_custom_forgot_password' => 'SB Custom Forgot Password',
+    'sb_custom_change_password' => 'SB Custom Change Password',
     'travel_plan' => 'Travel plan',
     //'tour_detail' => 'Tour Detail',
     //'place_detail' => 'Place Detail'
@@ -790,6 +791,30 @@ function bc_ajax_process(){
             echo "Mật khẩu không chính xác, vui lòng kiểm tra lại";
             return;
         }
+    }else if($action=='ChangePass2'){
+        global $user;
+        $pass = $_REQUEST['pass'];
+        $pass2 = $_REQUEST['pass2'];
+        if($pass=='' || $pass2==''){
+            echo "Mật khẩu không được trống.";
+            return ;
+        }
+        if($pass != $pass2){
+            echo "Mật khẩu xác nhận không trùng khớp.";
+            return ;
+        }
+        require_once DRUPAL_ROOT . '/' . variable_get('password_inc', 'includes/password.inc');
+        //$check = user_check_password($oldPass, $user);
+        $check = true;
+        if($check){
+            $user->pass = user_hash_password($pass);
+            user_save($user);
+            echo "1"; // success
+            return;
+        }else{
+            echo "Mật khẩu không chính xác, vui lòng kiểm tra lại";
+            return;
+        }
     }else if($action=='updateCoverPhoto'){
         $account = user_load($user->uid);
         
@@ -871,7 +896,7 @@ function bc_user_login(&$edit, $account) {
 function bc_init(){
     if(arg(0)=='user' && is_numeric(arg(1)) && arg(2)=='edit'){
         if(isset($_REQUEST['pass-reset-token'])){
-            drupal_goto('xbb');
+            drupal_goto('user/'.arg(1).'/my-new-password');
             return;
         }
     }

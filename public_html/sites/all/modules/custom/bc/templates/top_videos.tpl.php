@@ -14,10 +14,10 @@
             </div>
         </div>        
         <div class="col-sm-6 col-xs-12">
-            <div class="col-sm-6 col-xs-12"><div class="video"><iframe width="560" height="315" src="https://www.youtube.com/embed/IUxoEi_5hog" frameborder="0" allowfullscreen></iframe></div></div>
-            <div class="col-sm-6 col-xs-12"><div class="video"><iframe width="560" height="315" src="https://www.youtube.com/embed/OWxS6EOOVkg" frameborder="0" allowfullscreen></iframe></div></div>
-            <div class="col-sm-6 col-xs-12"><div class="video"><iframe width="560" height="315" src="https://www.youtube.com/embed/IXDKdDLYC4c" frameborder="0" allowfullscreen></iframe></div></div>
-            <div class="col-sm-6 col-xs-12"><div class="video"><iframe width="560" height="315" src="https://www.youtube.com/embed/k-6ZAxsN9UI" frameborder="0" allowfullscreen></iframe></div></div>
+            <div class="col-sm-6 col-xs-6"><div class="video"><iframe width="560" height="315" src="https://www.youtube.com/embed/IUxoEi_5hog" frameborder="0" allowfullscreen></iframe></div></div>
+            <div class="col-sm-6 col-xs-6"><div class="video"><iframe width="560" height="315" src="https://www.youtube.com/embed/OWxS6EOOVkg" frameborder="0" allowfullscreen></iframe></div></div>
+            <div class="col-sm-6 col-xs-6"><div class="video"><iframe width="560" height="315" src="https://www.youtube.com/embed/IXDKdDLYC4c" frameborder="0" allowfullscreen></iframe></div></div>
+            <div class="col-sm-6 col-xs-6"><div class="video"><iframe width="560" height="315" src="https://www.youtube.com/embed/k-6ZAxsN9UI" frameborder="0" allowfullscreen></iframe></div></div>
         </div>
     </div>
 </div>

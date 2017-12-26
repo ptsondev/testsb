@@ -1,0 +1,49 @@
+name = Booking Mobile
+description = Booking - for mobile version
+core = "7.x"
+project = "SNH.VN"
+engine = phptemplate
+
+regions[header] = Header
+regions[pre_content] = Pre Content
+regions[content] = Content
+regions[sidebar_first] = First sidebar
+regions[page_bottom] = Page bottom
+regions[footer] = Footer
+
+features[] = logo
+features[] = name
+features[] = slogan
+
+; Stylesheets
+stylesheets[all][] = css/bootstrap.css
+stylesheets[all][] = css/jquery-ui.min.css
+stylesheets[all][] = css/responsive_slide.css
+stylesheets[all][] = css/pgwslideshow.min.css
+stylesheets[all][] = css/animate.css
+stylesheets[all][] = css/timelify.css
+stylesheets[all][] = js/fancybox/jquery.fancybox.css
+stylesheets[all][] = css/jquery.mCustomScrollbar.css
+stylesheets[all][] = css/jquery.rateyo.css
+stylesheets[all][] = css/main.css
+
+; Scripts
+scripts[] = js/jquery.min.js
+scripts[] = js/jquery-ui.min.js
+scripts[] = js/bootstrap.min.js
+scripts[] = js/jquery.flexisel.js
+scripts[] = js/responsiveslides.min.js
+scripts[] = js/pgwslideshow.min.js
+scripts[] = js/modernizr.2.5.3.min.js
+scripts[] = js/jssor.slider.min.js
+scripts[] = js/jquery.timelify.js
+scripts[] = js/fancybox/jquery.fancybox.js
+scripts[] = js/jquery.rateyo.js
+scripts[] = js/jquery.mCustomScrollbar.concat.min.js
+scripts[] = js/html2canvas.js
+scripts[] = js/FileSaver.min.js
+scripts[] = js/canvas2image.js
+scripts[] = js/jquery.form.js
+scripts[] = js/js.js
+scripts[] = js/booking.js
+

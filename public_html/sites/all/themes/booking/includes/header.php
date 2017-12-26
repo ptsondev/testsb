@@ -36,6 +36,13 @@
                 global $user;
                 echo '<a href="'.url('user/'.$user->uid).'" id="btnUser">'.$user->name.'</a>';
                 echo '<a href="'.url('user/logout').'" id="btnUserExit"></a>';
+                echo '<div style="display:none;"><a id="btn-changepass" href="#popup-changepass">Quên Mật Khẩu</a></div>';
+                echo '<div class="popup" id="popup-changepass">';
+                    echo '<div id="p-register-left"></div>';
+                    echo '<div id="p-register-right">';
+                        echo theme('sb_custom_change_password');
+                    echo '</div>';
+                echo '</div>';
             } else { // user is anonymous 
               echo '<div id="user-navigation">';
                 $form = drupal_get_form('user_login');
@@ -58,6 +65,7 @@
                         echo theme('sb_custom_forgot_password');
                     echo '</div>';
                 echo '</div>';
+                                
             }
             ?>				                 
         </div>        
