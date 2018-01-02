@@ -604,13 +604,14 @@ h2.title-top i{
     margin:15px 0;
 }
 #place-tabs .tab{
+    width: 100%;
     cursor: pointer;
     margin: 0;
-    padding:6px 0;
+    padding:6px 10px;
     display: inline-block;
     float: left;
     font-size: 12px;    
-    border: 1px solid #ccc;
+    border: 1px solid #ccc;    
     text-align: center;
 }
 
@@ -624,10 +625,9 @@ h2.title-top i{
     -moz-border-radius: 0px 5px 5px 0px;
     -webkit-border-radius: 0px 5px 5px 0px; 
 }
-#place-tabs .tab i.fa{
-    width:100%;
-    display: inline-block;
-    text-align: center;
+#place-tabs .tab i.fa{    
+    display: inline-block;    
+    padding:0 8px;
     font-size:20px;
     margin-bottom: 5px;
 }
@@ -848,7 +848,7 @@ h2.title-top i{
     content: " ";
     position: absolute;
     border-bottom:2px dotted #ccc;
-    width:150px;
+    width:100px;
     height: 3px;
     left: 0;
     top:18px;
@@ -1070,8 +1070,8 @@ h2.title-top i{
 .edit-mode input[type=radio]:first-child{
     margin-left: 0;
 }
-#travellers-info{
-    min-height: 184px;
+#tour-info{
+    border-top: none;
 }
 #todo-result .item,
 #cost-result .item,
@@ -1758,8 +1758,7 @@ h3.group-title{
 }
 #tour-info,
 #travellers-info{
-    margin:0;
-    border: none;
+   
 }
 .info-groupx input,
 .info-groupx select{
@@ -1882,6 +1881,8 @@ h1#des-title{
     display: inline-block;
     float: left;
     padding: 5px 0 0 5px;
+    position: relative;
+    z-index: 999;
 }
 #btnShowSearch{
     display: inline-block;
@@ -2317,4 +2318,30 @@ h2.title-top{
 }
 .tour-detail-2 .content{
     height: 220px;
+}
+.info-groupx{
+    position: relative;
+    height: 50px;
+    overflow: hidden;
+}
+
+.info-groupx.show{
+    height: auto;
+}
+.info-groupx h3.group-title{
+    width: 100%;
+    background: url('../images/thide.png') right 0 no-repeat;
+    background-size: 30px 28px;
+    text-decoration: underline orange;
+    border: none;
+    cursor: pointer;
+}
+.info-groupx input{
+    width:100px;
+}
+.info-groupx.show h3.group-title{
+    background-image: url('../images/tshow.png');
+}
+#main-menu{
+    display: none!important; /*hide trang blog du lich*/
 }

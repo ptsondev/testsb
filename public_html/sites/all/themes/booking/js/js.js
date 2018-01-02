@@ -477,115 +477,116 @@ jQuery(document).ready(function($){
     /*
      *  SAVE CUSTOM TOUR 
      */
-    $('#btnSaveCustomTour').click(function(){        
-        var tour={};
-        tour.addNew = 1;
-        tour.id = $(this).data('nid');
-        tour.cloneFrom = $(this).data('clonefrom');
-        if($(this).hasClass('update')){
-            tour.addNew = 0;            
-        }                
-        // tour information
-        tour.background = $('#tour-detail').data('bgid');
-        tour.destination = $('#des-ref').data('nid');
-        tour.startDate = $('#u-start-date').val();
-        tour.endDate = $('#u-end-date').val();
-        tour.totalDay = $('#u-total-day').val(); 
-        tour.target = $('.rdTarget:checked').val();
-        tour.transport = $('.rdTransport:checked').val();
-        tour.budget = removeFormatNumber($('#u-expected-budget').val());
-                                
-        // customers 
-        var customers = [];
-        $('#list-customers li').each(function(){
-            var cu={};
-            cu.name = $(this).find('.cu-name').text();
-            cu.phone = $(this).find('.cu-phone').text();
-            cu.email = $(this).find('.cu-email').text();
-            cu.old = $(this).find('.cu-old').text();
-            customers.push(cu);
-        });
-        tour.customers = customers;
+    $('#btnSaveCustomTour').click(function(){      
+        if(confirmLogin()){
+            var tour={};
+            tour.addNew = 1;
+            tour.id = $(this).data('nid');
+            tour.cloneFrom = $(this).data('clonefrom');
+            if($(this).hasClass('update')){
+                tour.addNew = 0;            
+            }                
+            // tour information
+            tour.background = $('#tour-detail').data('bgid');
+            tour.destination = $('#des-ref').data('nid');
+            tour.startDate = $('#u-start-date').val();
+            tour.endDate = $('#u-end-date').val();
+            tour.totalDay = $('#u-total-day').val(); 
+            tour.target = $('.rdTarget:checked').val();
+            tour.transport = $('.rdTransport:checked').val();
+            tour.budget = removeFormatNumber($('#u-expected-budget').val());
 
-        // todo works  
-        var toDoWorks = [];
-        $('#todo-result .item').each(function(){
-            var item={};
-            item.name = $(this).find('.col-sm-2:nth-child(1)').text();
-            item.prio = $(this).find('.col-sm-2:nth-child(2)').text();
-            item.human = $(this).find('.col-sm-2:nth-child(3)').text();
-            item.time = $(this).find('.col-sm-2:nth-child(4)').text();
-            item.status = $(this).find('.col-sm-2:nth-child(5)').text();
-            item.note = $(this).find('.col-sm-2:nth-child(6)').text();            
-            toDoWorks.push(item);
-        });
-        tour.toDoWorks = toDoWorks;
-        
-        // ngan sach
-        var expense = [];
-        $('#cost-result .item').each(function(){
-            var item={};
-            item.name = $(this).find('.col-sm-2:nth-child(1)').text();
-            item.type = $(this).find('.col-sm-2:nth-child(2)').text();
-            item.quantity = $(this).find('.col-sm-2:nth-child(3)').text();
-            item.uprice = removeFormatNumber($(this).find('.col-sm-2:nth-child(4)').text());
-            item.total = removeFormatNumber($(this).find('.col-sm-2:nth-child(5)').text());
-            item.note = $(this).find('.col-sm-2:nth-child(6)').text();            
-            expense.push(item);
-        });
-        tour.expense = expense;
-        
-        // urgent contact
-        var uContact = [];
-        $('#urgent-contact-result .item').each(function(){
-            var item={};
-            item.name = $(this).find('.col-sm-2:nth-child(1)').text();
-            item.home_phone = $(this).find('.col-sm-2:nth-child(2)').text();
-            item.phone = $(this).find('.col-sm-2:nth-child(3)').text();
-            item.address = $(this).find('.col-sm-2:nth-child(4)').text();
-            item.relationship = $(this).find('.col-sm-2:nth-child(5)').text();
-            item.note = $(this).find('.col-sm-2:nth-child(6)').text();            
-            uContact.push(item);
-        });
-        tour.uContact = uContact;
-        
-        // ticket info
-        var tickets = [];
-        $('#ticket-result .item').each(function(){
-            var item={};
-            item.datetime = $(this).find('.col-sm-2:nth-child(1)').text();
-            item.start = $(this).find('.col-sm-2:nth-child(2)').text();
-            item.end = $(this).find('.col-sm-2:nth-child(3)').text();
-            item.type = $(this).find('.col-sm-2:nth-child(4)').text();
-            item.num = $(this).find('.col-sm-2:nth-child(5)').text();
-            item.note = $(this).find('.col-sm-2:nth-child(6)').text();            
-            tickets.push(item);
-        });
-        tour.tickets = tickets;
-        
-        // tour detail 
-        var trips = [];
-        $('#tour-detail li.timeline-item').each(function(){
-            var trip = {};
-            trip.name = $(this).find('h3.trip-name').text();
-            trip.bday = $(this).parent().data('day');
-            trip.bdaypart=$(this).find('.txtDayPart').val();
-            trips.push(trip);
-        });
-        tour.trips = trips;
-        
-        
-        jQuery.ajax({
-	    method: "POST",
-	    async:false,
-	    url: ajaxPath,
-	    data: {action: "addCustomTour", tour:tour},
-	    success: function (response) { 
-                //console.log(response);
-                window.location.href = response;
-            }
-	});
-        
+            // customers 
+            var customers = [];
+            $('#list-customers li').each(function(){
+                var cu={};
+                cu.name = $(this).find('.cu-name').text();
+                cu.phone = $(this).find('.cu-phone').text();
+                cu.email = $(this).find('.cu-email').text();
+                cu.old = $(this).find('.cu-old').text();
+                customers.push(cu);
+            });
+            tour.customers = customers;
+
+            // todo works  
+            var toDoWorks = [];
+            $('#todo-result .item').each(function(){
+                var item={};
+                item.name = $(this).find('.col-sm-2:nth-child(1)').text();
+                item.prio = $(this).find('.col-sm-2:nth-child(2)').text();
+                item.human = $(this).find('.col-sm-2:nth-child(3)').text();
+                item.time = $(this).find('.col-sm-2:nth-child(4)').text();
+                item.status = $(this).find('.col-sm-2:nth-child(5)').text();
+                item.note = $(this).find('.col-sm-2:nth-child(6)').text();            
+                toDoWorks.push(item);
+            });
+            tour.toDoWorks = toDoWorks;
+
+            // ngan sach
+            var expense = [];
+            $('#cost-result .item').each(function(){
+                var item={};
+                item.name = $(this).find('.col-sm-2:nth-child(1)').text();
+                item.type = $(this).find('.col-sm-2:nth-child(2)').text();
+                item.quantity = $(this).find('.col-sm-2:nth-child(3)').text();
+                item.uprice = removeFormatNumber($(this).find('.col-sm-2:nth-child(4)').text());
+                item.total = removeFormatNumber($(this).find('.col-sm-2:nth-child(5)').text());
+                item.note = $(this).find('.col-sm-2:nth-child(6)').text();            
+                expense.push(item);
+            });
+            tour.expense = expense;
+
+            // urgent contact
+            var uContact = [];
+            $('#urgent-contact-result .item').each(function(){
+                var item={};
+                item.name = $(this).find('.col-sm-2:nth-child(1)').text();
+                item.home_phone = $(this).find('.col-sm-2:nth-child(2)').text();
+                item.phone = $(this).find('.col-sm-2:nth-child(3)').text();
+                item.address = $(this).find('.col-sm-2:nth-child(4)').text();
+                item.relationship = $(this).find('.col-sm-2:nth-child(5)').text();
+                item.note = $(this).find('.col-sm-2:nth-child(6)').text();            
+                uContact.push(item);
+            });
+            tour.uContact = uContact;
+
+            // ticket info
+            var tickets = [];
+            $('#ticket-result .item').each(function(){
+                var item={};
+                item.datetime = $(this).find('.col-sm-2:nth-child(1)').text();
+                item.start = $(this).find('.col-sm-2:nth-child(2)').text();
+                item.end = $(this).find('.col-sm-2:nth-child(3)').text();
+                item.type = $(this).find('.col-sm-2:nth-child(4)').text();
+                item.num = $(this).find('.col-sm-2:nth-child(5)').text();
+                item.note = $(this).find('.col-sm-2:nth-child(6)').text();            
+                tickets.push(item);
+            });
+            tour.tickets = tickets;
+
+            // tour detail 
+            var trips = [];
+            $('#tour-detail li.timeline-item').each(function(){
+                var trip = {};
+                trip.name = $(this).find('h3.trip-name').text();
+                trip.bday = $(this).parent().data('day');
+                trip.bdaypart=$(this).find('.txtDayPart').val();
+                trips.push(trip);
+            });
+            tour.trips = trips;
+
+
+            jQuery.ajax({
+                method: "POST",
+                async:false,
+                url: ajaxPath,
+                data: {action: "addCustomTour", tour:tour},
+                success: function (response) { 
+                    //console.log(response);
+                    window.location.href = response;
+                }
+            });
+        }
     });
     
     $('#place-tabs .tab').click(function(){

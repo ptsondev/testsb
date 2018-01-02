@@ -2152,6 +2152,10 @@ h1#des-title{
 .u-post-info a{
     color:#333;
 }
+#main-menu{
+    display: none!important; /*hide trang blog du lich*/
+}
+
 @media (min-width: 1024px) {
     #main-des-wrapper #main-content{
         width:74%;
