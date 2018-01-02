@@ -1955,8 +1955,8 @@ h1#des-title{
     -moz-border-radius: 3px;
     border-radius: 3px;
     display: inline-block;
-    float:left;
-    margin-right: 16px;
+    width:100%;
+    margin:5px;
     cursor: pointer;
 }
 
